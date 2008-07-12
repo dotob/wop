@@ -92,7 +92,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AboutWOP.Designer.cs">
-      <DependentUpon>AboutWOP.cs</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
