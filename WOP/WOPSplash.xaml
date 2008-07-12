@@ -1,0 +1,17 @@
+﻿<Window x:Class="WOP.WOPSplash"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="wop splash" Height="165" Width="311" ResizeMode="NoResize" WindowStyle="None" Opacity="1" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Background="#00FFFFFF">
+    <Grid>
+        <Rectangle Fill="#FF202020" Stroke="#00000000" RadiusY="12.5" RadiusX="12.5" Margin="0,0,8,8">
+        	<Rectangle.BitmapEffect>
+        		<DropShadowBitmapEffect/>
+        	</Rectangle.BitmapEffect>
+        </Rectangle>
+        <Label x:Name="m_l_wop" FontSize="70" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="wop" FontFamily="Georgia" Height="145" VerticalAlignment="Top" Foreground="#FFCCCCCC" Margin="0,0,8,0">
+            <Label.BitmapEffect>
+                <DropShadowBitmapEffect />
+            </Label.BitmapEffect></Label>
+        <Label HorizontalAlignment="Left" Margin="22,128,0,0" VerticalAlignment="Top" Width="43" Height="25" Content="v0.1" x:Name="m_l_version" RenderTransformOrigin="0.465,0.12" Foreground="#FFCCCCCC"/>
+    </Grid>
+</Window>
