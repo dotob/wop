@@ -3,42 +3,70 @@ using WOP.Objects;
 
 namespace WOP.Tasks {
     public class Job {
-        public List<ITask> TasksList { get; set; }
+        private List<ITask> TasksList { get; set; }
         public List<IWorkItem> WorkItems { get; set; }
 
         public void Start()
         {
-            //TODO: start all tasks
+            if (TasksList != null) {
+                for (int i = TasksList.Count - 1; i >= 0; i--) {
+                    TasksList[i].Start();
+                }
+            }
         }
 
         public void Pause()
         {
-            //TODO: stop all tasks
+            if (TasksList != null) {
+                foreach (ITask task in TasksList) {
+                    task.Pause();
+                }
+            }
         }
 
-        public static Job CreateJob()
+        public void AddTask(ITask t)
         {
-            Job j = new Job();
-            j.TasksList.Add(new FileGatherTask(j));
-            j.TasksList.Add(new FileRenamerTask(j));
-            j.TasksList.Add(new ImageShrinkTask(j));
-            // inform tasks of their position
+            if (TasksList == null) {
+                TasksList = new List<ITask>();
+                t.Position = TASKPOS.FIRST;
+                t.WIProcessed += task_WIProcessed;
+            }
+            TasksList.Add(t);
+
+            // connect tasks
+            if (TasksList.Count > 1) {
+                TasksList[TasksList.Count - 1].NextTask = t;
+            }
+
+            // tell them their position
             int i = 0;
-            foreach (ITask task in j.TasksList) {
-                if (i == 0) {
-                    task.Position = TASKPOS.FIRST;
-                    task.WIProcessed += new System.EventHandler<TaskEventArgs>(task_WIProcessed);
-                } else if (i == j.TasksList.Count - 1) {
-                    task.Position = TASKPOS.LAST;
-                } else {
-                    task.Position = TASKPOS.MIDDLE;
-                }
+            foreach (ITask task in TasksList) {
+                task.Position = i == TasksList.Count - 1 ? TASKPOS.LAST : TASKPOS.MIDDLE;
                 i++;
             }
+        }
+
+        public static Job CreateTestJob()
+        {
+            var j = new Job();
+            var fgt = new FileGatherTask();
+            fgt.SourceDirectory = @"..\..\..\IM\pix";
+            fgt.TargetDirectory = @"c:\tmp";
+            fgt.SortOrder = FileGatherTask.SORTSTYLE.FILENAME;
+            fgt.RecurseDirectories = true;
+            fgt.FilePattern = "*jpg";
+            j.AddTask(fgt);
+
+            var frt = new FileRenamerTask();
+            frt.RenamePattern = "bastiTest_{0}";
+            //j.AddTask(frt);
+
+            //j.AddTask(new ImageShrinkTask());
+
             return j;
         }
 
-        static void task_WIProcessed(object sender, TaskEventArgs e)
+        private static void task_WIProcessed(object sender, TaskEventArgs e)
         {
             // listen for first task (usually the filegatherer). so we learn all wi from him
             e.Task.Parent.WorkItems.Add(e.WorkItem);

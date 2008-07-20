@@ -22,7 +22,7 @@ namespace WOP.Tasks {
     }
 
     public interface ITask {
-        Queue<ImageWI> WorkItems { get; }
+        Queue<IWorkItem> WorkItems { get; }
         ITask NextTask { get; set; }
         string Name { get; set; }
         UserControl UI { get; set; }

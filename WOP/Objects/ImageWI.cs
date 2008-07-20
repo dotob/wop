@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Fireball.Drawing;
 
 namespace WOP.Objects {
     public class ImageWI : IWorkItem {
@@ -8,6 +9,9 @@ namespace WOP.Objects {
             CreationTime = DateTime.Now;
             OriginalFile = fi;
             CurrentFile = fi;
+            // get times
+            FileDate = fi.CreationTime;
+            ExifDate = fi.CreationTime;
         }
 
         #region IWorkItem Members
@@ -23,5 +27,8 @@ namespace WOP.Objects {
         public DateTime FinishedWork { get; set; }
 
         #endregion
+
+        public DateTime FileDate { get; set; }
+        public DateTime ExifDate { get; set; }
     }
 }

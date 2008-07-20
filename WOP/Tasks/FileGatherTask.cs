@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Windows.Controls;
 using WOP.Objects;
 
@@ -19,25 +20,28 @@ namespace WOP.Tasks {
 
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
         // TODO: is this queue thread save??
-        private readonly Queue<ImageWI> workItems = new Queue<ImageWI>();
+        private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
 
-        public FileGatherTask(Job j)
+        public FileGatherTask()
         {
-            Parent = j;
             // create bgw
             this.bgWorker.WorkerReportsProgress = true;
             this.bgWorker.WorkerSupportsCancellation = true;
             this.bgWorker.DoWork += bgWorker_DoWork;
+            DeleteSource = false;
+            FilePattern = "*";
         }
 
         public string SourceDirectory { get; set; }
         public string TargetDirectory { get; set; }
+        public string FilePattern { get; set; }
         public bool RecurseDirectories { get; set; }
+        public bool DeleteSource { get; set; }
         public SORTSTYLE SortOrder { get; set; }
 
         #region ITask Members
 
-        public Queue<ImageWI> WorkItems { get; private set; }
+        public Queue<IWorkItem> WorkItems { get; private set; }
         public ITask NextTask { get; set; }
         public string Name { get; set; }
         public UserControl UI { get; set; }
@@ -60,16 +64,95 @@ namespace WOP.Tasks {
 
         #endregion
 
-        private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        public void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            // go and gather files 
-            // create workitems
-            // sort them
-            // copy them
-            // hand them over to next task
-            // remember the stopwi item at the end
+            GatherFiles(this);
         }
 
+        public static void Test()
+        {
+            var fgt = new FileGatherTask();
+            fgt.SourceDirectory = @"..\..\..\IM\pix";
+            fgt.TargetDirectory = @"c:\tmp";
+            fgt.SortOrder = FileGatherTask.SORTSTYLE.FILENAME;
+            fgt.RecurseDirectories = true;
+            fgt.FilePattern = "*jpg";
+            GatherFiles(fgt);
+        }
+
+        private static void GatherFiles(FileGatherTask gatherTask) {
+            // go and gather files 
+            string[] file = Directory.GetFiles(gatherTask.SourceDirectory, gatherTask.FilePattern, gatherTask.RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            // create workitems
+            int i = 0;
+            var allWI = new List<ImageWI>();
+            foreach (string s in file) {
+                var fi = new FileInfo(s);
+                var iwi = new ImageWI(fi);
+                iwi.ProcessPosition = i++;
+                allWI.Add(iwi);
+            }
+            // sort them
+            switch (gatherTask.SortOrder) {
+                case SORTSTYLE.NONE:
+                    break;
+                case SORTSTYLE.FILENAME:
+                    allWI.Sort(CompareByFileName);
+                    break;
+                case SORTSTYLE.DATEFILE:
+                    allWI.Sort(CompareByFileDate);
+                    break;
+                case SORTSTYLE.DATEEXIF:
+                    allWI.Sort(CompareByExifDate);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            // copy them
+            foreach (ImageWI wi in allWI) {
+                try {
+                    File.Copy(wi.CurrentFile.FullName, Path.Combine(gatherTask.TargetDirectory, wi.OriginalFile.Name), true);
+                    // do we want to delete?
+                    if (gatherTask.DeleteSource) {
+                        File.Delete(wi.OriginalFile.FullName);
+                    }
+                    // hand them over to next task
+                    if (gatherTask.NextTask != null) {
+                        gatherTask.NextTask.WorkItems.Enqueue(wi);
+                    }
+                } catch (Exception ex) {
+                    ex.ToString();
+                }
+            }
+            // remember the stopwi item at the end
+            if (gatherTask.NextTask != null) {
+                gatherTask.NextTask.WorkItems.Enqueue(new StopWI());
+            }
+        }
+
+        public static int CompareByFileDate(ImageWI a, ImageWI b)
+        {
+            if (a != null && b != null) {
+                return a.FileDate.CompareTo(b.FileDate);
+            }
+            return 0;
+        }
+
+        public static int CompareByExifDate(ImageWI a, ImageWI b)
+        {
+            if (a != null && b != null) {
+                return a.ExifDate.CompareTo(b.ExifDate);
+            }
+            return 0;
+        }
+
+        public static int CompareByFileName(ImageWI a, ImageWI b)
+        {
+            if (a != null && b != null) {
+                return a.OriginalFile.Name.CompareTo(b.OriginalFile.Name);
+            }
+            return 0;
+        }
 
         public bool Process(ImageWI iwi)
         {

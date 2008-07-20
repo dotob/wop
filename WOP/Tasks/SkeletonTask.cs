@@ -8,7 +8,7 @@ namespace WOP.Tasks {
     public abstract class SkeletonTask : ITask {
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
         // TODO: is this queue thread save??
-        private readonly Queue<ImageWI> workItems = new Queue<ImageWI>();
+        private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
 
         protected SkeletonTask()
         {
@@ -20,7 +20,7 @@ namespace WOP.Tasks {
 
         protected SkeletonTask(Job parent)
         {
-            this.Parent = parent;
+            Parent = parent;
         }
 
         public string Name { get; private set; }
@@ -29,15 +29,12 @@ namespace WOP.Tasks {
 
         #region ITask Members
 
-        public Queue<ImageWI> WorkItems
+        public Queue<IWorkItem> WorkItems
         {
             get { return this.workItems; }
         }
 
-        public Dictionary<ITask, string> TaskInfos
-        {
-            get; set;
-        }
+        public Dictionary<ITask, string> TaskInfos { get; set; }
 
         public event EventHandler<TaskEventArgs> WIProcessed;
 
@@ -75,28 +72,32 @@ namespace WOP.Tasks {
         {
             // infinite loop
             while (true) {
-                // get item from queue and process it
-                IWorkItem wi = this.workItems.Dequeue();
-                if (wi == null) {
-                    continue;
+                try {
+                    // get item from queue and process it
+                    IWorkItem wi = this.workItems.Dequeue();
+                    if (wi == null) {
+                        continue;
+                    }
+                    // check if we want to stop
+                    if (wi is StopWI) {
+                        // stop
+                        return;
+                    }
+                    if (!(wi is ImageWI)) {
+                        continue;
+                    }
+                    var iwi = (ImageWI) wi;
+                    Process(iwi);
+                    // tell job (or anyone else) we have finised process
+                    EventHandler<TaskEventArgs> temp = WIProcessed;
+                    if (temp != null) {
+                        temp(this, new TaskEventArgs(this, iwi));
+                    }
+                    // add procedd wi into next tasks queue
+                    NextTask.WorkItems.Enqueue(iwi);
+                } catch (InvalidOperationException iex) {
+                    // notting doto here...queue seems empty
                 }
-                // check if we want to stop
-                if (wi is StopWI) {
-                    // stop
-                    return;
-                }
-                if (!(wi is ImageWI)) {
-                    continue;
-                }
-                var iwi = (ImageWI) wi;
-                Process(iwi);
-                // tell job (or anyone else) we have finised process
-                EventHandler<TaskEventArgs> temp = WIProcessed;
-                if (temp != null) {
-                    temp(this, new TaskEventArgs(this, iwi));
-                }
-                // add procedd wi into next tasks queue
-                NextTask.WorkItems.Enqueue(iwi);
             }
         }
 

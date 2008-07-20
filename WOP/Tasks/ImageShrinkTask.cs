@@ -8,7 +8,6 @@ namespace WOP.Tasks
 {
     public class ImageShrinkTask:SkeletonTask
     {
-        public ImageShrinkTask(Job j) : base(j) { }
         public override bool Process(ImageWI iwi)
         {
             return true;
