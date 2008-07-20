@@ -52,7 +52,5 @@ namespace WOP.Tests
             Job j = Job.CreateTestJob();
             j.Start();
         }
-
-
     }
 }
