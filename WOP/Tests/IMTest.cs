@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using Fireball.Drawing;
 using NUnit.Framework;
 using WOP.Objects;
+using WOP.Tasks;
 
 namespace WOP.Tests
 {
@@ -23,5 +25,34 @@ namespace WOP.Tests
             string d = Directory.GetCurrentDirectory();
             Console.WriteLine(ts);
         }
+
+        [Test]
+        public void TagTest()
+        {
+            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg")) {
+                FreeImage fifi = new FreeImage(s);
+            }
+        }
+
+        [Test]
+        public void FITest()
+        {
+            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg")) {
+                FileInfo fi = new FileInfo(s);
+                fi.Name.ToString();
+                fi.Extension.ToString();
+                fi.FullName.ToString();
+                fi.DirectoryName.ToString();
+            }
+        }
+
+        [Test]
+        public void JobTest()
+        {
+            Job j = Job.CreateTestJob();
+            j.Start();
+        }
+
+
     }
 }

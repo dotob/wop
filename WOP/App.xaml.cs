@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using WOP.Tasks;
 
 namespace WOP
 {
@@ -13,5 +14,11 @@ namespace WOP
     public partial class App : Application
     {
 
+        void AppStartup(object sender, StartupEventArgs args)
+        {
+            Job j = Job.CreateTestJob();
+            j.Start();
+        }
+        
     }
 }

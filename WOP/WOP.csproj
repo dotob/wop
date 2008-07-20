@@ -118,6 +118,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Tasks\ImageShrinkTask.cs" />
     <Compile Include="Tasks\SkeletonTask.cs" />
     <Compile Include="Tasks\FileGatherTask.cs" />
     <Compile Include="Tasks\FileRenamerTask.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\Job.cs" />
     <Compile Include="Tests\IMTest.cs" />
+    <Compile Include="Util\Utils.cs" />
     <EmbeddedResource Include="AboutWOP.resx">
       <DependentUpon>AboutWOP.cs</DependentUpon>
       <SubType>Designer</SubType>
