@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{856636A5-4B9B-4AF9-B9FB-3AF25B99EA65}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -79,6 +79,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\BlackThemeStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TasksUI\FileRenamerTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TasksUI\FileGatherTaskUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WOPSplash.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +129,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TasksUI\FileRenamerTaskUI.xaml.cs">
+      <DependentUpon>FileRenamerTaskUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TasksUI\FileGatherTaskUI.xaml.cs">
+      <DependentUpon>FileGatherTaskUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tasks\ImageShrinkTask.cs" />
     <Compile Include="Tasks\SkeletonTask.cs" />

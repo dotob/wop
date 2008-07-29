@@ -13,9 +13,9 @@ namespace WOP.Tasks {
         protected SkeletonTask()
         {
             // create bgw
-            this.bgWorker.WorkerReportsProgress = true;
-            this.bgWorker.WorkerSupportsCancellation = true;
-            this.bgWorker.DoWork += bgWorker_DoWork;
+            bgWorker.WorkerReportsProgress = true;
+            bgWorker.WorkerSupportsCancellation = true;
+            bgWorker.DoWork += bgWorker_DoWork;
         }
 
         protected SkeletonTask(Job parent)
@@ -31,7 +31,7 @@ namespace WOP.Tasks {
 
         public Queue<IWorkItem> WorkItems
         {
-            get { return this.workItems; }
+            get { return workItems; }
         }
 
         public Dictionary<ITask, string> TaskInfos { get; set; }
@@ -58,12 +58,12 @@ namespace WOP.Tasks {
         public void Start()
         {
             // start it
-            this.bgWorker.RunWorkerAsync();
+            bgWorker.RunWorkerAsync();
         }
 
         public void Pause()
         {
-            this.bgWorker.CancelAsync();
+            bgWorker.CancelAsync();
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace WOP.Tasks {
             while (true) {
                 try {
                     // get item from queue and process it
-                    IWorkItem wi = this.workItems.Dequeue();
+                    IWorkItem wi = workItems.Dequeue();
                     if (wi == null) {
                         continue;
                     }

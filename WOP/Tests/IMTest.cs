@@ -6,34 +6,9 @@ using NUnit.Framework;
 using WOP.Objects;
 using WOP.Tasks;
 
-namespace WOP.Tests
-{
+namespace WOP.Tests {
     [TestFixture]
-    public class IMTest
-    {
-        [Test]
-        public void TestIMSpeed()
-        {
-            DateTime start = DateTime.Now;
-            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg"))
-            {
-                var fin = new FileInfo(s);
-                var fout = new FileInfo(Path.Combine(fin.DirectoryName, fin.Name + "_small" + fin.Extension));
-                ImageWorker.ShrinkImageFI(fin, fout, new Size(400, 400));
-            }
-            TimeSpan ts = DateTime.Now.Subtract(start);
-            string d = Directory.GetCurrentDirectory();
-            Console.WriteLine(ts);
-        }
-
-        [Test]
-        public void TagTest()
-        {
-            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg")) {
-                FreeImage fifi = new FreeImage(s);
-            }
-        }
-
+    public class IMTest {
         [Test]
         public void FITest()
         {
@@ -51,6 +26,28 @@ namespace WOP.Tests
         {
             Job j = Job.CreateTestJob();
             j.Start();
+        }
+
+        [Test]
+        public void TagTest()
+        {
+            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg")) {
+                FreeImage fifi = new FreeImage(s);
+            }
+        }
+
+        [Test]
+        public void TestIMSpeed()
+        {
+            DateTime start = DateTime.Now;
+            foreach (string s in Directory.GetFiles(@"..\..\..\IM\pix", "*jpg")) {
+                var fin = new FileInfo(s);
+                var fout = new FileInfo(Path.Combine(fin.DirectoryName, fin.Name + "_small" + fin.Extension));
+                ImageWorker.ShrinkImageFI(fin, fout, new Size(400, 400));
+            }
+            TimeSpan ts = DateTime.Now.Subtract(start);
+            string d = Directory.GetCurrentDirectory();
+            Console.WriteLine(ts);
         }
     }
 }

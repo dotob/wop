@@ -16,8 +16,8 @@ namespace WOP.Tasks {
 
         public TaskEventArgs(ITask task, IWorkItem wi)
         {
-            this.Task = task;
-            this.WorkItem = wi;
+            Task = task;
+            WorkItem = wi;
         }
     }
 

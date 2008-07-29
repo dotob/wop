@@ -3,13 +3,11 @@ using System.Drawing;
 using System.IO;
 using Fireball.Drawing;
 
-namespace WOP.Objects
-{
+namespace WOP.Objects {
     /// <summary>
     /// this is for editing pictures
     /// </summary>
-    public class ImageWorker
-    {
+    public class ImageWorker {
         public static void ShrinkImageIM(FileInfo fileIn, FileInfo fileOut, Size nuSize)
         {
             var psi = new ProcessStartInfo();

@@ -25,9 +25,9 @@ namespace WOP.Tasks {
         public FileGatherTask()
         {
             // create bgw
-            this.bgWorker.WorkerReportsProgress = true;
-            this.bgWorker.WorkerSupportsCancellation = true;
-            this.bgWorker.DoWork += bgWorker_DoWork;
+            bgWorker.WorkerReportsProgress = true;
+            bgWorker.WorkerSupportsCancellation = true;
+            bgWorker.DoWork += bgWorker_DoWork;
             DeleteSource = false;
             FilePattern = "*";
         }
@@ -54,12 +54,12 @@ namespace WOP.Tasks {
         public void Start()
         {
             // start it
-            this.bgWorker.RunWorkerAsync();
+            bgWorker.RunWorkerAsync();
         }
 
         public void Pause()
         {
-            this.bgWorker.CancelAsync();
+            bgWorker.CancelAsync();
         }
 
         #endregion
@@ -74,13 +74,14 @@ namespace WOP.Tasks {
             var fgt = new FileGatherTask();
             fgt.SourceDirectory = @"..\..\..\IM\pix";
             fgt.TargetDirectory = @"c:\tmp";
-            fgt.SortOrder = FileGatherTask.SORTSTYLE.FILENAME;
+            fgt.SortOrder = SORTSTYLE.FILENAME;
             fgt.RecurseDirectories = true;
             fgt.FilePattern = "*jpg";
             GatherFiles(fgt);
         }
 
-        private static void GatherFiles(FileGatherTask gatherTask) {
+        private static void GatherFiles(FileGatherTask gatherTask)
+        {
             // go and gather files 
             string[] file = Directory.GetFiles(gatherTask.SourceDirectory, gatherTask.FilePattern, gatherTask.RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             // create workitems

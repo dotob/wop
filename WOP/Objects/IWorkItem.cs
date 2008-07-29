@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
-namespace WOP.Objects
-{
-    public interface IWorkItem
-    {
+namespace WOP.Objects {
+    public interface IWorkItem {
         int ProcessPosition { get; set; }
         int SortedPosition { get; set; }
         FileInfo CurrentFile { get; set; }
