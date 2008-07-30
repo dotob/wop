@@ -1,24 +1,25 @@
 ﻿using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using WOP.Tasks;
 
 namespace WOP {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        private BackgroundWorker bgSplasher = new BackgroundWorker();
+        private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
+        private readonly WOPSplash wops = new WOPSplash();
         private int til = 50;
-        private WOPSplash wops = new WOPSplash();
 
         public MainWindow()
         {
             Visibility = Visibility.Hidden;
             InitializeComponent();
             bgSplasher.WorkerReportsProgress = true;
-            bgSplasher.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgSplasher_RunWorkerCompleted);
-            bgSplasher.DoWork += new DoWorkEventHandler(bgSplasher_DoWork);
-            bgSplasher.ProgressChanged += new ProgressChangedEventHandler(bgSplasher_ProgressChanged);
+            bgSplasher.RunWorkerCompleted += bgSplasher_RunWorkerCompleted;
+            bgSplasher.DoWork += bgSplasher_DoWork;
+            bgSplasher.ProgressChanged += bgSplasher_ProgressChanged;
             wops.Opacity = 0;
             wops.Show();
             bgSplasher.RunWorkerAsync();
@@ -48,6 +49,26 @@ namespace WOP {
             Visibility = Visibility.Visible;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e) {}
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // configure tasks
+            var mainJob = new Job();
+            mainJob.Name = "eintest";
+            mainJob.AddTask(new FileGatherTask());
+            mainJob.AddTask(new FileRenamerTask());
+            mainJob.AddTask(new ImageShrinkTask());
+            mainJob.AddTask(new GEOTagTask());
+            foreach (ITask task in mainJob.TasksList) {
+                if (task.UI != null) {
+                    m_sp_tasks.Children.Add(task.UI);
+                }
+            }
+            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "eintest", Progress = 60}});
+            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "zweitest", Progress = 40}});
+            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "dreitest", Progress = 20}});
+
+            Job jj = Job.CreateTestJob();
+            jj.Start();
+        }
     }
 }

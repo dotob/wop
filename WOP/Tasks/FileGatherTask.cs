@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
 using WOP.Objects;
+using WOP.TasksUI;
 
 namespace WOP.Tasks {
     public class FileGatherTask : ITask {
@@ -30,6 +31,8 @@ namespace WOP.Tasks {
             bgWorker.DoWork += bgWorker_DoWork;
             DeleteSource = false;
             FilePattern = "*";
+            UI = new FileGatherTaskUI();
+            UI.DataContext = this;
         }
 
         public string SourceDirectory { get; set; }

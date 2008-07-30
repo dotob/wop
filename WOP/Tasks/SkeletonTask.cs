@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Controls;
 using WOP.Objects;
 
@@ -23,9 +24,9 @@ namespace WOP.Tasks {
             Parent = parent;
         }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public UserControl UI { get; private set; }
+        public UserControl UI { get; set; }
 
         #region ITask Members
 
@@ -97,6 +98,7 @@ namespace WOP.Tasks {
                     NextTask.WorkItems.Enqueue(iwi);
                 } catch (InvalidOperationException iex) {
                     // notting doto here...queue seems empty
+                    Thread.Sleep(2000);
                 }
             }
         }

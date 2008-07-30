@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="WOP.JobListTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border Style="{DynamicResource myBorder}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" ></ColumnDefinition>
+                <ColumnDefinition Width="*" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*" ></RowDefinition>
+                <RowDefinition Height="*" ></RowDefinition>
+                <RowDefinition Height="*" ></RowDefinition>
+                <RowDefinition Height="*" ></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{DynamicResource bigTextLabel}" Grid.Column="0" Grid.Row="0" Text="Name:" />
+            <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Name}" />
+
+            <TextBlock Style="{DynamicResource bigTextLabel}" Grid.Column="0" Grid.Row="1" Text="Bilderzahl:" />
+            <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="1" Text="{Binding Path=WorkItems.Count}" />
+
+            <ProgressBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding Path=Progress}" Minimum="0" Maximum="100" FlowDirection="LeftToRight" MinHeight="20" Margin="2"/> 
+            
+            <Button Grid.Column="0" Grid.Row="3" Content="Start"/>
+            <Button Grid.Column="1" Grid.Row="3" Content="Stop"/>
+            
+        </Grid>
+    </Border>
+</UserControl>

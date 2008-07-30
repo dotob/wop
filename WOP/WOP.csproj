@@ -75,13 +75,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="JobListTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\BlackThemeStyles.xaml">
+    <Page Include="Styles\BlackTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\WhiteTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DefaultStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TasksUI\GEOTagTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="TasksUI\FileRenamerTaskUI.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +126,9 @@
     </Compile>
     <Compile Include="AboutWOP.Designer.cs">
     </Compile>
+    <Compile Include="JobListTemplate.xaml.cs">
+      <DependentUpon>JobListTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -130,12 +149,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TasksUI\GEOTagTaskUI.xaml.cs">
+      <DependentUpon>GEOTagTaskUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TasksUI\FileRenamerTaskUI.xaml.cs">
       <DependentUpon>FileRenamerTaskUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="TasksUI\FileGatherTaskUI.xaml.cs">
       <DependentUpon>FileGatherTaskUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\GEOTagTask.cs" />
     <Compile Include="Tasks\ImageShrinkTask.cs" />
     <Compile Include="Tasks\SkeletonTask.cs" />
     <Compile Include="Tasks\FileGatherTask.cs" />

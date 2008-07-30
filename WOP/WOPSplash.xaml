@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="wop splash" Height="206" Width="331" ResizeMode="NoResize" WindowStyle="None" Opacity="1" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Background="Transparent">
     <Grid Background="Transparent">
-        <Rectangle Fill="#FF202020" Stroke="#00000000" RadiusY="12.5" RadiusX="12.5" Margin="0,0,8,8">
+        <Rectangle Fill="{DynamicResource backColorDark}" Stroke="#00000000" RadiusY="12.5" RadiusX="12.5" Margin="0,0,8,8">
             <Rectangle.BitmapEffect>
                 <DropShadowBitmapEffect/>
             </Rectangle.BitmapEffect>

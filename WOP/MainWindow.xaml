@@ -23,12 +23,12 @@
             </MenuItem>
         </Menu>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" x:Name="m_sp_tasks">
-            <TasksUI:FileGatherTaskUI HorizontalAlignment="Stretch"></TasksUI:FileGatherTaskUI>
-            <TasksUI:FileRenamerTaskUI HorizontalAlignment="Stretch"></TasksUI:FileRenamerTaskUI>
+        <StackPanel Grid.Row="1" Grid.Column="0" x:Name="m_sp_tasks" CanVerticallyScroll="True">
+            <!--<TasksUI:FileGatherTaskUI HorizontalAlignment="Stretch"></TasksUI:FileGatherTaskUI>
+            <TasksUI:FileRenamerTaskUI HorizontalAlignment="Stretch"></TasksUI:FileRenamerTaskUI>-->
         </StackPanel>
         <GridSplitter Grid.Row="1" Grid.Column="1" d:LayoutOverrides="GridBox"/>
-        <ListBox Grid.Row="1" Grid.Column="2" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" x:Name="m_lb_tasks"/>
+        <ListBox Grid.Row="1" Grid.Column="2" IsSynchronizedWithCurrentItem="True" VerticalAlignment="Stretch" x:Name="m_lb_jobs" HorizontalContentAlignment="Stretch"/>
 
         <StatusBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="25" x:Name="statusBar1" VerticalAlignment="Bottom">
             <StatusBarItem Content="eine info...."/>

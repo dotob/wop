@@ -3,7 +3,9 @@ using WOP.Objects;
 
 namespace WOP.Tasks {
     public class Job {
-        private List<ITask> TasksList { get; set; }
+        public string Name { get; set; }
+        public int Progress { get; set; }
+        public List<ITask> TasksList { get; set; }
         public List<IWorkItem> WorkItems { get; set; }
 
         public void Start()
@@ -59,9 +61,9 @@ namespace WOP.Tasks {
 
             var frt = new FileRenamerTask();
             frt.RenamePattern = "bastiTest_{0}";
-            //j.AddTask(frt);
+            j.AddTask(frt);
 
-            //j.AddTask(new ImageShrinkTask());
+            j.AddTask(new ImageShrinkTask());
 
             return j;
         }
