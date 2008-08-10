@@ -19,11 +19,6 @@ namespace WOP.Tasks {
             bgWorker.DoWork += bgWorker_DoWork;
         }
 
-        protected SkeletonTask(Job parent)
-        {
-            Parent = parent;
-        }
-
         public string Name { get; set; }
 
         public UserControl UI { get; set; }
@@ -40,6 +35,7 @@ namespace WOP.Tasks {
         public event EventHandler<TaskEventArgs> WIProcessed;
 
         public ITask NextTask { get; set; }
+        public bool IsEnabled { get; set; }
 
         string ITask.Name
         {
@@ -74,32 +70,45 @@ namespace WOP.Tasks {
             // infinite loop
             while (true) {
                 try {
-                    // get item from queue and process it
-                    IWorkItem wi = workItems.Dequeue();
-                    if (wi == null) {
-                        continue;
-                    }
-                    // check if we want to stop
-                    if (wi is StopWI) {
-                        // stop
+                    if(bgWorker.CancellationPending) {
                         return;
                     }
-                    if (!(wi is ImageWI)) {
-                        continue;
+                    // get item from queue and process it
+                    lock (workItems) {
+                        IWorkItem wi = workItems.Dequeue();
+                        if (wi == null) {
+                            continue;
+                        }
+                        if (wi is ImageWI) {
+                            var iwi = (ImageWI) wi;
+                            Process(iwi);
+                        }
+                        // tell job (or anyone else) we have finised process
+                        throwProcessedEvent(wi);
+                        // add procedd wi into next tasks queue
+                        if (Position != TASKPOS.LAST && NextTask != null) {
+                            lock (NextTask.WorkItems) {
+                                NextTask.WorkItems.Enqueue(wi);
+                            }
+                        }
+                        // check if we want to stop
+                        if (wi is StopWI) {
+                            // stop
+                            return;
+                        }
                     }
-                    var iwi = (ImageWI) wi;
-                    Process(iwi);
-                    // tell job (or anyone else) we have finised process
-                    EventHandler<TaskEventArgs> temp = WIProcessed;
-                    if (temp != null) {
-                        temp(this, new TaskEventArgs(this, iwi));
-                    }
-                    // add procedd wi into next tasks queue
-                    NextTask.WorkItems.Enqueue(iwi);
                 } catch (InvalidOperationException iex) {
                     // notting doto here...queue seems empty
                     Thread.Sleep(2000);
                 }
+            }
+        }
+
+        private void throwProcessedEvent(IWorkItem iwi)
+        {
+            EventHandler<TaskEventArgs> temp = WIProcessed;
+            if (temp != null) {
+                temp(this, new TaskEventArgs(this, iwi));
             }
         }
 

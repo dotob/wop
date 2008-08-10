@@ -29,5 +29,13 @@ namespace WOP.Objects {
         public DateTime FinishedWork { get; set; }
 
         #endregion
+
+        public override string ToString()
+        {
+            if (OriginalFile != null && OriginalFile != null) {
+                return string.Format("was: {0}  ; is: {1}", OriginalFile.FullName, CurrentFile.FullName);
+            }
+            return base.ToString();
+        }
     }
 }

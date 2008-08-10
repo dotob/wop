@@ -95,6 +95,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TasksUI\FTPTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TasksUI\ImageShrinkTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TasksUI\GEOTagTaskUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,6 +157,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TasksUI\FTPTaskUI.xaml.cs">
+      <DependentUpon>FTPTaskUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TasksUI\ImageShrinkTaskUI.xaml.cs">
+      <DependentUpon>ImageShrinkTaskUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TasksUI\GEOTagTaskUI.xaml.cs">
       <DependentUpon>GEOTagTaskUI.xaml</DependentUpon>
     </Compile>
@@ -185,6 +199,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="wop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="wop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FTP\ftp.csproj">
+      <Project>{4BB7AD11-C2D2-40CA-A98C-0BBED0621065}</Project>
+      <Name>ftp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

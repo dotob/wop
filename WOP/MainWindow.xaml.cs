@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using WOP.Tasks;
@@ -10,6 +11,7 @@ namespace WOP {
     public partial class MainWindow : Window {
         private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
         private readonly WOPSplash wops = new WOPSplash();
+        private Job theJob;
         private int til = 50;
 
         public MainWindow()
@@ -32,14 +34,17 @@ namespace WOP {
 
         private void bgSplasher_DoWork(object sender, DoWorkEventArgs e)
         {
-            for (int i = 0; i < til; i++) {
-                bgSplasher.ReportProgress(i);
-                Thread.Sleep(10);
-            }
-            Thread.Sleep(2000);
-            for (int i = til/2; i >= 0; i--) {
-                bgSplasher.ReportProgress(i*2);
-                Thread.Sleep(1);
+            bool withSplash = false;
+            if (withSplash) {
+                for (int i = 0; i < til; i++) {
+                    bgSplasher.ReportProgress(i);
+                    Thread.Sleep(10);
+                }
+                Thread.Sleep(2000);
+                for (int i = til/2; i >= 0; i--) {
+                    bgSplasher.ReportProgress(i*2);
+                    Thread.Sleep(1);
+                }
             }
         }
 
@@ -51,24 +56,39 @@ namespace WOP {
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            createDefaultJob();
+            addJobUIs();
+        }
+
+        private void createDefaultJob()
+        {
             // configure tasks
-            var mainJob = new Job();
-            mainJob.Name = "eintest";
-            mainJob.AddTask(new FileGatherTask());
-            mainJob.AddTask(new FileRenamerTask());
-            mainJob.AddTask(new ImageShrinkTask());
-            mainJob.AddTask(new GEOTagTask());
-            foreach (ITask task in mainJob.TasksList) {
+            theJob = new Job();
+            theJob.Name = "my first job";
+            theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true});
+            theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
+            theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
+            theJob.AddTask(new GEOTagTask {IsEnabled = false});
+        }
+
+        private void addJobUIs()
+        {
+            foreach (ITask task in theJob.TasksList) {
                 if (task.UI != null) {
                     m_sp_tasks.Children.Add(task.UI);
                 }
             }
-            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "eintest", Progress = 60}});
-            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "zweitest", Progress = 40}});
-            m_lb_jobs.Items.Add(new JobListTemplate {DataContext = new Job {Name = "dreitest", Progress = 20}});
+        }
 
-            Job jj = Job.CreateTestJob();
-            jj.Start();
+        private void jj_JobFinished(object sender, EventArgs e)
+        {
+            MessageBox.Show("job finished");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            m_lb_jobs.Items.Add(theJob);
+            createDefaultJob();
         }
     }
 }

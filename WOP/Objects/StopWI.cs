@@ -45,5 +45,10 @@ namespace WOP.Objects {
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return "stop me";
+        }
     }
 }

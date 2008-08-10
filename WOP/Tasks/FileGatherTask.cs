@@ -20,8 +20,7 @@ namespace WOP.Tasks {
         #endregion
 
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
-        // TODO: is this queue thread save??
-        private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
+        private Queue<ImageWI> workItems = new Queue<ImageWI>();
 
         public FileGatherTask()
         {
@@ -40,6 +39,7 @@ namespace WOP.Tasks {
         public string FilePattern { get; set; }
         public bool RecurseDirectories { get; set; }
         public bool DeleteSource { get; set; }
+        public bool IsEnabled { get; set; }
         public SORTSTYLE SortOrder { get; set; }
 
         #region ITask Members
@@ -47,6 +47,7 @@ namespace WOP.Tasks {
         public Queue<IWorkItem> WorkItems { get; private set; }
         public ITask NextTask { get; set; }
         public string Name { get; set; }
+
         public UserControl UI { get; set; }
         public Job Parent { get; set; }
         public TASKPOS Position { get; set; }
@@ -69,68 +70,82 @@ namespace WOP.Tasks {
 
         public void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            GatherFiles(this);
+            gatherFiles();
+            copyItems();
         }
 
-        public static void Test()
+        private void gatherFiles()
         {
-            var fgt = new FileGatherTask();
-            fgt.SourceDirectory = @"..\..\..\IM\pix";
-            fgt.TargetDirectory = @"c:\tmp";
-            fgt.SortOrder = SORTSTYLE.FILENAME;
-            fgt.RecurseDirectories = true;
-            fgt.FilePattern = "*jpg";
-            GatherFiles(fgt);
-        }
+            if (workItems == null) {
+                // go and gather files 
+                string[] file = Directory.GetFiles(SourceDirectory, FilePattern, RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                // create workitems
+                int i = 0;
 
-        private static void GatherFiles(FileGatherTask gatherTask)
-        {
-            // go and gather files 
-            string[] file = Directory.GetFiles(gatherTask.SourceDirectory, gatherTask.FilePattern, gatherTask.RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-            // create workitems
-            int i = 0;
-            var allWI = new List<ImageWI>();
-            foreach (string s in file) {
-                var fi = new FileInfo(s);
-                var iwi = new ImageWI(fi);
-                iwi.ProcessPosition = i++;
-                allWI.Add(iwi);
-            }
-            // sort them
-            switch (gatherTask.SortOrder) {
-                case SORTSTYLE.NONE:
-                    break;
-                case SORTSTYLE.FILENAME:
-                    allWI.Sort(CompareByFileName);
-                    break;
-                case SORTSTYLE.DATEFILE:
-                    allWI.Sort(CompareByFileDate);
-                    break;
-                case SORTSTYLE.DATEEXIF:
-                    allWI.Sort(CompareByExifDate);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            // copy them
-            foreach (ImageWI wi in allWI) {
-                try {
-                    File.Copy(wi.CurrentFile.FullName, Path.Combine(gatherTask.TargetDirectory, wi.OriginalFile.Name), true);
-                    // do we want to delete?
-                    if (gatherTask.DeleteSource) {
-                        File.Delete(wi.OriginalFile.FullName);
-                    }
-                    // hand them over to next task
-                    if (gatherTask.NextTask != null) {
-                        gatherTask.NextTask.WorkItems.Enqueue(wi);
-                    }
-                } catch (Exception ex) {
-                    ex.ToString();
+                var allWI = new List<ImageWI>();
+                foreach (string s in file) {
+                    var fi = new FileInfo(s);
+                    allWI.Add(new ImageWI(fi) {ProcessPosition = i++});
+                }
+                // sort them
+                switch (SortOrder) {
+                    case SORTSTYLE.NONE:
+                        break;
+                    case SORTSTYLE.FILENAME:
+                        allWI.Sort(CompareByFileName);
+                        break;
+                    case SORTSTYLE.DATEFILE:
+                        allWI.Sort(CompareByFileDate);
+                        break;
+                    case SORTSTYLE.DATEEXIF:
+                        allWI.Sort(CompareByExifDate);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                // copy them to queue
+                workItems = new Queue<ImageWI>();
+                foreach (ImageWI wi in allWI) {
+                    workItems.Enqueue(wi);
                 }
             }
-            // remember the stopwi item at the end
-            if (gatherTask.NextTask != null) {
-                gatherTask.NextTask.WorkItems.Enqueue(new StopWI());
+        }
+
+        private void copyItems()
+        {
+            foreach (ImageWI wi in workItems) {
+                if (!bgWorker.CancellationPending) {
+                    try {
+                        string nuFile = Path.Combine(TargetDirectory, wi.OriginalFile.Name);
+                        File.Copy(wi.CurrentFile.FullName, nuFile, true);
+                        // set currentfile info
+                        wi.CurrentFile = new FileInfo(nuFile);
+                        // do we want to delete?
+                        if (DeleteSource) {
+                            File.Delete(wi.OriginalFile.FullName);
+                        }
+                        // hand them over to next task
+                        if (NextTask != null) {
+                            lock (NextTask.WorkItems) {
+                                EventHandler<TaskEventArgs> temp = WIProcessed;
+                                if (temp != null) {
+                                    temp(this, new TaskEventArgs(this, wi));
+                                }
+                                NextTask.WorkItems.Enqueue(wi);
+                            }
+                        }
+                    } catch (Exception ex) {
+                        ex.ToString();
+                    }
+                }
+            }
+            if (!bgWorker.CancellationPending) {
+                // remember the stopwi item at the end
+                if (NextTask != null) {
+                    lock (NextTask.WorkItems) {
+                        NextTask.WorkItems.Enqueue(new StopWI());
+                    }
+                }
             }
         }
 

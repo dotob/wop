@@ -26,6 +26,7 @@ namespace WOP.Tasks {
         ITask NextTask { get; set; }
         string Name { get; set; }
         UserControl UI { get; set; }
+        bool IsEnabled { get; set; }
         Job Parent { get; set; }
         TASKPOS Position { get; set; }
         Dictionary<ITask, string> TaskInfos { get; set; }

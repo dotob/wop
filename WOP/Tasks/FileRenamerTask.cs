@@ -15,6 +15,9 @@ namespace WOP.Tasks {
         public override bool Process(ImageWI iwi)
         {
             string nuName = Path.Combine(iwi.CurrentFile.DirectoryName ?? string.Empty, RenamedString(iwi));
+            if (File.Exists(nuName)) {
+                File.Delete(nuName);
+            }
             File.Move(iwi.CurrentFile.FullName, nuName);
             // save current file location
             iwi.CurrentFile = new FileInfo(nuName);
@@ -23,7 +26,7 @@ namespace WOP.Tasks {
 
         private string RenamedString(IWorkItem iwi)
         {
-            return string.Format(RenamePattern, iwi.ProcessPosition, iwi.SortedPosition);
+            return string.Format(RenamePattern, iwi.ProcessPosition, iwi.SortedPosition) + iwi.OriginalFile.Extension;
         }
     }
 }

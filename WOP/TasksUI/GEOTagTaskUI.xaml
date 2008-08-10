@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="WOP.TasksUI.GEOTagTaskUI"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Expander Header="GEO-Tag-Task" IsExpanded="True">
+    <Expander Header="GEO-Tag-Task" IsExpanded="{Binding Path=IsEnabled}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ></ColumnDefinition>

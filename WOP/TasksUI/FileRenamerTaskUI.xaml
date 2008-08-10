@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="WOP.TasksUI.FileRenamerTaskUI"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Expander Header="Renamer-Task" IsExpanded="True">
+    <Expander Header="Umbennenen" IsExpanded="{Binding Path=IsEnabled}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ></ColumnDefinition>
@@ -11,7 +11,7 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto" ></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Text="Benennungsmuster:"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Benennungsmuster (ohne Dateiendung!):"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center"/>
 
             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">

@@ -23,8 +23,8 @@
 
             <ProgressBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding Path=Progress}" Minimum="0" Maximum="100" FlowDirection="LeftToRight" MinHeight="20" Margin="2"/> 
             
-            <Button Grid.Column="0" Grid.Row="3" Content="Start"/>
-            <Button Grid.Column="1" Grid.Row="3" Content="Stop"/>
+            <Button Grid.Column="0" Grid.Row="3" Content="Start" Click="StartButton_Click" />
+            <Button Grid.Column="1" Grid.Row="3" Content="Pause" Click="PauseButton_Click" />
             
         </Grid>
     </Border>

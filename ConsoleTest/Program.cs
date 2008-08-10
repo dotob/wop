@@ -14,8 +14,7 @@ namespace ConsoleTest
 //            Job j = Job.CreateTestJob();
 //            j.Start();
  
-            Thread t = new Thread(FileGatherTask.Test);
-            t.Start();
+
         }
     }
 }
