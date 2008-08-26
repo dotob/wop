@@ -20,7 +20,7 @@ namespace WOP.Tasks {
         #endregion
 
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
-        private Queue<ImageWI> workItems = new Queue<ImageWI>();
+        private Queue<ImageWI> workItems;
 
         public FileGatherTask()
         {
@@ -78,12 +78,13 @@ namespace WOP.Tasks {
         {
             if (workItems == null) {
                 // go and gather files 
-                string[] file = Directory.GetFiles(SourceDirectory, FilePattern, RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                string[] files = Directory.GetFiles(SourceDirectory, FilePattern, RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+                // tell job count
+                Parent.WorkItemCount = files.Length;
                 // create workitems
                 int i = 0;
-
                 var allWI = new List<ImageWI>();
-                foreach (string s in file) {
+                foreach (string s in files) {
                     var fi = new FileInfo(s);
                     allWI.Add(new ImageWI(fi) {ProcessPosition = i++});
                 }

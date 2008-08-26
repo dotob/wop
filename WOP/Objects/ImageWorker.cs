@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using Fireball.Drawing;
+using FreeImageAPI;
 
 namespace WOP.Objects {
     /// <summary>
@@ -28,9 +28,24 @@ namespace WOP.Objects {
 
         public static void ShrinkImageFI(FileInfo fileIn, FileInfo fileOut, Size nuSize)
         {
-            var fi = new FreeImage(fileIn.FullName);
-            fi.Rescale(nuSize.Width, nuSize.Height);
-            fi.Save(fileOut.FullName);
+            ShrinkImageFI(fileIn, fileOut, nuSize, FREE_IMAGE_FORMAT.FIF_JPEG, FREE_IMAGE_FILTER.FILTER_BOX, FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD);
+        }
+
+        public static void ShrinkImageFI(FileInfo fileIn, FileInfo fileOut, Size nuSize, FREE_IMAGE_FORMAT saveFormat, FREE_IMAGE_FILTER filter, FREE_IMAGE_SAVE_FLAGS savequality)
+        {
+            FIBITMAP dib = 0;
+            dib = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, fileIn.FullName, FREE_IMAGE_LOAD_FLAGS.JPEG_FAST);
+            FIBITMAP dibsmall = FreeImage.Rescale(dib, nuSize.Width, nuSize.Height, filter);
+            FreeImage.Save(FREE_IMAGE_FORMAT.FIF_JPEG, dibsmall, fileOut.FullName, savequality);
+            // The bitmap was saved to disk but is still allocated in memory, so the handle has to be freed.
+            if (!dib.IsNull)
+                FreeImage.Unload(dib);
+            if (!dibsmall.IsNull)
+                FreeImage.Unload(dibsmall);
+
+            // Make sure to set the handle to null so that it is clear that the handle is not pointing to a bitmap.
+            dib = 0;
+            dibsmall = 0;
         }
     }
 }

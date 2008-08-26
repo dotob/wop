@@ -14,15 +14,16 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
+            
             <TextBlock Text="Jobname:"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="jobName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="jobName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Path=Parent.Name}" VerticalAlignment="Center"/>
             
             <TextBlock Text="Quellverzeichnis:"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center"/>
+            <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="1" Text="{Binding Path=SourceDirectory}"  VerticalAlignment="Center"/>
             <Button Grid.Column="2" Grid.Row="1" Content="Suchen" />
 
             <TextBlock Text="Zielverzeichnis:"  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="targetDir" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center"/>
+            <TextBox x:Name="targetDir" Grid.Column="1" Grid.Row="2" Text="{Binding Path=TargetDirectory}"  VerticalAlignment="Center"/>
             <Button Grid.Column="2" Grid.Row="2" Content="Suchen" />
 
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal">

@@ -12,7 +12,7 @@
                 <RowDefinition Height="Auto" ></RowDefinition>
             </Grid.RowDefinitions>
             <TextBlock Text="Benennungsmuster (ohne Dateiendung!):"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Center"/>
+            <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="0" Text="{Binding Path=RenamePattern}"  VerticalAlignment="Center"/>
 
             <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 %1 = Datum Datei<LineBreak/>

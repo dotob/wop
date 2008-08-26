@@ -1,28 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using WOP.Objects;
 
 namespace WOP.Tasks {
-    public class Job {
-        public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof(Job));
-        public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof(Job));
+    public class Job : INotifyPropertyChanged {
+        public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof (Job));
+        public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof (Job));
 
-        public event EventHandler JobFinished;
+        public Job()
+        {
+            IsFinishedVisible = Visibility.Hidden;
+        }
+
         public string Name { get; set; }
         public int Progress { get; set; }
         public List<ITask> TasksList { get; set; }
         public List<IWorkItem> WorkItems { get; set; }
         public bool IsProcessing { get; set; }
         public bool IsFinished { get; set; }
+        public Visibility IsFinishedVisible { get; set; }
         public bool IsPaused { get; set; }
+        public int WorkItemCount { get; set; }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        public event EventHandler JobFinished;
 
         public void Start()
         {
             if (TasksList != null) {
                 for (int i = TasksList.Count - 1; i >= 0; i--) {
-                    if (TasksList[i].IsEnabled) {
-                        TasksList[i].Start();
+                    ITask t = TasksList[i];
+                    if (t.IsEnabled) {
+                        t.Start();
                     }
                 }
             }
@@ -98,10 +115,11 @@ namespace WOP.Tasks {
         {
             // listen for first task (usually the filegatherer). so we learn all wi from him
             e.Task.Parent.WorkItems.Add(e.WorkItem);
-            if(e.WorkItem is StopWI) {
+            if (e.WorkItem is StopWI) {
+                IsFinishedVisible = Visibility.Visible;
                 // job seems finished tell it
-                EventHandler temp = this.JobFinished;
-                if(temp!=null) {
+                EventHandler temp = JobFinished;
+                if (temp != null) {
                     temp(this, EventArgs.Empty);
                 }
             }

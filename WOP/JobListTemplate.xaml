@@ -19,12 +19,14 @@
             <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="0" Text="{Binding Path=Name}" />
 
             <TextBlock Style="{DynamicResource bigTextLabel}" Grid.Column="0" Grid.Row="1" Text="Bilderzahl:" />
-            <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="1" Text="{Binding Path=WorkItems.Count}" />
+            <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="1" Text="{Binding Path=WorkItemCount}" />
 
             <ProgressBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding Path=Progress}" Minimum="0" Maximum="100" FlowDirection="LeftToRight" MinHeight="20" Margin="2"/> 
             
-            <Button Grid.Column="0" Grid.Row="3" Content="Start" Click="StartButton_Click" />
-            <Button Grid.Column="1" Grid.Row="3" Content="Pause" Click="PauseButton_Click" />
+            <TextBlock Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" FontSize="30" Foreground="Green" FontWeight="Bold" Visibility="{Binding Path=IsFinishedVisible}" >Finished</TextBlock>
+            
+            <Button Grid.Column="0" Grid.Row="4" Content="Start" Click="StartButton_Click" />
+            <Button Grid.Column="1" Grid.Row="4" Content="Pause" Click="PauseButton_Click" />
             
         </Grid>
     </Border>

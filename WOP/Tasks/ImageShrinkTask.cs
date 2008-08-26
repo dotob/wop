@@ -2,6 +2,7 @@
 using System.IO;
 using WOP.Objects;
 using WOP.TasksUI;
+using WOP.Util;
 
 namespace WOP.Tasks {
     public class ImageShrinkTask : SkeletonTask {
@@ -20,7 +21,7 @@ namespace WOP.Tasks {
 
         public override bool Process(ImageWI iwi)
         {
-            var ftmp = iwi.CurrentFile;
+            var ftmp = new FileInfo(Path.Combine(iwi.CurrentFile.DirectoryName, iwi.CurrentFile.NameWithoutExtension() + "_tmp_" + iwi.CurrentFile.Extension));
             ImageWorker.ShrinkImageFI(iwi.CurrentFile, ftmp, new Size(400, 400));
             File.Delete(iwi.CurrentFile.FullName);
             File.Move(ftmp.FullName, iwi.CurrentFile.FullName);

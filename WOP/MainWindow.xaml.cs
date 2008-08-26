@@ -65,7 +65,7 @@ namespace WOP {
             // configure tasks
             theJob = new Job();
             theJob.Name = "my first job";
-            theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true});
+            theJob.AddTask(new FileGatherTask { IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\IM\pixweniger", TargetDirectory = @"c:\tmp" });
             theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
             theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
             theJob.AddTask(new GEOTagTask {IsEnabled = false});
