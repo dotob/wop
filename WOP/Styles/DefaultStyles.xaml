@@ -23,13 +23,92 @@
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
     </Style>
 
-    <Style TargetType="Expander">
+    <!--<Style TargetType="Expander">
         <Setter Property="Background" Value="{DynamicResource backColorDark}" />
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
         <Setter Property="BorderBrush" Value="{DynamicResource borderColor}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="Padding" Value="2" />
+    </Style>-->
+
+
+    <ControlTemplate x:Key="ExpanderToggleButton" TargetType="{x:Type ToggleButton}">
+        <Border
+            Name="Border" 
+            CornerRadius="2,0,0,0"
+            Background="Transparent"
+            BorderBrush="#404040"
+            BorderThickness="0,0,1,0">
+            <Path     Name="Arrow"
+                      Fill="#404040"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="M 0 0 L 4 4 L 8 0 Z"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter TargetName="Arrow" Property="Data" Value="M 0 4 L 4 0 L 8 4 Z" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Name="ContentRow" Height="0"/>
+                        </Grid.RowDefinitions>
+                        <Border Name="Border" Grid.Row="0" Background="#E0E0E0" BorderBrush="#404040" BorderThickness="1" CornerRadius="2,2,0,0" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton  IsChecked="{Binding Path=IsExpanded,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                               OverridesDefaultStyle="True" 
+                                               Template="{StaticResource ExpanderToggleButton}" 
+                                               Background="#C0C0C0" />
+                                <ContentPresenter 
+                                               Grid.Column="1"
+                                               Margin="4" 
+                                               ContentSource="Header" 
+                                               RecognizesAccessKey="True" />
+                            </Grid>
+                        </Border>
+                        <Border Name="Content" Grid.Row="1" Background="#FFFFFF" BorderBrush="#888888" BorderThickness="1,0,1,1" CornerRadius="0,0,2,2" >
+                            <ContentPresenter Margin="0" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="ContentRow" Property="Height" Value="{Binding ElementName=Content,Path=DesiredHeight}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                            <Setter Property="Foreground" Value="#888888"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="baseTB" TargetType="TextBlock">
@@ -37,7 +116,7 @@
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
         <Setter Property="Margin" Value="2" />
     </Style>
-    
+
     <Style TargetType="TextBlock" BasedOn="{StaticResource baseTB}">
     </Style>
 
@@ -45,18 +124,18 @@
         <Setter Property="FontSize" Value="20" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-    
+
     <Style x:Key="bigTextValue" TargetType="TextBlock"  BasedOn="{StaticResource baseTB}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="HorizontalAlignment" Value="Left" />
     </Style>
-    
+
     <Style x:Key="smallTextLabel" TargetType="TextBlock"  BasedOn="{StaticResource baseTB}">
         <Setter Property="FontSize" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-    
+
     <Style x:Key="smallTextValue" TargetType="TextBlock"  BasedOn="{StaticResource baseTB}">
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="10" />
@@ -82,14 +161,14 @@
         <Setter Property="Foreground" Value="{DynamicResource fontColorDark}" />
         <Setter Property="Margin" Value="2" />
     </Style>
-    
+
     <Style x:Key="myBorder" TargetType="Border">
         <Setter Property="BorderBrush" Value="{DynamicResource borderColor}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="Padding" Value="2" />
     </Style>
-    
+
     <Style TargetType="ProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource backColorDark}" />
         <Setter Property="Background" Value="{DynamicResource backColorLight}" />

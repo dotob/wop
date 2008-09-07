@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FreeImageAPI;
 
 namespace WOP.Objects {
     /// <summary>
@@ -42,6 +43,17 @@ namespace WOP.Objects {
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
+        }
+
+        public FIBITMAP ImageHandle
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public void CleanUp()
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion

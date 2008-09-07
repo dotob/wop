@@ -106,6 +106,7 @@ namespace WOP.Tasks {
             frt.RenamePattern = "bastiTest_{0}";
             j.AddTask(frt);
 
+            j.AddTask(new ImageRotateTask());
             j.AddTask(new ImageShrinkTask());
 
             return j;

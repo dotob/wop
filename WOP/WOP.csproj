@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TasksUI\ImageRotateTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TasksUI\FTPTaskUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -157,6 +161,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TasksUI\ImageRotateTaskUI.xaml.cs">
+      <DependentUpon>ImageRotateTaskUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TasksUI\FTPTaskUI.xaml.cs">
       <DependentUpon>FTPTaskUI.xaml</DependentUpon>
     </Compile>
@@ -172,6 +179,7 @@
     <Compile Include="TasksUI\FileGatherTaskUI.xaml.cs">
       <DependentUpon>FileGatherTaskUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\ImageRotateTask.cs" />
     <Compile Include="Tasks\GEOTagTask.cs" />
     <Compile Include="Tasks\ImageShrinkTask.cs" />
     <Compile Include="Tasks\SkeletonTask.cs" />

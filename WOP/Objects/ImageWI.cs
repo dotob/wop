@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using FreeImageAPI;
 
 namespace WOP.Objects {
     public class ImageWI : IWorkItem {
@@ -27,6 +28,12 @@ namespace WOP.Objects {
         public DateTime CreationTime { get; set; }
 
         public DateTime FinishedWork { get; set; }
+
+        public FIBITMAP ImageHandle{ get; set; }
+        public void CleanUp()
+        {
+            
+        }
 
         #endregion
 
