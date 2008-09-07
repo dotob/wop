@@ -46,7 +46,7 @@ namespace WOP.Objects {
         private static void ShrinkImageFI(FIBITMAP dib, Size nuSize, FREE_IMAGE_FILTER filter, FileInfo fileOut, FREE_IMAGE_SAVE_FLAGS savequality)
         {
             FIBITMAP dibsmall = FreeImage.Rescale(dib, nuSize.Width, nuSize.Height, filter);
-            FreeImage.Save(FREE_IMAGE_FORMAT.FIF_JPEG, dibsmall, fileOut.FullName, savequality);
+            SaveJPGImageHandle(dib, fileOut, savequality);
             CleanUpResources(dibsmall);
         }
 

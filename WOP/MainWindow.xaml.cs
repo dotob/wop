@@ -65,18 +65,19 @@ namespace WOP {
             // configure tasks
             theJob = new Job();
             theJob.Name = "my first job";
-            theJob.AddTask(new FileGatherTask { IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\IM\pixweniger", TargetDirectory = @"c:\tmp" });
+            theJob.AddTask(new FileGatherTask { IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp" });
             theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
             theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
             theJob.AddTask(new ImageRotateTask {IsEnabled = true});
-            theJob.AddTask(new GEOTagTask {IsEnabled = false});
+            theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
+            theJob.AddTask(new GEOTagTask { IsEnabled = false });
         }
 
         private void addJobUIs()
         {
             foreach (ITask task in theJob.TasksList) {
                 if (task.UI != null) {
-                    //task.UI.Margin = new Thickness(2);
+                    task.UI.Margin = new Thickness(2);
                     m_sp_tasks.Children.Add(task.UI);
                 }
             }

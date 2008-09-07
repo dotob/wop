@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="Styles/BlackTheme.xaml"/>
                 <!--<ResourceDictionary Source="Styles/WhiteTheme.xaml"/>-->
                 <ResourceDictionary Source="Styles/DefaultStyles.xaml"/>
+                <ResourceDictionary Source="Styles/SimpleStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
