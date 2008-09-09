@@ -39,10 +39,11 @@ namespace WOP.Tasks {
         public string FilePattern { get; set; }
         public bool RecurseDirectories { get; set; }
         public bool DeleteSource { get; set; }
-        public bool IsEnabled { get; set; }
         public SORTSTYLE SortOrder { get; set; }
 
         #region ITask Members
+
+        public bool IsEnabled { get; set; }
 
         public Queue<IWorkItem> WorkItems { get; private set; }
         public ITask NextTask { get; set; }
@@ -152,16 +153,16 @@ namespace WOP.Tasks {
 
         public static int CompareByFileDate(ImageWI a, ImageWI b)
         {
-            if (a != null && b != null) {
-                return a.FileDate.CompareTo(b.FileDate);
+            if (a != null && b != null && a.FileDate != null && b.FileDate != null) {
+                return ((DateTime) a.FileDate).CompareTo((DateTime) b.FileDate);
             }
             return 0;
         }
 
         public static int CompareByExifDate(ImageWI a, ImageWI b)
         {
-            if (a != null && b != null) {
-                return a.ExifDate.CompareTo(b.ExifDate);
+            if (a != null && b != null && a.ExifDate != null && b.ExifDate != null) {
+                return ((DateTime) a.ExifDate).CompareTo((DateTime) b.ExifDate);
             }
             return 0;
         }

@@ -1,10 +1,38 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace WOP.Util {
     public static class Utils {
         public static string NameWithoutExtension(this FileInfo fi)
         {
             return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+        }
+
+        public static string AugmentFilename(this FileInfo fi, string augmentWith)
+        {
+            return Path.Combine(fi.DirectoryName, string.Format("{0}{1}{2}", fi.Name, augmentWith, fi.Extension));
+        }
+
+        public static FileInfo GetFileFromDialog(string initialDir)
+        {
+            FileInfo fi = null;
+            var ofd = new OpenFileDialog();
+            ofd.InitialDirectory = initialDir;
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                fi = new FileInfo(ofd.FileName);
+            }
+            return fi;
+        }
+
+        public static BogenMass ConvertToBogenMass(double inDegrees)
+        {
+            BogenMass bm = new BogenMass();
+            bm.Grad = (byte)Math.Truncate(inDegrees);
+            bm.Minuten = (byte)((inDegrees-bm.Grad)*60);
+            bm.Sekunden = ((inDegrees-bm.Grad)*60-bm.Minuten)*60;
+            bm.Plus = inDegrees >= 0;
+            return bm;
         }
     }
 }

@@ -1,27 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WOP.Tasks;
 
-namespace WOP.TasksUI
-{
+namespace WOP.TasksUI {
     /// <summary>
     /// Interaction logic for GEOTagTaskUI.xaml
     /// </summary>
-    public partial class GEOTagTaskUI : UserControl
-    {
+    public partial class GEOTagTaskUI : UserControl {
         public GEOTagTaskUI()
         {
             InitializeComponent();
+        }
+
+        private void addFile_Click(object sender, RoutedEventArgs e)
+        {
+            var task = DataContext as GEOTagTask;
+            if (task != null) {
+                task.GPXFiles.Add(new FileInfo(gpxFile.Text));
+            }
+        }
+
+        private void delFile_Click(object sender, RoutedEventArgs e)
+        {
+            var task = DataContext as GEOTagTask;
+            if (task != null) {
+                var s = gpxFileList.SelectedItem as FileInfo;
+                if (s != null) {
+                    task.GPXFiles.Remove(s);
+                }
+            }
+        }
+
+        private void browseFile_Click(object sender, RoutedEventArgs e)
+        {
+            gpxFile.Text = Util.Utils.GetFileFromDialog(".").FullName;
         }
     }
 }

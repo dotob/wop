@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="byHand" version="1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <wpt lat="39.921055008" lon="3.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort1</name>
+  </wpt>
+  <wpt lat="41" lon="4">
+    <ele>12</ele>
+    <time>2008-09-01T00:00:00Z</time>
+    <name>before</name>
+  </wpt>
+  <!-- image would be made here... -->
+  <wpt lat="42" lon="5">
+    <ele>13</ele>
+    <time>2008-10-01T00:00:00Z</time>
+    <name>after</name>
+  </wpt>
+  <wpt lat="42.921055008" lon="6.054223107">
+    <ele>12.863281</ele>
+    <time>2009-05-16T11:49:06Z</time>
+    <name>ort4</name>
+  </wpt>
+</gpx>

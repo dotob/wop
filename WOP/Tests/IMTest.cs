@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.IO;
 using FreeImageAPI;
-using NUnit.Framework;
+using MbUnit.Framework;
 using WOP.Objects;
 using WOP.Tasks;
 

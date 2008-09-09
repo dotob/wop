@@ -14,8 +14,8 @@ namespace WOP.Objects {
             ExifDate = fi.CreationTime;
         }
 
-        public DateTime FileDate { get; set; }
-        public DateTime ExifDate { get; set; }
+        public DateTime? FileDate { get; set; }
+        public DateTime? ExifDate { get; set; }
 
         #region IWorkItem Members
 

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using FreeImageAPI;
 using WOP.Objects;
+using WOP.Tasks;
 using WOP.Util;
 
 namespace WopConsole {
@@ -12,7 +13,25 @@ namespace WopConsole {
         {
             //SpeedTest();
             //RotateTest();
-            SetRotateInfo();
+            //SetRotateInfo();
+            //GPSTest();
+            //BogenMass bm = Utils.ConvertToBogenMass(51.2345);
+            TestWriteGPS();
+        }
+
+        private static void TestWriteGPS()
+        {
+            ImageWI iwi = new ImageWI(new FileInfo(@"..\..\..\testdata\gps\pic.jpg"));
+            // tweak date to match the on in gpx file
+            iwi.ExifDate = DateTime.Parse("01.09.2008");
+            var wpl = GEOTagTask.initGPXFiles(new List<FileInfo> { new FileInfo(@"..\..\..\testdata\gps\testdata.gpx") });
+            var wp = GEOTagTask.findWaypoint4Date(iwi.ExifDate, wpl);
+            ImageWorker.WriteGPSDateIntoImage(iwi.CurrentFile, new FileInfo(iwi.CurrentFile.AugmentFilename("_withgps")), wp);
+        }
+
+        private static void GPSTest()
+        {
+            var wpl =  GEOTagTask.initGPXFiles(new List<FileInfo> { new FileInfo(@"..\..\..\testdata\gps\testdata.gpx") });
         }
 
         private static void RotateTest()
@@ -30,7 +49,7 @@ namespace WopConsole {
                 FileInfo fi = new FileInfo(s);
                 FIBITMAP dib = ImageWorker.GetJPGImageHandle(fi);
                 ImageWorker.SetRotateInfo(dib, 8);
-                ImageWorker.SaveJPGImageHandle(dib, new FileInfo(Path.Combine(fi.DirectoryName, fi.NameWithoutExtension() + "_rotinfo" + fi.Extension)));
+                ImageWorker.SaveJPGImageHandle(dib, new FileInfo(fi.AugmentFilename("_rotinfo")));
             }
         }
 

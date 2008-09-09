@@ -21,7 +21,7 @@ namespace WOP.Tasks {
 
         public override bool Process(ImageWI iwi)
         {
-            var ftmp = new FileInfo(Path.Combine(iwi.CurrentFile.DirectoryName, iwi.CurrentFile.NameWithoutExtension() + "_tmp_" + iwi.CurrentFile.Extension));
+            var ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename("_tmp_"));
             ImageWorker.ShrinkImageFI(iwi.CurrentFile, ftmp, new Size(400, 400));
             File.Delete(iwi.CurrentFile.FullName);
             File.Move(ftmp.FullName, iwi.CurrentFile.FullName);

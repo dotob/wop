@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="byHand" version="1.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <wpt lat="39.921055008" lon="3.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort1</name>
+  </wpt>
+  <wpt lat="40.921055008" lon="4.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort2</name>
+  </wpt>
+  <wpt lat="41.921055008" lon="5.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort3</name>
+  </wpt>
+  <wpt lat="42.921055008" lon="6.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort4</name>
+  </wpt>
+  <wpt lat="43.921055008" lon="7.054223107">
+    <ele>12.863281</ele>
+    <time>2005-05-16T11:49:06Z</time>
+    <name>ort5</name>
+  </wpt>
+</gpx>
