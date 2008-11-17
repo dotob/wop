@@ -3,9 +3,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Media;
 using FreeImageAPI;
 using FreeImageAPI.Metadata;
 using WOP.Util;
+using ImageMetadata=FreeImageAPI.Metadata.ImageMetadata;
 
 namespace WOP.Objects {
     /// <summary>
