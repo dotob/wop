@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
@@ -30,6 +31,8 @@ namespace WOP.Tasks {
             bgWorker.DoWork += bgWorker_DoWork;
             DeleteSource = false;
             FilePattern = "*";
+            SortStyles = new ObservableCollection<SORTSTYLE> { SORTSTYLE.NONE, SORTSTYLE.FILENAME, SORTSTYLE.DATEFILE, SORTSTYLE.DATEEXIF};
+
             UI = new FileGatherTaskUI();
             UI.DataContext = this;
         }
@@ -40,6 +43,7 @@ namespace WOP.Tasks {
         public bool RecurseDirectories { get; set; }
         public bool DeleteSource { get; set; }
         public SORTSTYLE SortOrder { get; set; }
+        public ObservableCollection<SORTSTYLE> SortStyles { get; set; }
 
         #region ITask Members
 

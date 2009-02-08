@@ -34,6 +34,8 @@
                 <CheckBox Content="Quelldateien löschen" VerticalAlignment="Center" Margin="2, 2, 15, 2"/>
                 <TextBlock Text="Dateimuster:"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
                 <TextBox x:Name="filePattern" VerticalAlignment="Center" Width="80"/>
+                <TextBlock Text="Sortierung:"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
+                <ComboBox ItemsSource="{Binding SortStyles}" SelectedItem="{Binding SortOrder}"/>
             </StackPanel> 
         </Grid>
     </Expander>
