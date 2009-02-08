@@ -25,6 +25,18 @@ namespace WOP.Util {
             return fi;
         }
 
+        public static DirectoryInfo GetDirFromDialog(string initialDir)
+        {
+            DirectoryInfo di = new DirectoryInfo(initialDir);
+            var ofd = new FolderBrowserDialog();
+            ofd.SelectedPath = initialDir;
+            ofd.ShowNewFolderButton = true;
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                di = new DirectoryInfo(ofd.SelectedPath);
+            }
+            return di;
+        }
+
         public static BogenMass ConvertToBogenMass(double inDegrees)
         {
             BogenMass bm = new BogenMass();

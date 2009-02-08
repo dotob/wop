@@ -5,7 +5,7 @@
         <Expander.Header>
             <TextBlock Text="Umbennenen" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
         </Expander.Header>
-        <Grid>
+        <Grid  Style="{StaticResource myGrid}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" ></ColumnDefinition>
                 <ColumnDefinition Width="*" ></ColumnDefinition>

@@ -69,8 +69,8 @@ namespace WOP {
             theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
             theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
             theJob.AddTask(new ImageRotateTask {IsEnabled = true});
-            theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
-            theJob.AddTask(new GEOTagTask { IsEnabled = false });
+            //theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
+            //snootheJob.AddTask(new GEOTagTask { IsEnabled = false });
         }
 
         private void addJobUIs()

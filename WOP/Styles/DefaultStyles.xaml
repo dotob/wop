@@ -2,7 +2,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:wop="clr-namespace:WOP" >
 
-    <Style TargetType="Grid">
+    <Style x:Key="myGrid" TargetType="Grid">
         <Setter Property="Background" Value="{DynamicResource backColorDark}" />
     </Style>
 
@@ -14,6 +14,11 @@
     </Style>
 
     <Style TargetType="Menu">
+        <Setter Property="Background" Value="{DynamicResource backColorDark}" />
+        <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
+    </Style>
+    
+    <Style TargetType="MenuItem">
         <Setter Property="Background" Value="{DynamicResource backColorDark}" />
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
     </Style>
@@ -32,6 +37,10 @@
         <Setter Property="Padding" Value="2" />
     </Style>-->
 
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    
     <Style x:Key="wop_tb" TargetType="TextBlock">
         <Setter Property="Background" Value="{DynamicResource backColorDark}" />
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />

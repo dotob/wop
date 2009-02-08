@@ -5,7 +5,7 @@
         <Expander.Header>
             <TextBlock Text="Drehen" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
         </Expander.Header>
-        <Grid>
+        <Grid Style="{StaticResource myGrid}">
             <StackPanel Grid.Column="0" Grid.Row="0"  Orientation="Horizontal">
                 <CheckBox x:Name="preserveOriginals" IsChecked="{Binding Path=PreserveOriginals}" Margin="0 0 10 0"  VerticalAlignment="Center">Originale behalten</CheckBox>
                 <TextBlock Text="Namen erweitern um:" IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>

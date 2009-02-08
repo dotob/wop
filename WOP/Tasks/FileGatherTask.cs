@@ -7,7 +7,7 @@ using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
-    public class FileGatherTask : ITask {
+    public class FileGatherTask : ITask, INotifyPropertyChanged {
         #region SORTSTYLE enum
 
         public enum SORTSTYLE {
@@ -43,7 +43,22 @@ namespace WOP.Tasks {
 
         #region ITask Members
 
-        public bool IsEnabled { get; set; }
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get { return this.isEnabled; }
+            set
+            {
+                if(this.isEnabled == value) {
+                    return;
+                }
+                this.isEnabled = value;
+                PropertyChangedEventHandler tmp = this.PropertyChanged;
+                if(tmp!=null) {
+                    tmp(this, new PropertyChangedEventArgs("IsEnabled"));
+                }
+            }
+        }
 
         public Queue<IWorkItem> WorkItems { get; private set; }
         public ITask NextTask { get; set; }
@@ -179,5 +194,7 @@ namespace WOP.Tasks {
         {
             return true;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

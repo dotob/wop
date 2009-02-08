@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using WOP.Objects;
 
 namespace WOP.Tasks {
-    public abstract class SkeletonTask : ITask {
+    public abstract class SkeletonTask : ITask, INotifyPropertyChanged {
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
         // TODO: is this queue thread save??
         private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
@@ -35,7 +35,24 @@ namespace WOP.Tasks {
         public event EventHandler<TaskEventArgs> WIProcessed;
 
         public ITask NextTask { get; set; }
-        public bool IsEnabled { get; set; }
+        private bool isEnabled;
+        public bool IsEnabled
+        {
+            get { return this.isEnabled; }
+            set
+            {
+                if (this.isEnabled == value)
+                {
+                    return;
+                }
+                this.isEnabled = value;
+                PropertyChangedEventHandler tmp = this.PropertyChanged;
+                if (tmp != null)
+                {
+                    tmp(this, new PropertyChangedEventArgs("IsEnabled"));
+                }
+            }
+        }
 
         string ITask.Name
         {
@@ -113,5 +130,6 @@ namespace WOP.Tasks {
         }
 
         public abstract bool Process(ImageWI iwi);
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

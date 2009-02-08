@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WOP.TasksUI
 {
@@ -22,6 +11,16 @@ namespace WOP.TasksUI
         public FileGatherTaskUI()
         {
             InitializeComponent();
+        }
+
+        private void searchTargetDir_Click(object sender, RoutedEventArgs e)
+        {
+            this.targetDir.Text = Util.Utils.GetDirFromDialog(this.targetDir.Text).FullName;
+        }
+
+        private void searchSourceDir_Click(object sender, RoutedEventArgs e)
+        {
+            this.sourceDir.Text = Util.Utils.GetDirFromDialog(this.sourceDir.Text).FullName;
         }
     }
 }

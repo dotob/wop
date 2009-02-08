@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using FreeImageAPI;
 using FreeImageAPI.Metadata;
 using WOP.Util;
@@ -30,6 +31,16 @@ namespace WOP.Objects {
             imp.WaitForExit();
             string s = imp.StandardError.ReadToEnd();
             s = imp.StandardOutput.ReadToEnd();
+        }
+
+        public static void doit()
+        {
+            //FIBITMAP dib = GetJPGImageHandle(fileIn);
+            //MemoryStream ms = new MemoryStream();
+            
+            //BitmapImage bi = new BitmapImage(new Uri("file://bla.jpg"));
+            //BitmapMetadata bm = new BitmapMetadata("jpeg");
+            
         }
 
         public static void ShrinkImageFI(FileInfo fileIn, FileInfo fileOut, Size nuSize)
