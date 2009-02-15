@@ -23,6 +23,10 @@
             <MenuItem Header="Datei" x:Name="m_mn_file">
                 <MenuItem Header="Beenden" />
             </MenuItem>
+            <MenuItem Header="Hilfe" x:Name="m_mn_themes">
+                <MenuItem Header="schwarz" x:Name="m_mn_blacktheme" IsChecked="True" IsCheckable="True" Checked="m_mn_blacktheme_Checked" />
+                <MenuItem Header="weiß" x:Name="m_mn_whitetheme" IsCheckable="True" Checked="m_mn_whitetheme_Checked" />
+            </MenuItem>            
             <MenuItem Header="Hilfe" x:Name="m_mn_help">
                 <MenuItem Header="Über wop..." x:Name="m_mn_about" />
             </MenuItem>

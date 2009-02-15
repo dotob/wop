@@ -93,5 +93,15 @@ namespace WOP {
             m_lb_jobs.Items.Add(theJob);
             createDefaultJob();
         }
+
+        private void m_mn_whitetheme_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void m_mn_blacktheme_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
