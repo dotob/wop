@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Controls;
 using WOP.Objects;
 
@@ -21,7 +22,7 @@ namespace WOP.Tasks {
         }
     }
 
-    public interface ITask {
+    public interface ITask:INotifyPropertyChanged {
         Queue<IWorkItem> WorkItems { get; }
         ITask NextTask { get; set; }
         string Name { get; set; }

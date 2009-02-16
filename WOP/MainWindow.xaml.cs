@@ -69,8 +69,8 @@ namespace WOP
       this.theJob.Name = "my first job";
       this.theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
       this.theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
-      this.theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
-      this.theJob.AddTask(new ImageRotateTask {IsEnabled = true});
+      this.theJob.AddTask(new ImageShrinkTask {IsEnabled = false, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
+      this.theJob.AddTask(new ImageRotateTask { IsEnabled = false });
       //theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
       //snootheJob.AddTask(new GEOTagTask { IsEnabled = false });
     }
@@ -93,7 +93,6 @@ namespace WOP
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       this.m_lb_jobs.Items.Add(this.theJob);
-      this.createDefaultJob();
     }
 
     private void m_mn_whitetheme_Checked(object sender, RoutedEventArgs e)
