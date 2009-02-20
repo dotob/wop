@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace WOP.TasksUI
 {
-    /// <summary>
-    /// Interaction logic for ImageShrinkTaskUI.xaml
-    /// </summary>
-    public partial class ImageRotateTaskUI : UserControl
+  /// <summary>
+  /// Interaction logic for ImageShrinkTaskUI.xaml
+  /// </summary>
+  public partial class ImageRotateTaskUI : UserControl
+  {
+    public ImageRotateTaskUI()
     {
-        public ImageRotateTaskUI()
-        {
-            InitializeComponent();
-        }
+      this.InitializeComponent();
     }
+  }
 }

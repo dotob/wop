@@ -70,7 +70,7 @@ namespace WOP
       this.theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
       this.theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
       this.theJob.AddTask(new ImageShrinkTask {IsEnabled = false, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
-      this.theJob.AddTask(new ImageRotateTask { IsEnabled = false });
+      this.theJob.AddTask(new ImageRotateTask {IsEnabled = false});
       //theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
       //snootheJob.AddTask(new GEOTagTask { IsEnabled = false });
     }

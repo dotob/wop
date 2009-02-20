@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace WOP.TasksUI
 {
-    /// <summary>
-    /// Interaction logic for FTPTaskUI.xaml
-    /// </summary>
-    public partial class FTPTaskUI : UserControl
+  /// <summary>
+  /// Interaction logic for FTPTaskUI.xaml
+  /// </summary>
+  public partial class FTPTaskUI : UserControl
+  {
+    public FTPTaskUI()
     {
-        public FTPTaskUI()
-        {
-            InitializeComponent();
-        }
+      this.InitializeComponent();
     }
+  }
 }

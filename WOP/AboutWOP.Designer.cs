@@ -2,186 +2,188 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WOP {
-    internal partial class AboutWOP {
-        /// <summary>
-        /// Erforderliche Designervariable.
-        /// </summary>
-        private IContainer components = null;
+namespace WOP
+{
+  internal partial class AboutWOP
+  {
+    /// <summary>
+    /// Erforderliche Designervariable.
+    /// </summary>
+    private IContainer components = null;
 
-        private Label labelCompanyName;
-        private Label labelCopyright;
+    private Label labelCompanyName;
+    private Label labelCopyright;
 
-        private Label labelProductName;
-        private Label labelVersion;
-        private PictureBox logoPictureBox;
-        private Button okButton;
-        private TableLayoutPanel tableLayoutPanel;
-        private TextBox textBoxDescription;
+    private Label labelProductName;
+    private Label labelVersion;
+    private PictureBox logoPictureBox;
+    private Button okButton;
+    private TableLayoutPanel tableLayoutPanel;
+    private TextBox textBoxDescription;
 
-        /// <summary>
-        /// Verwendete Ressourcen bereinigen.
-        /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null)) {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        #region Vom Windows Form-Designer generierter Code
-
-        /// <summary>
-        /// Erforderliche Methode für die Designerunterstützung.
-        /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            ComponentResourceManager resources = new ComponentResourceManager(typeof (AboutWOP));
-            tableLayoutPanel = new TableLayoutPanel();
-            logoPictureBox = new PictureBox();
-            labelProductName = new Label();
-            labelVersion = new Label();
-            labelCopyright = new Label();
-            labelCompanyName = new Label();
-            textBoxDescription = new TextBox();
-            okButton = new Button();
-            tableLayoutPanel.SuspendLayout();
-            ((ISupportInitialize) (logoPictureBox)).BeginInit();
-            SuspendLayout();
-            // 
-            // tableLayoutPanel
-            // 
-            tableLayoutPanel.ColumnCount = 2;
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
-            tableLayoutPanel.Controls.Add(logoPictureBox, 0, 0);
-            tableLayoutPanel.Controls.Add(labelProductName, 1, 0);
-            tableLayoutPanel.Controls.Add(labelVersion, 1, 1);
-            tableLayoutPanel.Controls.Add(labelCopyright, 1, 2);
-            tableLayoutPanel.Controls.Add(labelCompanyName, 1, 3);
-            tableLayoutPanel.Controls.Add(textBoxDescription, 1, 4);
-            tableLayoutPanel.Controls.Add(okButton, 1, 5);
-            tableLayoutPanel.Dock = DockStyle.Fill;
-            tableLayoutPanel.Location = new Point(9, 9);
-            tableLayoutPanel.Name = "tableLayoutPanel";
-            tableLayoutPanel.RowCount = 6;
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.Size = new Size(417, 265);
-            tableLayoutPanel.TabIndex = 0;
-            // 
-            // logoPictureBox
-            // 
-            logoPictureBox.Dock = DockStyle.Fill;
-            logoPictureBox.Image = ((Image) (resources.GetObject("logoPictureBox.Image")));
-            logoPictureBox.Location = new Point(3, 3);
-            logoPictureBox.Name = "logoPictureBox";
-            tableLayoutPanel.SetRowSpan(logoPictureBox, 6);
-            logoPictureBox.Size = new Size(131, 259);
-            logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            logoPictureBox.TabIndex = 12;
-            logoPictureBox.TabStop = false;
-            // 
-            // labelProductName
-            // 
-            labelProductName.Dock = DockStyle.Fill;
-            labelProductName.Location = new Point(143, 0);
-            labelProductName.Margin = new Padding(6, 0, 3, 0);
-            labelProductName.MaximumSize = new Size(0, 17);
-            labelProductName.Name = "labelProductName";
-            labelProductName.Size = new Size(271, 17);
-            labelProductName.TabIndex = 19;
-            labelProductName.Text = "wop";
-            labelProductName.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // labelVersion
-            // 
-            labelVersion.Dock = DockStyle.Fill;
-            labelVersion.Location = new Point(143, 26);
-            labelVersion.Margin = new Padding(6, 0, 3, 0);
-            labelVersion.MaximumSize = new Size(0, 17);
-            labelVersion.Name = "labelVersion";
-            labelVersion.Size = new Size(271, 17);
-            labelVersion.TabIndex = 0;
-            labelVersion.Text = "v0.1";
-            labelVersion.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // labelCopyright
-            // 
-            labelCopyright.Dock = DockStyle.Fill;
-            labelCopyright.Location = new Point(143, 52);
-            labelCopyright.Margin = new Padding(6, 0, 3, 0);
-            labelCopyright.MaximumSize = new Size(0, 17);
-            labelCopyright.Name = "labelCopyright";
-            labelCopyright.Size = new Size(271, 17);
-            labelCopyright.TabIndex = 21;
-            labelCopyright.Text = "dotob";
-            labelCopyright.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // labelCompanyName
-            // 
-            labelCompanyName.Dock = DockStyle.Fill;
-            labelCompanyName.Location = new Point(143, 78);
-            labelCompanyName.Margin = new Padding(6, 0, 3, 0);
-            labelCompanyName.MaximumSize = new Size(0, 17);
-            labelCompanyName.Name = "labelCompanyName";
-            labelCompanyName.Size = new Size(271, 17);
-            labelCompanyName.TabIndex = 22;
-            labelCompanyName.Text = "build 4 lichtographie and sportograph";
-            labelCompanyName.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // textBoxDescription
-            // 
-            textBoxDescription.Dock = DockStyle.Fill;
-            textBoxDescription.Location = new Point(143, 107);
-            textBoxDescription.Margin = new Padding(6, 3, 3, 3);
-            textBoxDescription.Multiline = true;
-            textBoxDescription.Name = "textBoxDescription";
-            textBoxDescription.ReadOnly = true;
-            textBoxDescription.ScrollBars = ScrollBars.Both;
-            textBoxDescription.Size = new Size(271, 126);
-            textBoxDescription.TabIndex = 23;
-            textBoxDescription.TabStop = false;
-            textBoxDescription.Text = "working on pictures is a workflow tool for processing images/pictures";
-            // 
-            // okButton
-            // 
-            okButton.Anchor = ((AnchorStyles) ((AnchorStyles.Bottom | AnchorStyles.Right)));
-            okButton.DialogResult = DialogResult.Cancel;
-            okButton.Location = new Point(339, 239);
-            okButton.Name = "okButton";
-            okButton.Size = new Size(75, 23);
-            okButton.TabIndex = 24;
-            okButton.Text = "&OK";
-            // 
-            // AboutWOP
-            // 
-            AcceptButton = okButton;
-            AutoScaleDimensions = new SizeF(6F, 13F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(435, 283);
-            Controls.Add(tableLayoutPanel);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "AboutWOP";
-            Padding = new Padding(9);
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "über wop...";
-            tableLayoutPanel.ResumeLayout(false);
-            tableLayoutPanel.PerformLayout();
-            ((ISupportInitialize) (logoPictureBox)).EndInit();
-            ResumeLayout(false);
-        }
-
-        #endregion
+    /// <summary>
+    /// Verwendete Ressourcen bereinigen.
+    /// </summary>
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing && (this.components != null)) {
+        this.components.Dispose();
+      }
+      base.Dispose(disposing);
     }
+
+    #region Vom Windows Form-Designer generierter Code
+
+    /// <summary>
+    /// Erforderliche Methode für die Designerunterstützung.
+    /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
+    /// </summary>
+    private void InitializeComponent()
+    {
+      ComponentResourceManager resources = new ComponentResourceManager(typeof(AboutWOP));
+      this.tableLayoutPanel = new TableLayoutPanel();
+      this.logoPictureBox = new PictureBox();
+      this.labelProductName = new Label();
+      this.labelVersion = new Label();
+      this.labelCopyright = new Label();
+      this.labelCompanyName = new Label();
+      this.textBoxDescription = new TextBox();
+      this.okButton = new Button();
+      this.tableLayoutPanel.SuspendLayout();
+      ((ISupportInitialize)(this.logoPictureBox)).BeginInit();
+      this.SuspendLayout();
+      // 
+      // tableLayoutPanel
+      // 
+      this.tableLayoutPanel.ColumnCount = 2;
+      this.tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33F));
+      this.tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 67F));
+      this.tableLayoutPanel.Controls.Add(this.logoPictureBox, 0, 0);
+      this.tableLayoutPanel.Controls.Add(this.labelProductName, 1, 0);
+      this.tableLayoutPanel.Controls.Add(this.labelVersion, 1, 1);
+      this.tableLayoutPanel.Controls.Add(this.labelCopyright, 1, 2);
+      this.tableLayoutPanel.Controls.Add(this.labelCompanyName, 1, 3);
+      this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 1, 4);
+      this.tableLayoutPanel.Controls.Add(this.okButton, 1, 5);
+      this.tableLayoutPanel.Dock = DockStyle.Fill;
+      this.tableLayoutPanel.Location = new Point(9, 9);
+      this.tableLayoutPanel.Name = "tableLayoutPanel";
+      this.tableLayoutPanel.RowCount = 6;
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+      this.tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+      this.tableLayoutPanel.Size = new Size(417, 265);
+      this.tableLayoutPanel.TabIndex = 0;
+      // 
+      // logoPictureBox
+      // 
+      this.logoPictureBox.Dock = DockStyle.Fill;
+      this.logoPictureBox.Image = ((Image)(resources.GetObject("logoPictureBox.Image")));
+      this.logoPictureBox.Location = new Point(3, 3);
+      this.logoPictureBox.Name = "logoPictureBox";
+      this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
+      this.logoPictureBox.Size = new Size(131, 259);
+      this.logoPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+      this.logoPictureBox.TabIndex = 12;
+      this.logoPictureBox.TabStop = false;
+      // 
+      // labelProductName
+      // 
+      this.labelProductName.Dock = DockStyle.Fill;
+      this.labelProductName.Location = new Point(143, 0);
+      this.labelProductName.Margin = new Padding(6, 0, 3, 0);
+      this.labelProductName.MaximumSize = new Size(0, 17);
+      this.labelProductName.Name = "labelProductName";
+      this.labelProductName.Size = new Size(271, 17);
+      this.labelProductName.TabIndex = 19;
+      this.labelProductName.Text = "wop";
+      this.labelProductName.TextAlign = ContentAlignment.MiddleLeft;
+      // 
+      // labelVersion
+      // 
+      this.labelVersion.Dock = DockStyle.Fill;
+      this.labelVersion.Location = new Point(143, 26);
+      this.labelVersion.Margin = new Padding(6, 0, 3, 0);
+      this.labelVersion.MaximumSize = new Size(0, 17);
+      this.labelVersion.Name = "labelVersion";
+      this.labelVersion.Size = new Size(271, 17);
+      this.labelVersion.TabIndex = 0;
+      this.labelVersion.Text = "v0.1";
+      this.labelVersion.TextAlign = ContentAlignment.MiddleLeft;
+      // 
+      // labelCopyright
+      // 
+      this.labelCopyright.Dock = DockStyle.Fill;
+      this.labelCopyright.Location = new Point(143, 52);
+      this.labelCopyright.Margin = new Padding(6, 0, 3, 0);
+      this.labelCopyright.MaximumSize = new Size(0, 17);
+      this.labelCopyright.Name = "labelCopyright";
+      this.labelCopyright.Size = new Size(271, 17);
+      this.labelCopyright.TabIndex = 21;
+      this.labelCopyright.Text = "dotob";
+      this.labelCopyright.TextAlign = ContentAlignment.MiddleLeft;
+      // 
+      // labelCompanyName
+      // 
+      this.labelCompanyName.Dock = DockStyle.Fill;
+      this.labelCompanyName.Location = new Point(143, 78);
+      this.labelCompanyName.Margin = new Padding(6, 0, 3, 0);
+      this.labelCompanyName.MaximumSize = new Size(0, 17);
+      this.labelCompanyName.Name = "labelCompanyName";
+      this.labelCompanyName.Size = new Size(271, 17);
+      this.labelCompanyName.TabIndex = 22;
+      this.labelCompanyName.Text = "build 4 lichtographie and sportograph";
+      this.labelCompanyName.TextAlign = ContentAlignment.MiddleLeft;
+      // 
+      // textBoxDescription
+      // 
+      this.textBoxDescription.Dock = DockStyle.Fill;
+      this.textBoxDescription.Location = new Point(143, 107);
+      this.textBoxDescription.Margin = new Padding(6, 3, 3, 3);
+      this.textBoxDescription.Multiline = true;
+      this.textBoxDescription.Name = "textBoxDescription";
+      this.textBoxDescription.ReadOnly = true;
+      this.textBoxDescription.ScrollBars = ScrollBars.Both;
+      this.textBoxDescription.Size = new Size(271, 126);
+      this.textBoxDescription.TabIndex = 23;
+      this.textBoxDescription.TabStop = false;
+      this.textBoxDescription.Text = "working on pictures is a workflow tool for processing images/pictures";
+      // 
+      // okButton
+      // 
+      this.okButton.Anchor = ((AnchorStyles)((AnchorStyles.Bottom | AnchorStyles.Right)));
+      this.okButton.DialogResult = DialogResult.Cancel;
+      this.okButton.Location = new Point(339, 239);
+      this.okButton.Name = "okButton";
+      this.okButton.Size = new Size(75, 23);
+      this.okButton.TabIndex = 24;
+      this.okButton.Text = "&OK";
+      // 
+      // AboutWOP
+      // 
+      this.AcceptButton = this.okButton;
+      this.AutoScaleDimensions = new SizeF(6F, 13F);
+      this.AutoScaleMode = AutoScaleMode.Font;
+      this.ClientSize = new Size(435, 283);
+      this.Controls.Add(this.tableLayoutPanel);
+      this.FormBorderStyle = FormBorderStyle.FixedDialog;
+      this.MaximizeBox = false;
+      this.MinimizeBox = false;
+      this.Name = "AboutWOP";
+      this.Padding = new Padding(9);
+      this.ShowIcon = false;
+      this.ShowInTaskbar = false;
+      this.StartPosition = FormStartPosition.CenterParent;
+      this.Text = "über wop...";
+      this.tableLayoutPanel.ResumeLayout(false);
+      this.tableLayoutPanel.PerformLayout();
+      ((ISupportInitialize)(this.logoPictureBox)).EndInit();
+      this.ResumeLayout(false);
+    }
+
+    #endregion
+  }
 }

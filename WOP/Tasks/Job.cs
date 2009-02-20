@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using NLog;
 using WOP.Objects;
 using System.Linq;
 
@@ -12,6 +13,7 @@ namespace WOP.Tasks
   {
     public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof(Job));
     public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof(Job));
+    private static Logger logger = LogManager.GetCurrentClassLogger();
     private IWorkItem lastFinishedWI;
     private int totalWorkItemCount;
 
@@ -43,6 +45,7 @@ namespace WOP.Tasks
           return;
         }
         this.lastFinishedWI = value;
+        logger.Debug("new lastfinished wi: {0}", this.lastFinishedWI.OriginalFile.Name);
         PropertyChangedEventHandler tmp = this.PropertyChanged;
         if (tmp != null) {
           tmp(this, new PropertyChangedEventArgs("LastFinishedWI"));
@@ -77,6 +80,7 @@ namespace WOP.Tasks
     public void Start()
     {
       if (this.TasksList != null) {
+        logger.Info("start job: {0}", this.Name);
         for (int i = this.TasksList.Count - 1; i >= 0; i--) {
           ITask t = this.TasksList[i];
           if (t.IsEnabled) {
@@ -89,6 +93,7 @@ namespace WOP.Tasks
     public void Pause()
     {
       if (this.TasksList != null) {
+        logger.Info("pause job: {0}", this.Name);
         foreach (ITask task in this.TasksList) {
           task.Pause();
         }
@@ -97,6 +102,8 @@ namespace WOP.Tasks
 
     public void AddTask(ITask t)
     {
+      logger.Debug("add task: {0}", t.Name);
+
       t.ParentJob = this;
 
       if (this.TasksList.Count == 0) {

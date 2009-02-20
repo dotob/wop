@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 
 namespace WOP.TasksUI
 {
-    /// <summary>
-    /// Interaction logic for FileGatherTaskUI.xaml
-    /// </summary>
-    public partial class FileRenamerTaskUI : UserControl
+  /// <summary>
+  /// Interaction logic for FileGatherTaskUI.xaml
+  /// </summary>
+  public partial class FileRenamerTaskUI : UserControl
+  {
+    public FileRenamerTaskUI()
     {
-        public FileRenamerTaskUI()
-        {
-            InitializeComponent();
-        }
+      this.InitializeComponent();
     }
+  }
 }
