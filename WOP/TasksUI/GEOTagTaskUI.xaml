@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Expander IsExpanded="{Binding Path=IsEnabled}">
         <Expander.Header>
-            <TextBlock Text="GeoTagging" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
+            <TextBlock Text="GeoTagging" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb_nobg}"/>
         </Expander.Header>
         <Grid Style="{StaticResource myGrid}">
             <Grid.ColumnDefinitions>

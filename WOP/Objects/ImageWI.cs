@@ -11,6 +11,7 @@ namespace WOP.Objects {
             CurrentFile = fi;
             // get times
             FileDate = fi.CreationTime;
+            // TODO: extract exif date
             ExifDate = fi.CreationTime;
         }
 

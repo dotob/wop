@@ -45,6 +45,12 @@
         <Setter Property="Background" Value="{DynamicResource backColorDark}" />
         <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
         <Setter Property="Margin" Value="2" />
+    </Style>   
+  
+    <Style x:Key="wop_tb_nobg" TargetType="TextBlock">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource fontColor}" />
+        <Setter Property="Margin" Value="2" />
     </Style>
 
     <Style x:Key="bigTextLabel" TargetType="TextBlock"  BasedOn="{StaticResource wop_tb}">

@@ -13,6 +13,7 @@
         <RowDefinition Height="*" ></RowDefinition>
         <RowDefinition Height="*" ></RowDefinition>
         <RowDefinition Height="*" ></RowDefinition>
+        <RowDefinition Height="*" ></RowDefinition>
       </Grid.RowDefinitions>
 
       <TextBlock Style="{DynamicResource bigTextLabel}" Grid.Column="0" Grid.Row="0" Text="Name:" />
@@ -22,11 +23,13 @@
       <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="1">
          <TextBlock.Text>
             <MultiBinding StringFormat="[{0} - {1}]">
-                <Binding Path="WorkItems.Count"></Binding>
-                <Binding Path="WorkItemCount"></Binding>
+                <Binding Path="FinishedWorkItems.Count"></Binding>
+                <Binding Path="TotalWorkItemCount"></Binding>
              </MultiBinding>
          </TextBlock.Text>
       </TextBlock>
+
+      <TextBlock Style="{DynamicResource wop_tb}" Grid.Column="0" Grid.Row="1" Text="{Binding LastFinishedWI.OriginalFile.Name}" />
 
       <ProgressBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Value="{Binding Path=Progress}" Minimum="0" Maximum="100" FlowDirection="LeftToRight" MinHeight="20" Margin="2"/>
 

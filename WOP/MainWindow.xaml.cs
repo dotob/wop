@@ -36,7 +36,7 @@ namespace WOP
 
     private void bgSplasher_DoWork(object sender, DoWorkEventArgs e)
     {
-      bool withSplash = false;
+      bool withSplash = true;
       if (withSplash) {
         for (int i = 0; i < this.til; i++) {
           this.bgSplasher.ReportProgress(i);

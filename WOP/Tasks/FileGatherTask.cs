@@ -69,7 +69,7 @@ namespace WOP.Tasks {
         public string Name { get; set; }
 
         public UserControl UI { get; set; }
-        public Job Parent { get; set; }
+        public Job ParentJob { get; set; }
         public TASKPOS Position { get; set; }
         public Dictionary<ITask, string> TaskInfos { get; set; }
 
@@ -100,7 +100,7 @@ namespace WOP.Tasks {
                 // go and gather files 
                 string[] files = Directory.GetFiles(SourceDirectory, FilePattern, RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
                 // tell job count
-                Parent.WorkItemCount = files.Length;
+                this.ParentJob.TotalWorkItemCount = files.Length;
                 // create workitems
                 int i = 0;
                 var allWI = new List<ImageWI>();

@@ -66,7 +66,7 @@ namespace WOP.Tasks {
             set { UI = value; }
         }
 
-        public Job Parent { get; set; }
+        public Job ParentJob { get; set; }
         public TASKPOS Position { get; set; }
 
         public void Start()
