@@ -24,6 +24,11 @@ namespace WOP.Objects
 
     #region IWorkItem Members
 
+    public string Name
+    {
+      get { return OriginalFile.Name; }
+    }
+
     public int ProcessPosition { get; set; }
     public int SortedPosition { get; set; }
     public FileInfo CurrentFile { get; set; }

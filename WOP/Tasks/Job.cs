@@ -17,7 +17,7 @@ namespace WOP.Tasks
     private bool isFinished;
     private Visibility isFinishedVisible;
     private bool isProcessing;
-    private IWorkItem lastFinishedWI;
+    private IWorkItem lastFinishedWI = new StartWI();
     private int progress;
     private int totalWorkItemCount;
 
@@ -99,7 +99,7 @@ namespace WOP.Tasks
           return;
         }
         this.lastFinishedWI = value;
-        logger.Debug("new lastfinished wi: {0}", this.lastFinishedWI.OriginalFile.Name);
+        logger.Debug("new lastfinished wi: {0}", this.lastFinishedWI.Name);
         this.RaisePropertyChangedEvent("LastFinishedWI");
       }
     }
@@ -238,16 +238,21 @@ namespace WOP.Tasks
 
     private void lastTaskHasProcessedWI(object sender, TaskEventArgs e)
     {
-      logger.Info("last task {0} hast processed WI: {1}", e.Task.Name, e.WorkItem.OriginalFile.Name);
+      logger.Info("last task {0} hast processed WI: {1}", e.Task.Name, e.WorkItem.Name);
 
       // filegathertask will fill workitems
       e.Task.ParentJob.GatheredWorkItems.Add(e.WorkItem);
+
       //  add wi to finisheditems list
       this.LastFinishedWI = e.WorkItem;
       this.FinishedWorkItems.Add(e.WorkItem);
+
+      // set progress
+      this.Progress = (TotalWorkItemCount / FinishedWorkItems.Count) * 100;
+
       // listen for last wi
       if (e.WorkItem is StopWI) {
-        logger.Info("catched StopWI from task {0}", e.Task.Name, e.WorkItem.OriginalFile.Name);
+        logger.Info("catched StopWI from task {0}", e.Task.Name, e.WorkItem.Name);
         this.IsFinishedVisible = Visibility.Visible;
         // job seems finished tell it
         EventHandler temp = this.JobFinished;

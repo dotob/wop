@@ -82,17 +82,17 @@ namespace WOP.Tasks
     private Size calcNewSize(ImageWI iwi)
     {
       Size oldSize = ImageWorker.GetCurrentSize(iwi);
-      logger.Debug("oldsize of image {0}:{2}", iwi.OriginalFile.Name, oldSize);
+      logger.Debug("oldsize of image {0}:{2}", iwi.Name, oldSize);
       double ratio = (double)oldSize.Width / oldSize.Height;
       Size newSize;
       if (this.AbsoluteSizing) {
         newSize = new Size(this.SizeX, (int)(this.SizeX / ratio));
-        logger.Debug("newsize (absolut) of image {0}:{2}", iwi.OriginalFile.Name, newSize);
+        logger.Debug("newsize (absolut) of image {0}:{2}", iwi.Name, newSize);
       }
       else {
         // suppose relativesizing
         newSize = new Size((int)(oldSize.Width * (this.SizePercent / 100f)), (int)(oldSize.Height * (this.SizePercent / 100f)));
-        logger.Debug("newsize (percentage) of image {0}:{2}", iwi.OriginalFile.Name, newSize);
+        logger.Debug("newsize (percentage) of image {0}:{2}", iwi.Name, newSize);
       }
       return newSize;
     }

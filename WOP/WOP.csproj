@@ -196,6 +196,7 @@
     <Compile Include="Tasks\FTPTask.cs" />
     <Compile Include="Tasks\ITask.cs" />
     <Compile Include="Tasks\Job.cs" />
+    <Compile Include="Objects\StartWI.cs" />
     <Compile Include="Util\WayPoint.cs" />
     <Compile Include="Tests\IMTest.cs" />
     <Compile Include="Util\Utils.cs" />

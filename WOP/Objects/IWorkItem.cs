@@ -6,6 +6,7 @@ namespace WOP.Objects
 {
   public interface IWorkItem
   {
+    string Name { get; }
     int ProcessPosition { get; set; }
     int SortedPosition { get; set; }
     FileInfo CurrentFile { get; set; }

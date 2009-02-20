@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
             
             <TextBlock Text="Jobname:"  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
-            <TextBox x:Name="jobName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Path=Parent.Name}" VerticalAlignment="Center"/>
+            <TextBox x:Name="jobName" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="{Binding Path=ParentJob.Name}" VerticalAlignment="Center"/>
             
             <TextBlock Text="Quellverzeichnis:"  Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{DynamicResource wop_tb}"/>
             <TextBox x:Name="sourceDir" Grid.Column="1" Grid.Row="1" Text="{Binding Path=SourceDirectory}"  VerticalAlignment="Center"/>

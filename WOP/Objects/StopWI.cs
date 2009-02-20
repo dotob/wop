@@ -11,6 +11,11 @@ namespace WOP.Objects
   {
     #region IWorkItem Members
 
+    public string Name
+    {
+      get { return "StopItem"; }
+    }
+
     public int ProcessPosition
     {
       get { throw new NotImplementedException(); }
