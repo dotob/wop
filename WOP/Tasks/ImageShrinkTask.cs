@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using WOP.Objects;
 using WOP.TasksUI;
@@ -17,7 +18,20 @@ namespace WOP.Tasks
 
     public int SizeX { get; set; }
     public int SizeY { get; set; }
-    public int SizePercent { get; set; }
+    private int sizePercent;
+    public int SizePercent
+    {
+      get { return this.sizePercent; }
+      set
+      {
+        if (this.sizePercent == value) {
+          return;
+        }
+        this.sizePercent = value;
+        this.RaisePropertyChangedEvent("SizePercent");
+      }
+    }
+
     public bool PreserveOriginals { get; set; }
     public string NameExtension { get; set; }
 

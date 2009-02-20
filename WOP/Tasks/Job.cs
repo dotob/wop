@@ -11,9 +11,9 @@ namespace WOP.Tasks
 {
   public class Job : INotifyPropertyChanged
   {
+    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof(Job));
     public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof(Job));
-    private static Logger logger = LogManager.GetCurrentClassLogger();
     private IWorkItem lastFinishedWI;
     private int totalWorkItemCount;
 
@@ -104,49 +104,55 @@ namespace WOP.Tasks
     {
       logger.Debug("add task: {0}", t.Name);
 
+      // connect to this
       t.ParentJob = this;
 
+      // set this tasks position
       if (this.TasksList.Count == 0) {
         t.Position = TASKPOS.FIRST;
       }
+      else {
+        t.Position = TASKPOS.LAST;
+      }
+      // tell others tasks their position
+      foreach (ITask middleTask in this.TasksList.Where(x => x.Position != TASKPOS.FIRST)) {
+        middleTask.Position = TASKPOS.MIDDLE;
+      }
+      // add the given to this list
       this.TasksList.Add(t);
 
-      // connect tasks
+      // connect tasks, so everyone knows its follower
       if (this.TasksList.Count > 1) {
         this.TasksList[this.TasksList.Count - 2].NextTask = t;
       }
 
-      // tell them their position
-      int i = 0;
-      foreach (ITask task in this.TasksList) {
-        if (i > 0) {
-          task.Position = i == this.TasksList.Count - 1 ? TASKPOS.LAST : TASKPOS.MIDDLE;
-        }
-        i++;
-      }
-
-      // listen for enabled
+      // listen for en-/disabling
       t.PropertyChanged += new PropertyChangedEventHandler(this.t_PropertyChanged);
 
-      this.Listen4LastEnabledTask();
+      this.Listen4ProcessedWIOfLastEnabledTask();
     }
 
     private void t_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       if (e.PropertyName == "IsEnabled") {
-        this.Listen4LastEnabledTask();
+        ITask t = sender as ITask;
+        if (t != null) {
+          logger.Debug("task {0} IsEnabled set to: {1}", t.Name, t.IsEnabled);
+        }
+        this.Listen4ProcessedWIOfLastEnabledTask();
       }
     }
 
-    private void Listen4LastEnabledTask()
+    private void Listen4ProcessedWIOfLastEnabledTask()
     {
       // listen to last enabled task
       foreach (ITask task in this.TasksList) {
-        task.WIProcessed -= this.task_WIProcessed;
+        task.WIProcessed -= this.lastTaskHasProcessedWI;
       }
       ITask lastEnabled = this.TasksList.Where(x => x.IsEnabled).Last();
       if (lastEnabled != null) {
-        lastEnabled.WIProcessed += this.task_WIProcessed;
+        logger.Debug("found task {0} to listen to as last enabled", lastEnabled.Name);
+        lastEnabled.WIProcessed += this.lastTaskHasProcessedWI;
       }
     }
 
@@ -171,17 +177,18 @@ namespace WOP.Tasks
       return j;
     }
 
-    private void task_WIProcessed(object sender, TaskEventArgs e)
+    private void lastTaskHasProcessedWI(object sender, TaskEventArgs e)
     {
+      logger.Info("last task {0} hast processed WI: {1}", e.Task.Name, e.WorkItem.OriginalFile.Name);
+
       // filegathertask will fill workitems
       e.Task.ParentJob.GatheredWorkItems.Add(e.WorkItem);
-      // look for last task and add wi to finisheditems list
-      if (e.Task.Position == TASKPOS.LAST) {
-        this.LastFinishedWI = e.WorkItem;
-        this.FinishedWorkItems.Add(e.WorkItem);
-      }
+      //  add wi to finisheditems list
+      this.LastFinishedWI = e.WorkItem;
+      this.FinishedWorkItems.Add(e.WorkItem);
       // listen for last wi
       if (e.WorkItem is StopWI) {
+        logger.Info("catched StopWI from task {0}", e.Task.Name, e.WorkItem.OriginalFile.Name);
         this.IsFinishedVisible = Visibility.Visible;
         // job seems finished tell it
         EventHandler temp = this.JobFinished;
@@ -193,7 +200,7 @@ namespace WOP.Tasks
 
     public override string ToString()
     {
-      return string.Format("{0}:{1} Tasks", this.Name, this.TasksList.Count);
+      return string.Format("{0}:{1} Tasks, WI:{2}/{3}", this.Name, this.TasksList.Count, this.FinishedWorkItems.Count, this.TotalWorkItemCount);
     }
   }
 }

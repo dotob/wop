@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Controls;
+using NLog;
 using WOP.Objects;
 
 namespace WOP.Tasks
 {
   public abstract class SkeletonTask : ITask, INotifyPropertyChanged
   {
+    protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     // TODO: is this queue thread save??
     private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
@@ -48,10 +50,15 @@ namespace WOP.Tasks
           return;
         }
         this.isEnabled = value;
-        PropertyChangedEventHandler tmp = this.PropertyChanged;
-        if (tmp != null) {
-          tmp(this, new PropertyChangedEventArgs("IsEnabled"));
-        }
+        this.RaisePropertyChangedEvent("IsEnabled");
+      }
+    }
+
+    protected void RaisePropertyChangedEvent(string prop)
+    {
+      PropertyChangedEventHandler tmp = this.PropertyChanged;
+      if (tmp != null) {
+        tmp(this, new PropertyChangedEventArgs(prop));
       }
     }
 
@@ -101,6 +108,7 @@ namespace WOP.Tasks
             }
             if (wi is ImageWI) {
               var iwi = (ImageWI)wi;
+              logger.Info("task {0} start processing: {1}", this.Name, iwi);
               this.Process(iwi);
             }
             // tell job (or anyone else) we have finised process

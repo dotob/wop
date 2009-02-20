@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using WOP.Objects;
 using WOP.TasksUI;
 
@@ -6,6 +7,7 @@ namespace WOP.Tasks
 {
   public class FileRenamerTask : SkeletonTask
   {
+
     public FileRenamerTask()
     {
       this.Name = "Umbenennen";
@@ -17,14 +19,24 @@ namespace WOP.Tasks
 
     public override bool Process(ImageWI iwi)
     {
+      logger.Info("task {0} start processing: {1}", this.Name, iwi);
+      bool success = false;
       string nuName = Path.Combine(iwi.CurrentFile.DirectoryName ?? string.Empty, this.RenamedString(iwi));
-      if (File.Exists(nuName)) {
-        File.Delete(nuName);
+      try {
+        if (File.Exists(nuName)) {
+          logger.Debug("file {0} already existed, so we remove it", nuName);
+          File.Delete(nuName);
+        }
+        File.Move(iwi.CurrentFile.FullName, nuName);
+        // save current file location
+        iwi.CurrentFile = new FileInfo(nuName);
+        success = true;
       }
-      File.Move(iwi.CurrentFile.FullName, nuName);
-      // save current file location
-      iwi.CurrentFile = new FileInfo(nuName);
-      return true;
+      catch (Exception ex) {
+        logger.ErrorException(string.Format("while moving (renaming) file {0} to: {1}", iwi.CurrentFile.Name, nuName), ex);
+      }
+
+      return success;
     }
 
     private string RenamedString(IWorkItem iwi)

@@ -26,7 +26,7 @@
             <RadioButton Content="Neue Größe %:"  x:Name="percSize" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <UniformGrid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Columns="2" IsEnabled="{Binding Path=IsChecked, ElementName=percSize}" >
                 <Slider Minimum="1" Maximum="100" SmallChange="1" LargeChange="10" MinWidth="80" TickPlacement="None" Value="{Binding Path=SizePercent}" />
-                <TextBox  Grid.Column="3" Grid.Row="0" MinWidth="80" VerticalAlignment="Center" Text="{Binding Path=SizePercent}"/>
+                <TextBox  Grid.Column="3" Grid.Row="0" MinWidth="80" VerticalAlignment="Center" Text="{Binding Path=SizePercent, UpdateSourceTrigger=PropertyChanged}"/>
             </UniformGrid>
 
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"  Orientation="Horizontal">

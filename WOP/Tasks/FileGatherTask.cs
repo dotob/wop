@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
+using NLog;
 using WOP.Objects;
 using WOP.TasksUI;
 
@@ -23,6 +24,7 @@ namespace WOP.Tasks
 
     #endregion
 
+    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     private bool isEnabled;
     private Queue<ImageWI> workItems;
@@ -105,7 +107,10 @@ namespace WOP.Tasks
     {
       if (this.workItems == null) {
         // go and gather files 
+        logger.Debug("find files with pattern:{0} in sourcedir: {1}, recursedirs:{2}, to targetdir:{3}", this.FilePattern, this.SourceDirectory, this.RecurseDirectories, this.TargetDirectory);
         string[] files = Directory.GetFiles(this.SourceDirectory, this.FilePattern, this.RecurseDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+        logger.Debug("found {0} files", files.Length);
+
         // tell job count
         this.ParentJob.TotalWorkItemCount = files.Length;
         // create workitems
@@ -116,6 +121,7 @@ namespace WOP.Tasks
           allWI.Add(new ImageWI(fi) {ProcessPosition = i++});
         }
         // sort them
+        logger.Debug("sort by {0}", this.SortOrder);
         switch (this.SortOrder) {
           case SORTSTYLE.NONE:
             break;
@@ -143,8 +149,8 @@ namespace WOP.Tasks
     {
       foreach (ImageWI wi in this.workItems) {
         if (!this.bgWorker.CancellationPending) {
+          string nuFile = Path.Combine(this.TargetDirectory, wi.OriginalFile.Name);
           try {
-            string nuFile = Path.Combine(this.TargetDirectory, wi.OriginalFile.Name);
             File.Copy(wi.CurrentFile.FullName, nuFile, true);
             // set currentfile info
             wi.CurrentFile = new FileInfo(nuFile);
@@ -164,7 +170,7 @@ namespace WOP.Tasks
             }
           }
           catch (Exception ex) {
-            ex.ToString();
+            logger.ErrorException(string.Format("while copying file {0} to: {1}", wi.OriginalFile.Name, nuFile), ex);
           }
         }
       }
