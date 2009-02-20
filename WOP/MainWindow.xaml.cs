@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using NLog;
 using WOP.Tasks;
 
 namespace WOP
@@ -11,8 +12,9 @@ namespace WOP
   /// </summary>
   public partial class MainWindow : Window
   {
+    protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
-    private readonly WOPSplash wops = new WOPSplash();
+    private readonly WOPSplash wopSplash = new WOPSplash();
     private Job theJob;
     private int til = 50;
 
@@ -24,20 +26,21 @@ namespace WOP
       this.bgSplasher.RunWorkerCompleted += this.bgSplasher_RunWorkerCompleted;
       this.bgSplasher.DoWork += this.bgSplasher_DoWork;
       this.bgSplasher.ProgressChanged += this.bgSplasher_ProgressChanged;
-      this.wops.Opacity = 0;
-      this.wops.Show();
+      this.wopSplash.Opacity = 0;
+      this.wopSplash.Show();
       this.bgSplasher.RunWorkerAsync();
     }
 
     private void bgSplasher_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-      this.wops.Opacity = 1f / this.til * e.ProgressPercentage;
+      this.wopSplash.Opacity = 1f / this.til * e.ProgressPercentage;
     }
 
     private void bgSplasher_DoWork(object sender, DoWorkEventArgs e)
     {
       bool withSplash = false;
       if (withSplash) {
+        logger.Debug("show splashscreen");
         for (int i = 0; i < this.til; i++) {
           this.bgSplasher.ReportProgress(i);
           Thread.Sleep(10);
@@ -45,14 +48,14 @@ namespace WOP
         Thread.Sleep(2000);
         for (int i = this.til / 2; i >= 0; i--) {
           this.bgSplasher.ReportProgress(i * 2);
-          Thread.Sleep(1);
+          Thread.Sleep(4);
         }
       }
     }
 
     private void bgSplasher_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-      this.wops.Close();
+      this.wopSplash.Close();
       this.Visibility = Visibility.Visible;
     }
 
@@ -69,7 +72,7 @@ namespace WOP
       this.theJob.Name = "my first job";
       this.theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
       this.theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
-      this.theJob.AddTask(new ImageShrinkTask {IsEnabled = false, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
+      this.theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
       this.theJob.AddTask(new ImageRotateTask {IsEnabled = false});
       //theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
       //snootheJob.AddTask(new GEOTagTask { IsEnabled = false });

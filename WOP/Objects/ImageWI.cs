@@ -6,6 +6,8 @@ namespace WOP.Objects
 {
   public class ImageWI : IWorkItem
   {
+    private FIBITMAP? imageHandle;
+
     public ImageWI(FileInfo fi)
     {
       this.CreationTime = DateTime.Now;
@@ -32,7 +34,17 @@ namespace WOP.Objects
 
     public DateTime FinishedWork { get; set; }
 
-    public FIBITMAP ImageHandle { get; set; }
+    public FIBITMAP ImageHandle
+    {
+      get
+      {
+        if (this.imageHandle == null) {
+          this.imageHandle = ImageWorker.GetJPGImageHandle(this.CurrentFile);
+        }
+        return (FIBITMAP)this.imageHandle;
+      }
+      set { this.imageHandle = value; }
+    }
 
     public void CleanUp()
     {

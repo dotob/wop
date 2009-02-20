@@ -33,7 +33,7 @@ namespace WOP.Tasks
         success = true;
       }
       catch (Exception ex) {
-        logger.ErrorException(string.Format("while moving (renaming) file {0} to: {1}", iwi.CurrentFile.Name, nuName), ex);
+        logger.ErrorException(string.Format("error while moving (renaming) file {0} to: {1}", iwi.CurrentFile.Name, nuName), ex);
       }
 
       return success;

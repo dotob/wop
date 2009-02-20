@@ -10,7 +10,7 @@ using WOP.TasksUI;
 
 namespace WOP.Tasks
 {
-  public class FileGatherTask : ITask, INotifyPropertyChanged
+  public class FileGatherTask : ITask
   {
     #region SORTSTYLE enum
 
@@ -170,7 +170,7 @@ namespace WOP.Tasks
             }
           }
           catch (Exception ex) {
-            logger.ErrorException(string.Format("while copying file {0} to: {1}", wi.OriginalFile.Name, nuFile), ex);
+            logger.ErrorException(string.Format("error while copying file {0} to: {1}", wi.OriginalFile.Name, nuFile), ex);
           }
         }
       }

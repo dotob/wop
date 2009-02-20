@@ -14,7 +14,11 @@ namespace WOP.Tasks
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof(Job));
     public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof(Job));
+    private bool isFinished;
+    private Visibility isFinishedVisible;
+    private bool isProcessing;
     private IWorkItem lastFinishedWI;
+    private int progress;
     private int totalWorkItemCount;
 
     public Job()
@@ -26,13 +30,63 @@ namespace WOP.Tasks
     }
 
     public string Name { get; set; }
-    public int Progress { get; set; }
+
+    public int Progress
+    {
+      get { return this.progress; }
+      set
+      {
+        if (this.progress == value) {
+          return;
+        }
+        this.progress = value;
+        this.RaisePropertyChangedEvent("Progress");
+      }
+    }
+
     public List<ITask> TasksList { get; set; }
     public List<IWorkItem> GatheredWorkItems { get; set; }
     public List<IWorkItem> FinishedWorkItems { get; set; }
-    public bool IsProcessing { get; set; }
-    public bool IsFinished { get; set; }
-    public Visibility IsFinishedVisible { get; set; }
+
+    public bool IsProcessing
+    {
+      get { return this.isProcessing; }
+      set
+      {
+        if (this.isProcessing == value) {
+          return;
+        }
+        this.isProcessing = value;
+        this.RaisePropertyChangedEvent("IsProcessing");
+      }
+    }
+
+    public bool IsFinished
+    {
+      get { return this.isFinished; }
+      set
+      {
+        if (this.isFinished == value) {
+          return;
+        }
+        this.isFinished = value;
+        this.RaisePropertyChangedEvent("IsFinished");
+      }
+    }
+
+    public Visibility IsFinishedVisible
+    {
+      get { return this.isFinishedVisible; }
+      set
+      {
+        if (this.isFinishedVisible == value) {
+          return;
+        }
+        this.isFinishedVisible = value;
+        this.RaisePropertyChangedEvent("IsFinishedVisible");
+      }
+    }
+
     public bool IsPaused { get; set; }
 
 
@@ -46,10 +100,7 @@ namespace WOP.Tasks
         }
         this.lastFinishedWI = value;
         logger.Debug("new lastfinished wi: {0}", this.lastFinishedWI.OriginalFile.Name);
-        PropertyChangedEventHandler tmp = this.PropertyChanged;
-        if (tmp != null) {
-          tmp(this, new PropertyChangedEventArgs("LastFinishedWI"));
-        }
+        this.RaisePropertyChangedEvent("LastFinishedWI");
       }
     }
 
@@ -74,6 +125,14 @@ namespace WOP.Tasks
     public event PropertyChangedEventHandler PropertyChanged;
 
     #endregion
+
+    private void RaisePropertyChangedEvent(string lastfinishedwi)
+    {
+      PropertyChangedEventHandler tmp = this.PropertyChanged;
+      if (tmp != null) {
+        tmp(this, new PropertyChangedEventArgs(lastfinishedwi));
+      }
+    }
 
     public event EventHandler JobFinished;
 
