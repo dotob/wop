@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using NLog;
 using WOP.Objects;
-using System.Linq;
 
-namespace WOP.Tasks
-{
-  public class Job : INotifyPropertyChanged
-  {
+namespace WOP.Tasks {
+  public class Job : INotifyPropertyChanged {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-    public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof(Job));
-    public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof(Job));
+    public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof (Job));
+    public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof (Job));
     private bool isFinished;
     private Visibility isFinishedVisible;
     private bool isProcessing;
     private IWorkItem lastFinishedWI = new StartWI();
     private int progress;
     private int totalWorkItemCount;
+    private int finishedWorkItemCount;
 
     public Job()
     {
@@ -120,6 +119,23 @@ namespace WOP.Tasks
       }
     }
 
+    public int FinishedWorkItemCount
+    {
+      get { return this.finishedWorkItemCount; }
+      set
+      {
+        if (this.finishedWorkItemCount == value)
+        {
+          return;
+        }
+        this.finishedWorkItemCount = value;
+        PropertyChangedEventHandler tmp = this.PropertyChanged;
+        if (tmp != null) {
+          tmp(this, new PropertyChangedEventArgs("FinishedWorkItemCount"));
+        }
+      }
+    }
+
     #region INotifyPropertyChanged Members
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -138,6 +154,7 @@ namespace WOP.Tasks
 
     public void Start()
     {
+      this.IsProcessing = true;
       if (this.TasksList != null) {
         logger.Info("start job: {0}", this.Name);
         for (int i = this.TasksList.Count - 1; i >= 0; i--) {
@@ -151,6 +168,7 @@ namespace WOP.Tasks
 
     public void Pause()
     {
+      this.IsProcessing = false;
       if (this.TasksList != null) {
         logger.Info("pause job: {0}", this.Name);
         foreach (ITask task in this.TasksList) {
@@ -169,8 +187,7 @@ namespace WOP.Tasks
       // set this tasks position
       if (this.TasksList.Count == 0) {
         t.Position = TASKPOS.FIRST;
-      }
-      else {
+      } else {
         t.Position = TASKPOS.LAST;
       }
       // tell others tasks their position
@@ -246,9 +263,10 @@ namespace WOP.Tasks
       //  add wi to finisheditems list
       this.LastFinishedWI = e.WorkItem;
       this.FinishedWorkItems.Add(e.WorkItem);
+      this.FinishedWorkItemCount = this.FinishedWorkItems.Count;
 
       // set progress
-      this.Progress = (TotalWorkItemCount / FinishedWorkItems.Count) * 100;
+      this.Progress = (int)((this.FinishedWorkItems.Count * 1f / this.TotalWorkItemCount) * 100);
 
       // listen for last wi
       if (e.WorkItem is StopWI) {

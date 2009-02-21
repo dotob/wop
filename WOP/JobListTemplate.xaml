@@ -23,7 +23,7 @@
       <TextBlock Style="{DynamicResource bigTextValue}" Grid.Column="1" Grid.Row="1">
          <TextBlock.Text>
             <MultiBinding StringFormat="[{0} - {1}]">
-                <Binding Path="FinishedWorkItems.Count"></Binding>
+                <Binding Path="FinishedWorkItemCount"></Binding>
                 <Binding Path="TotalWorkItemCount"></Binding>
              </MultiBinding>
          </TextBlock.Text>
@@ -33,10 +33,10 @@
 
       <ProgressBar Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Value="{Binding Path=Progress}" Minimum="0" Maximum="100" FlowDirection="LeftToRight" MinHeight="20" Margin="2"  />
 
-      <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="30" Foreground="Green" FontWeight="Bold" Visibility="{Binding Path=IsFinishedVisible}" >Finished</TextBlock>
+      <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="30" Foreground="Green" FontWeight="Bold" Visibility="{Binding Path=IsFinishedVisible}" HorizontalAlignment="Center">Finished</TextBlock>
 
-      <Button Grid.Column="0" Grid.Row="5" Content="Start" Click="StartButton_Click" />
-      <Button Grid.Column="1" Grid.Row="5" Content="Pause" Click="PauseButton_Click" />
+      <Button Grid.Column="0" Grid.Row="5" Content="Start" Click="StartButton_Click" IsEnabled="True"/>
+      <Button Grid.Column="1" Grid.Row="5" Content="Pause" Click="PauseButton_Click" IsEnabled="True"/>
 
     </Grid>
   </Border>

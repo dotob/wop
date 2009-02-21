@@ -5,10 +5,8 @@ using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
-namespace WOP.Tasks
-{
-  public class ImageShrinkTask : SkeletonTask
-  {
+namespace WOP.Tasks {
+  public class ImageShrinkTask : SkeletonTask {
     private int sizePercent;
     private int sizeX;
     private int sizeY;
@@ -72,8 +70,7 @@ namespace WOP.Tasks
         ImageWorker.ShrinkImageFI(iwi.ImageHandle, ftmp, this.calcNewSize(iwi));
         File.Delete(iwi.CurrentFile.FullName);
         File.Move(ftmp.FullName, iwi.CurrentFile.FullName);
-      }catch(Exception ex)
-      {
+      } catch (Exception ex) {
         logger.ErrorException(string.Format("error while shrinking file {0}", iwi.CurrentFile.Name), ex);
       }
       return true;
@@ -82,17 +79,16 @@ namespace WOP.Tasks
     private Size calcNewSize(ImageWI iwi)
     {
       Size oldSize = ImageWorker.GetCurrentSize(iwi);
-      logger.Debug("oldsize of image {0}:{2}", iwi.Name, oldSize);
-      double ratio = (double)oldSize.Width / oldSize.Height;
+      logger.Debug("oldsize of image {0}:{1}", iwi.Name, oldSize);
+      float ratio = oldSize.Width*1f/oldSize.Height;
       Size newSize;
       if (this.AbsoluteSizing) {
-        newSize = new Size(this.SizeX, (int)(this.SizeX / ratio));
-        logger.Debug("newsize (absolut) of image {0}:{2}", iwi.Name, newSize);
-      }
-      else {
+        newSize = new Size(this.SizeX, (int) (this.SizeX/ratio));
+        logger.Debug("newsize (absolut) of image {0}:{1}", iwi.Name, newSize);
+      } else {
         // suppose relativesizing
-        newSize = new Size((int)(oldSize.Width * (this.SizePercent / 100f)), (int)(oldSize.Height * (this.SizePercent / 100f)));
-        logger.Debug("newsize (percentage) of image {0}:{2}", iwi.Name, newSize);
+        newSize = new Size((int) (oldSize.Width*(this.SizePercent/100f)), (int) (oldSize.Height*(this.SizePercent/100f)));
+        logger.Debug("newsize (percentage) of image {0}:{1}", iwi.Name, newSize);
       }
       return newSize;
     }
