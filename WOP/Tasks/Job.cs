@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using NLog;
 using WOP.Objects;
+using Size=System.Drawing.Size;
 
 namespace WOP.Tasks {
   public class Job : INotifyPropertyChanged {
@@ -19,6 +22,7 @@ namespace WOP.Tasks {
     private int progress;
     private int totalWorkItemCount;
     private int finishedWorkItemCount;
+    private BitmapSource currentWorkItemThumbnail;
 
     public Job()
     {
@@ -132,6 +136,23 @@ namespace WOP.Tasks {
         PropertyChangedEventHandler tmp = this.PropertyChanged;
         if (tmp != null) {
           tmp(this, new PropertyChangedEventArgs("FinishedWorkItemCount"));
+        }
+      }
+    }
+
+    public BitmapSource CurrentWorkItemThumbnail
+    {
+      get { return this.currentWorkItemThumbnail; }
+      set
+      {
+        if (this.currentWorkItemThumbnail == value)
+        {
+          return;
+        }
+        this.currentWorkItemThumbnail = value;
+        PropertyChangedEventHandler tmp = this.PropertyChanged;
+        if (tmp != null) {
+          tmp(this, new PropertyChangedEventArgs("CurrentWorkItemThumbnail"));
         }
       }
     }
@@ -258,12 +279,21 @@ namespace WOP.Tasks {
       logger.Info("last task {0} hast processed WI: {1}", e.Task.Name, e.WorkItem.Name);
 
       // filegathertask will fill workitems
+      // whats this for?????
       e.Task.ParentJob.GatheredWorkItems.Add(e.WorkItem);
 
       //  add wi to finisheditems list
-      this.LastFinishedWI = e.WorkItem;
-      this.FinishedWorkItems.Add(e.WorkItem);
-      this.FinishedWorkItemCount = this.FinishedWorkItems.Count;
+      if (!(e.WorkItem is StopWI)) {
+        this.LastFinishedWI = e.WorkItem;
+        this.FinishedWorkItems.Add(e.WorkItem);
+        this.FinishedWorkItemCount = this.FinishedWorkItems.Count;
+      }
+
+      // set thumb
+      var imageWI = e.WorkItem as ImageWI;
+      if (imageWI != null) {
+        //this.CurrentWorkItemThumbnail = ImageWorker.GetBitmapSourceFromFI(ImageWorker.GetShrinkedDIB(imageWI.ImageHandle, new Size(100,100)));
+      }
 
       // set progress
       this.Progress = (int)((this.FinishedWorkItems.Count * 1f / this.TotalWorkItemCount) * 100);

@@ -2,11 +2,14 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using FreeImageAPI;
 using FreeImageAPI.Metadata;
 using NLog;
 using WOP.Util;
 using FIImageMetadata=FreeImageAPI.Metadata.ImageMetadata;
+using Size=System.Drawing.Size;
 
 namespace WOP.Objects
 {
@@ -51,11 +54,36 @@ namespace WOP.Objects
       ShrinkImageFI(dib, fileOut, nuSize, stdFilter, stdQuality);
     }
 
-    private static void ShrinkImageFI(FIBITMAP dib, FileInfo fileOut, Size nuSize, FREE_IMAGE_FILTER filter, FREE_IMAGE_SAVE_FLAGS savequality)
+    public static void ShrinkImageFI(FIBITMAP dib, FileInfo fileOut, Size nuSize, FREE_IMAGE_FILTER filter, FREE_IMAGE_SAVE_FLAGS savequality)
     {
-      FIBITMAP dibsmall = FreeImage.Rescale(dib, nuSize.Width, nuSize.Height, filter);
+      FIBITMAP dibsmall = GetShrinkedDIB(dib, nuSize, filter);
       SaveJPGImageHandle(dibsmall, fileOut, savequality);
       CleanUpResources(dibsmall);
+    }
+
+    public static FIBITMAP GetShrinkedDIB(FIBITMAP dib, Size nuSize)
+    {
+      return GetShrinkedDIB(dib, nuSize, stdFilter);
+    }
+
+    public static FIBITMAP GetShrinkedDIB(FIBITMAP dib, Size nuSize, FREE_IMAGE_FILTER filter)
+    {
+      return FreeImage.Rescale(dib, nuSize.Width, nuSize.Height, filter);
+    }
+
+    public static Bitmap GetThumbnailFI(FIBITMAP dib)
+    {
+      FIBITMAP dibsmall = FreeImage.Rescale(dib, 100, 100, stdFilter);
+      Bitmap bitmap = FreeImage.GetBitmap(dibsmall);
+      CleanUpResources(dibsmall);
+      return bitmap;
+    }
+    public static BitmapSource GetBitmapSourceFromFI(FIBITMAP dib)
+    {
+      IntPtr hbitmap = FreeImage.GetHbitmap(dib, IntPtr.Zero, true);
+      BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+      FreeImage.FreeHbitmap(hbitmap);
+      return bs;
     }
 
     /// <summary>
