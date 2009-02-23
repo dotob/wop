@@ -1,18 +1,47 @@
 ﻿<Window x:Class="WOP.WOPSplash"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="wop splash" Height="206" Width="331" ResizeMode="NoResize" WindowStyle="None" Opacity="1" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Background="Transparent">
-    <Grid Background="Transparent">
-        <Rectangle Fill="{DynamicResource backColorDark}" Stroke="#00000000" RadiusY="12.5" RadiusX="12.5" Margin="0,0,8,8">
-            <Rectangle.BitmapEffect>
-                <DropShadowBitmapEffect/>
-            </Rectangle.BitmapEffect>
-        </Rectangle>
-        <Label x:Name="m_l_wop" FontSize="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="wop" FontFamily="Georgia" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent" Foreground="#FFCCCCCC" Margin="0,0,0,20">
-            <!--<Label.BitmapEffect>
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="wop splash"
+        Height="206"
+        Width="331"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Opacity="1"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent">
+  <Grid Background="Transparent">
+    <Rectangle Fill="{DynamicResource backColorDark}"
+               Stroke="#00000000"
+               RadiusY="12.5"
+               RadiusX="12.5"
+               Margin="0,0,8,8">
+      <Rectangle.BitmapEffect>
+        <DropShadowBitmapEffect />
+      </Rectangle.BitmapEffect>
+    </Rectangle>
+    <Label x:Name="m_l_wop"
+           FontSize="80"
+           HorizontalContentAlignment="Center"
+           VerticalContentAlignment="Center"
+           Content="wop"
+           FontFamily="Georgia"
+           VerticalAlignment="Stretch"
+           HorizontalAlignment="Stretch"
+           Background="Transparent"
+           Foreground="#FFCCCCCC"
+           Margin="0,0,0,20">
+      <!--<Label.BitmapEffect>
                 <DropShadowBitmapEffect />
             </Label.BitmapEffect>-->
-        </Label>
-        <Label HorizontalAlignment="Left" Margin="10" VerticalAlignment="Bottom" Width="43" Height="25" Content="v0.1" x:Name="m_l_version" Foreground="#FFCCCCCC"/>
-    </Grid>
+    </Label>
+    <Label HorizontalAlignment="Left"
+           Margin="10"
+           VerticalAlignment="Bottom"
+           Width="43"
+           Height="25"
+           Content="v0.1"
+           x:Name="m_l_version"
+           Foreground="#FFCCCCCC" />
+  </Grid>
 </Window>

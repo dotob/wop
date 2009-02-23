@@ -297,7 +297,7 @@
                             <Setter TargetName="Border"  Property="Background" Value="{DynamicResource backColorDark}"/>
                         </Trigger>
                         <Trigger Property="IsExpanded" Value="False">
-                            <Setter TargetName="Border"  Property="Background" Value="Red"/>
+                            <Setter TargetName="Border"  Property="Background" Value="{DynamicResource disabledTaskColor}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
