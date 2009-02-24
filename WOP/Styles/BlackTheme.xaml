@@ -12,6 +12,5 @@
   <SolidColorBrush x:Key="fontColorDark"
                    Color="Black" />
   <SolidColorBrush x:Key="disabledTaskColor"
-                   Color="DarkRed" 
-                   />
+                   Color="DarkRed" />
 </ResourceDictionary>
