@@ -111,6 +111,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TasksUI\DirSorterTaskUI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TasksUI\ImageRotateTaskUI.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +182,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TasksUI\DirSorterTaskUI.xaml.cs">
+      <DependentUpon>DirSorterTaskUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TasksUI\ImageRotateTaskUI.xaml.cs">
       <DependentUpon>ImageRotateTaskUI.xaml</DependentUpon>
     </Compile>
@@ -197,6 +204,7 @@
       <DependentUpon>FileGatherTaskUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tasks\CleanResourcesTask.cs" />
+    <Compile Include="Tasks\DirSorterTask.cs" />
     <Compile Include="Tasks\ImageRotateTask.cs" />
     <Compile Include="Tasks\GEOTagTask.cs" />
     <Compile Include="Tasks\ImageShrinkTask.cs" />
