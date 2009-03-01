@@ -185,8 +185,9 @@
     <Style TargetType="{x:Type Button}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="MinHeight" Value="23"/>
+        <!--<Setter Property="MinHeight" Value="23"/>-->
         <Setter Property="MinWidth" Value="75"/>
+        <Setter Property="Margin" Value="2"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -443,7 +444,7 @@
                   Grid.Column="0"
                   CornerRadius="2,0,0,2" 
                   Margin="1" 
-                  Background="#FFFFFF" 
+                  Background="{DynamicResource backColorLight}" 
                   BorderBrush="#404040"
                   BorderThickness="0,0,1,0" />
             <Path 
@@ -481,7 +482,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="MinWidth" Value="120"/>
-        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="Margin" Value="2"/>
+        <!--<Setter Property="MinHeight" Value="15"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">

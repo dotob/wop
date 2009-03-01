@@ -58,5 +58,12 @@ namespace WOP.Tests
         //ImageWorker.CleanUpResources(dib);
       }
     }
+
+    [Test]
+    public void TestFormatting()
+    {
+      string s = string.Format("{0:000}", 1);
+      s.ToString();
+    }
   }
 }

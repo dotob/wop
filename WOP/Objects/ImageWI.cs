@@ -4,6 +4,7 @@ using FreeImageAPI;
 
 namespace WOP.Objects {
   public class ImageWI : IWorkItem {
+    private DateTime? exifDate;
     private FIBITMAP? imageHandle;
 
     public ImageWI(FileInfo fi)
@@ -13,12 +14,21 @@ namespace WOP.Objects {
       this.CurrentFile = fi;
       // get times
       this.FileDate = fi.CreationTime;
-      // TODO: extract exif date
-      this.ExifDate = fi.CreationTime;
     }
 
-    public DateTime? FileDate { get; set; }
-    public DateTime? ExifDate { get; set; }
+    public DateTime FileDate { get; set; }
+
+    public DateTime ExifDate
+    {
+      get
+      {
+        if (this.exifDate == null) {
+          this.exifDate = ImageWorker.GetExifDate(this.ImageHandle);
+        }
+        return (DateTime) this.exifDate;
+      }
+      set { this.exifDate = value; }
+    }
 
     #region IWorkItem Members
 
@@ -55,7 +65,7 @@ namespace WOP.Objects {
         ImageWorker.CleanUpResources((FIBITMAP) this.imageHandle);
         this.imageHandle = 0;
       }
-    } 
+    }
 
     #endregion
 

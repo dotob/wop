@@ -5,6 +5,7 @@
   <Expander IsExpanded="{Binding IsEnabled}">
     <Expander.Header>
       <TextBlock Text="{Binding Name}"
+                 FontWeight="Bold"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
                  Style="{DynamicResource wop_tb_nobg}" />
@@ -19,28 +20,40 @@
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"></RowDefinition>
         <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="Auto"></RowDefinition>
       </Grid.RowDefinitions>
 
-      <StackPanel Grid.Column="0"
-                  Grid.Row="2"
-                  Grid.ColumnSpan="4"
-                  Orientation="Horizontal">
-        <CheckBox x:Name="preserveOriginals"
-                  IsChecked="{Binding Path=PreserveOriginals}"
-                  Margin="0 0 10 0"
-                  VerticalAlignment="Center">Originale behalten</CheckBox>
-        <TextBlock Text="Thumb-Namen erweitern um:"
-                   IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
-                   Grid.Column="0"
-                   Grid.Row="1"
+      <TextBlock Text="Ordner-Muster:"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Style="{DynamicResource wop_tb}" />
+        <TextBox Text="{Binding Path=DirectoryPattern}"
+                 Grid.Column="1"
+                 Grid.Row="0"
+                 MinWidth="80"
+                 VerticalAlignment="Center" />
+        <TextBlock Text="Anzahl Dateien pro Ordner:"
+                   Grid.Column="2"
+                   Grid.Row="0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Style="{DynamicResource wop_tb}" />
-        <TextBox Text="{Binding Path=NameExtension}"
+        <TextBox Text="{Binding Path=DirectoryFillCount}"
+                 Grid.Column="3"
+                 Grid.Row="0"
                  MinWidth="80"
                  VerticalAlignment="Center" />
-      </StackPanel>
+        <TextBlock Grid.Column="0"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="2"
+                             TextWrapping="Wrap"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Center"
+                             Style="{DynamicResource wop_tb}">
+              <Run FontWeight="Bold">Formatierungshilfe:</Run>
+                {0} = Zähler
+            </TextBlock>
     </Grid>
   </Expander>
 </UserControl>

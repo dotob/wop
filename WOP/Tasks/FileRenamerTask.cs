@@ -44,9 +44,14 @@ namespace WOP.Tasks {
       return success;
     }
 
-    private string RenamedString(IWorkItem iwi)
+    private string RenamedString(ImageWI iwi)
     {
-      return string.Format(this.RenamePattern, iwi.ProcessPosition, iwi.SortedPosition) + iwi.OriginalFile.Extension;
+      // check for exif date...so we dont need to read exif data when it is not needed
+      if (this.RenamePattern.Contains("{2}")) {
+        return string.Format(this.RenamePattern, iwi.ProcessPosition, iwi.FileDate, iwi.ExifDate) + iwi.OriginalFile.Extension;
+      }else {
+        return string.Format(this.RenamePattern, iwi.ProcessPosition, iwi.FileDate, 0) + iwi.OriginalFile.Extension;
+      }
     }
   }
 }

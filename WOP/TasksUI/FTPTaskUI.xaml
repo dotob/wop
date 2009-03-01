@@ -5,6 +5,7 @@
   <Expander IsExpanded="{Binding Path=IsEnabled}">
     <Expander.Header>
       <TextBlock Text="{Binding Name}"
+                 FontWeight="Bold"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
                  Style="{DynamicResource wop_tb_nobg}" />

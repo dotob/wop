@@ -214,16 +214,16 @@ namespace WOP.Tasks {
 
     public static int CompareByFileDate(ImageWI a, ImageWI b)
     {
-      if (a != null && b != null && a.FileDate != null && b.FileDate != null) {
-        return ((DateTime) a.FileDate).CompareTo((DateTime) b.FileDate);
+      if (a != null && b != null) {
+        return a.FileDate.CompareTo(b.FileDate);
       }
       return 0;
     }
 
     public static int CompareByExifDate(ImageWI a, ImageWI b)
     {
-      if (a != null && b != null && a.ExifDate != null && b.ExifDate != null) {
-        return ((DateTime) a.ExifDate).CompareTo((DateTime) b.ExifDate);
+      if (a != null && b != null) {
+        return a.ExifDate.CompareTo(b.ExifDate);
       }
       return 0;
     }

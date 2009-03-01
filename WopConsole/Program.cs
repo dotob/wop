@@ -18,7 +18,8 @@ namespace WopConsole
       //SetRotateInfo();
       //GPSTest();
       //BogenMass bm = Utils.ConvertToBogenMass(51.2345);
-      TestWriteGPS();
+      //TestWriteGPS();
+      TestFormatting();
     }
 
     private static void TestWriteGPS()
@@ -97,6 +98,14 @@ namespace WopConsole
       TimeSpan ts = DateTime.Now.Subtract(start);
       string d = Directory.GetCurrentDirectory();
       return ts;
+    }
+
+    public static void TestFormatting()
+    {
+      Console.WriteLine(string.Format("{0:000}", 1));
+      Console.WriteLine(string.Format("{0:000}", 10));
+      Console.WriteLine(string.Format("{0:000}", 10000));
+      Console.ReadKey();
     }
   }
 }

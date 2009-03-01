@@ -4,6 +4,7 @@
   <Expander IsExpanded="{Binding IsEnabled}">
     <Expander.Header>
       <TextBlock Text="Job"
+                 FontWeight="Bold"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Center"
                  Style="{DynamicResource wop_tb_nobg}" />

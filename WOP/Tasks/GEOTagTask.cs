@@ -45,7 +45,7 @@ namespace WOP.Tasks {
         this.inited = true;
       }
       // find 
-      WayPoint wp = findWaypoint4Date(iwi.ExifDate ?? iwi.FileDate, this.wayPointList);
+      WayPoint wp = findWaypoint4Date(iwi.ExifDate, this.wayPointList);
       if (wp != null) {
         ImageWorker.WriteGPSDateIntoImage(iwi.CurrentFile, null, wp);
       } else {
