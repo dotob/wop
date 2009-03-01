@@ -1,26 +1,39 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Windows.Controls;
+using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class ImageShrinkTask : SkeletonTask {
     private int sizePercent;
     private int sizeX;
     private int sizeY;
+    private UserControl ui;
 
     public ImageShrinkTask()
     {
       this.Name = "Verkleinern";
       this.AbsoluteSizing = true;
       this.SizePercent = 50;
-      this.UI = new ImageShrinkTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    public override UserControl UI
+    {
+      get
+      {
+        this.ui = new ImageShrinkTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
+    [JsonProperty]
     public int SizeX
     {
       get { return this.sizeX; }
@@ -34,7 +47,7 @@ namespace WOP.Tasks {
       }
     }
 
-    [SettingProperty]
+    [JsonProperty]
     public int SizeY
     {
       get { return this.sizeY; }
@@ -48,7 +61,7 @@ namespace WOP.Tasks {
       }
     }
 
-    [SettingProperty]
+    [JsonProperty]
     public int SizePercent
     {
       get { return this.sizePercent; }
@@ -62,11 +75,11 @@ namespace WOP.Tasks {
       }
     }
 
-    [SettingProperty]
+    [JsonProperty]
     public bool AbsoluteSizing { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public bool PreserveOriginals { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public string NameExtension { get; set; }
 
     public override ITask CloneNonDynamicStuff()

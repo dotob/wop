@@ -32,7 +32,7 @@ namespace WOP.Tasks {
       }
     }
 
-    public UserControl UI { get; set; }
+    public abstract UserControl UI { get; set; }
 
     public Dictionary<ITask, string> TaskInfos { get; set; }
 

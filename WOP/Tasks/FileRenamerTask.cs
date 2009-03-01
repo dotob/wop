@@ -1,18 +1,32 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Controls;
+using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class FileRenamerTask : SkeletonTask {
+    private UserControl ui;
+
     public FileRenamerTask()
     {
       this.Name = "Umbenennen";
-      this.UI = new FileRenamerTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    public override UserControl UI
+    {
+      get
+      {
+        this.ui = new FileRenamerTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
+    [JsonProperty]
     public string RenamePattern { get; set; }
 
     public override ITask CloneNonDynamicStuff()

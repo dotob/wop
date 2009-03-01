@@ -1,18 +1,32 @@
-﻿using WOP.Objects;
+﻿using System.Windows.Controls;
+using Newtonsoft.Json;
+using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class ImageRotateTask : SkeletonTask {
+    private UserControl ui;
+
     public ImageRotateTask()
     {
       this.Name = "Drehen";
-      this.UI = new ImageRotateTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    public override UserControl UI
+    {
+      get
+      {
+        this.ui = new ImageRotateTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
+    [JsonProperty]
     public bool PreserveOriginals { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public string NameExtension { get; set; }
 
     public override ITask CloneNonDynamicStuff()

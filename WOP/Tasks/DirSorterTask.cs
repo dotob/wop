@@ -1,26 +1,39 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Controls;
+using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class DirSorterTask : SkeletonTask {
     private string currentDir;
     private string currentDirComplete;
     private int dirCount;
     private int pixInDir;
+    private UserControl ui;
 
     public DirSorterTask()
     {
       this.Name = "In Ordner verteilen";
-      this.UI = new DirSorterTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    public override UserControl UI
+    {
+      get
+      {
+        this.ui = new DirSorterTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
+    [JsonProperty]
     public string DirectoryPattern { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public int DirectoryFillCount { get; set; }
 
     public override ITask CloneNonDynamicStuff()

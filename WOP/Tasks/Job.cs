@@ -5,10 +5,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class Job : INotifyPropertyChanged {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof (Job));
@@ -31,6 +33,7 @@ namespace WOP.Tasks {
       this.IsFinishedVisible = Visibility.Hidden;
     }
 
+    [JsonProperty]
     public string Name { get; set; }
 
     public int Progress
@@ -46,6 +49,7 @@ namespace WOP.Tasks {
       }
     }
 
+    [JsonProperty]
     public List<ITask> TasksList { get; set; }
     public List<IWorkItem> GatheredWorkItems { get; set; }
     public List<IWorkItem> FinishedWorkItems { get; set; }
@@ -354,6 +358,11 @@ namespace WOP.Tasks {
         j.AddTask(task.CloneNonDynamicStuff());
       }
       return j;
+    }
+
+    public string SerializeMe()
+    {
+      return JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 
     public override string ToString()

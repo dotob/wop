@@ -167,7 +167,6 @@
     <Compile Include="Objects\ImageWorker.cs" />
     <Compile Include="Objects\IWorkItem.cs" />
     <Compile Include="Objects\ImageWI.cs" />
-    <Compile Include="Objects\SettingProperty.cs" />
     <Compile Include="Objects\StopWI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

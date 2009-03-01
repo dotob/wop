@@ -1,29 +1,42 @@
-﻿using System;
+using System;
+using System.Windows.Controls;
 using FTPLib;
+using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks
 {
+  [JsonObject(MemberSerialization.OptIn)]
   public class FTPTask : SkeletonTask
   {
     private readonly FTP ftplib = new FTP();
     private bool inited;
+    private UserControl ui;
 
     public FTPTask()
     {
       this.Name = "FTP";
-      this.UI = new FTPTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    public override UserControl UI
+    {
+      get
+      {
+        this.ui = new FTPTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
+    [JsonProperty]
     public string Server { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public string ServerDirectory { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public string UserName { get; set; }
-    [SettingProperty]
+    [JsonProperty]
     public string Password { get; set; }
 
     public override ITask CloneNonDynamicStuff()

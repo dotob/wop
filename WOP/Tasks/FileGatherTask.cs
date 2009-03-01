@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
+using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
+  [JsonObject(MemberSerialization.OptIn)]
   public class FileGatherTask : ITask {
     #region SORTSTYLE enum
 
@@ -38,27 +40,24 @@ namespace WOP.Tasks {
       this.DeleteSource = false;
       this.FilePattern = "*";
       this.SortStyles = new ObservableCollection<SORTSTYLE> {SORTSTYLE.NONE, SORTSTYLE.FILENAME, SORTSTYLE.DATEFILE, SORTSTYLE.DATEEXIF};
-
-      this.UI = new FileGatherTaskUI();
-      this.UI.DataContext = this;
     }
 
-    [SettingProperty]
+    [JsonProperty]
     public string SourceDirectory { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public string TargetDirectory { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public string FilePattern { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public bool RecurseDirectories { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public bool DeleteSource { get; set; }
 
-    [SettingProperty]
+    [JsonProperty]
     public SORTSTYLE SortOrder { get; set; }
 
     /// for binding a list to it...
@@ -86,7 +85,18 @@ namespace WOP.Tasks {
     public ITask NextTask { get; set; }
     public string Name { get; private set; }
 
-    public UserControl UI { get; set; }
+    private UserControl ui;
+    public UserControl UI
+    {
+      get
+      {
+        this.ui = new FileGatherTaskUI();
+        this.ui.DataContext = this;
+        return this.ui;
+      }
+      set { this.ui = value; }
+    }
+
     public Job ParentJob { get; set; }
 
     /// <summary>
