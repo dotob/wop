@@ -26,7 +26,10 @@ namespace WopConsole
     private static void TestJSON()
     {
       Job j = Job.CreateTestJob();
-      Console.Write(j.SerializeMe());
+      string json = Job.SerializeMe(j);
+      Console.Write(json);
+      Console.ReadKey();
+      Job jj = Job.DeserializeMe(json);
       Console.ReadKey();
     }
 

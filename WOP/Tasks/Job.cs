@@ -360,9 +360,14 @@ namespace WOP.Tasks {
       return j;
     }
 
-    public string SerializeMe()
+    public static string SerializeMe(Job j)
     {
-      return JsonConvert.SerializeObject(this, Formatting.Indented);
+      return JsonConvert.SerializeObject(j, Formatting.Indented);
+    }
+
+    public static Job DeserializeMe(string json)
+    {
+      return JsonConvert.DeserializeObject<Job>(json);
     }
 
     public override string ToString()
