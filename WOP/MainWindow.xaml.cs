@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using NLog;
+using WOP.Objects;
 using WOP.Tasks;
 
 namespace WOP
@@ -15,13 +17,16 @@ namespace WOP
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
     private readonly WOPSplash wopSplash = new WOPSplash();
-    private Job theJob;
-    private int til = 50;
+    private Job skeletonJob;
+    private ObservableCollection<Job> jobsToWorkOn = new ObservableCollection<Job>();
+    private const int stepsForSplashScreenFadeIn = 50;
 
     public MainWindow()
     {
       this.Visibility = Visibility.Hidden;
       this.InitializeComponent();
+      this.DataContext = this;
+
       this.bgSplasher.WorkerReportsProgress = true;
       this.bgSplasher.RunWorkerCompleted += this.bgSplasher_RunWorkerCompleted;
       this.bgSplasher.DoWork += this.bgSplasher_DoWork;
@@ -31,22 +36,28 @@ namespace WOP
       this.bgSplasher.RunWorkerAsync();
     }
 
+    public ObservableCollection<Job> JobsToWorkOn
+    {
+      get { return this.jobsToWorkOn; }
+      set { this.jobsToWorkOn = value; }
+    }
+
     private void bgSplasher_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-      this.wopSplash.Opacity = 1f / this.til * e.ProgressPercentage;
+      this.wopSplash.Opacity = 1f / stepsForSplashScreenFadeIn * e.ProgressPercentage;
     }
 
     private void bgSplasher_DoWork(object sender, DoWorkEventArgs e)
     {
-      bool withSplash = true;
+      bool withSplash = false;
       if (withSplash) {
         logger.Debug("show splashscreen");
-        for (int i = 0; i < this.til; i++) {
+        for (int i = 0; i < stepsForSplashScreenFadeIn; i++) {
           this.bgSplasher.ReportProgress(i);
           Thread.Sleep(10);
         }
         Thread.Sleep(2000);
-        for (int i = this.til / 2; i >= 0; i--) {
+        for (int i = stepsForSplashScreenFadeIn / 2; i >= 0; i--) {
           this.bgSplasher.ReportProgress(i * 2);
           Thread.Sleep(4);
         }
@@ -67,20 +78,12 @@ namespace WOP
 
     private void createDefaultJob()
     {
-      // configure tasks
-      this.theJob = new Job();
-      this.theJob.Name = "my first job";
-      this.theJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
-      this.theJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0}"});
-      this.theJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
-      this.theJob.AddTask(new ImageRotateTask {IsEnabled = false});
-      //theJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "web1", Password = "celeron" });
-      //snootheJob.AddTask(new GEOTagTask { IsEnabled = false });
+      this.skeletonJob = Job.CreateTestJob();
     }
 
     private void addJobUIs()
     {
-      foreach (ITask task in this.theJob.TasksList) {
+      foreach (ITask task in this.skeletonJob.TasksList) {
         if (task.UI != null) {
           task.UI.Margin = new Thickness(2);
           this.m_sp_tasks.Children.Add(task.UI);
@@ -88,14 +91,15 @@ namespace WOP
       }
     }
 
-    private void jj_JobFinished(object sender, EventArgs e)
-    {
-      MessageBox.Show("job finished");
-    }
-
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-      this.m_lb_jobs.Items.Add(this.theJob);
+      this.CloneJobAndAdd();
+    }
+
+    private void CloneJobAndAdd()
+    {
+      Job j = this.skeletonJob.CloneNonDynamicStuff();
+      this.JobsToWorkOn.Add(j);
     }
 
     private void m_mn_whitetheme_Checked(object sender, RoutedEventArgs e)

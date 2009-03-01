@@ -4,16 +4,13 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
-using MbUnit.Framework;
 using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
-namespace WOP.Tasks
-{
-  public class GEOTagTask : SkeletonTask
-  {
-    public ObservableCollection<FileInfo> GPXFiles = new ObservableCollection<FileInfo>();
+namespace WOP.Tasks {
+  public class GEOTagTask : SkeletonTask {
+    private ObservableCollection<FileInfo> gpxFiles = new ObservableCollection<FileInfo>();
     private bool inited;
     private List<WayPoint> wayPointList;
 
@@ -24,18 +21,34 @@ namespace WOP.Tasks
       this.UI.DataContext = this;
     }
 
+    [SettingProperty]
+    public ObservableCollection<FileInfo> GpxFiles
+    {
+      get { return this.gpxFiles; }
+      set { this.gpxFiles = value; }
+    }
+
+    public override ITask CloneNonDynamicStuff()
+    {
+      GEOTagTask t = new GEOTagTask();
+      t.IsEnabled = this.IsEnabled;
+      foreach (FileInfo file in this.gpxFiles) {
+        t.gpxFiles.Add(new FileInfo(file.FullName));
+      }
+      return t;
+    }
+
     public override bool Process(ImageWI iwi)
     {
       if (!this.inited) {
-        this.wayPointList = initGPXFiles(this.GPXFiles);
+        this.wayPointList = initGPXFiles(this.gpxFiles);
         this.inited = true;
       }
       // find 
       WayPoint wp = findWaypoint4Date(iwi.ExifDate ?? iwi.FileDate, this.wayPointList);
       if (wp != null) {
         ImageWorker.WriteGPSDateIntoImage(iwi.CurrentFile, null, wp);
-      }
-      else {
+      } else {
         // tell anyone we didnt found a suitable waypoint
       }
       return true;

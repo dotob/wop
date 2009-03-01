@@ -2,13 +2,11 @@
 using System.IO;
 using FreeImageAPI;
 
-namespace WOP.Objects
-{
+namespace WOP.Objects {
   /// <summary>
   /// this is a marker item so the job can tell the tasks that its end is reached
   /// </summary>
-  public class StopWI : IWorkItem
-  {
+  public class StopWI : IWorkItem {
     #region IWorkItem Members
 
     public string Name
@@ -54,13 +52,13 @@ namespace WOP.Objects
 
     public FIBITMAP ImageHandle
     {
-      get { throw new System.NotImplementedException(); }
-      set { throw new System.NotImplementedException(); }
+      get { throw new NotImplementedException(); }
+      set { throw new NotImplementedException(); }
     }
 
     public void CleanUp()
     {
-      throw new System.NotImplementedException();
+      // do notting
     }
 
     #endregion

@@ -20,6 +20,7 @@ namespace WOP.Tasks {
       this.UI.DataContext = this;
     }
 
+    [SettingProperty]
     public int SizeX
     {
       get { return this.sizeX; }
@@ -33,6 +34,7 @@ namespace WOP.Tasks {
       }
     }
 
+    [SettingProperty]
     public int SizeY
     {
       get { return this.sizeY; }
@@ -46,6 +48,7 @@ namespace WOP.Tasks {
       }
     }
 
+    [SettingProperty]
     public int SizePercent
     {
       get { return this.sizePercent; }
@@ -59,9 +62,25 @@ namespace WOP.Tasks {
       }
     }
 
+    [SettingProperty]
     public bool AbsoluteSizing { get; set; }
+    [SettingProperty]
     public bool PreserveOriginals { get; set; }
+    [SettingProperty]
     public string NameExtension { get; set; }
+
+    public override ITask CloneNonDynamicStuff()
+    {
+      ImageShrinkTask t = new ImageShrinkTask();
+      t.IsEnabled = this.IsEnabled;
+      t.AbsoluteSizing = this.AbsoluteSizing;
+      t.NameExtension = this.NameExtension;
+      t.PreserveOriginals = this.PreserveOriginals;
+      t.SizePercent = this.SizePercent;
+      t.SizeX = this.SizeX;
+      t.SizeY = this.SizeY;
+      return t;
+    }
 
     public override bool Process(ImageWI iwi)
     {

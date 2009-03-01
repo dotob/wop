@@ -2,10 +2,8 @@
 using System.IO;
 using FreeImageAPI;
 
-namespace WOP.Objects
-{
-  public class ImageWI : IWorkItem
-  {
+namespace WOP.Objects {
+  public class ImageWI : IWorkItem {
     private FIBITMAP? imageHandle;
 
     public ImageWI(FileInfo fi)
@@ -26,7 +24,7 @@ namespace WOP.Objects
 
     public string Name
     {
-      get { return OriginalFile.Name; }
+      get { return this.OriginalFile.Name; }
     }
 
     public int ProcessPosition { get; set; }
@@ -46,14 +44,18 @@ namespace WOP.Objects
         if (this.imageHandle == null) {
           this.imageHandle = ImageWorker.GetJPGImageHandle(this.CurrentFile);
         }
-        return (FIBITMAP)this.imageHandle;
+        return (FIBITMAP) this.imageHandle;
       }
       set { this.imageHandle = value; }
     }
 
     public void CleanUp()
     {
-    }
+      if (this.imageHandle != null) {
+        ImageWorker.CleanUpResources((FIBITMAP) this.imageHandle);
+        this.imageHandle = 0;
+      }
+    } 
 
     #endregion
 

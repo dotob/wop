@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
-using WOP.Objects;
+using WOP.Tasks;
 
-namespace WOP.Tasks
-{
+namespace WOP.Objects {
   public enum TASKPOS
   {
     FIRST,
@@ -29,14 +28,14 @@ namespace WOP.Tasks
   {
     Queue<IWorkItem> WorkItems { get; }
     ITask NextTask { get; set; }
-    string Name { get; set; }
+    string Name { get; }
     UserControl UI { get; set; }
     bool IsEnabled { get; set; }
     Job ParentJob { get; set; }
     TASKPOS Position { get; set; }
-    Dictionary<ITask, string> TaskInfos { get; set; }
     event EventHandler<TaskEventArgs> WIProcessed;
     void Start();
     void Pause();
+    ITask CloneNonDynamicStuff();
   }
 }

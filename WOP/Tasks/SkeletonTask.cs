@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using NLog;
 using WOP.Objects;
 
-namespace WOP.Tasks
-{
-  public abstract class SkeletonTask : ITask, INotifyPropertyChanged
-  {
+namespace WOP.Tasks {
+  public abstract class SkeletonTask : ITask, INotifyPropertyChanged {
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     // TODO: is this queue thread save??
@@ -22,20 +21,29 @@ namespace WOP.Tasks
       this.bgWorker.WorkerReportsProgress = true;
       this.bgWorker.WorkerSupportsCancellation = true;
       this.bgWorker.DoWork += this.bgWorker_DoWork;
+      this.bgWorker.RunWorkerCompleted += this.bgWorker_RunWorkerCompleted;
     }
 
-    public string Name { get; set; }
+    void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+      if(e.Error!=null) {
+        logger.Error(e.Error);
+        MessageBox.Show(e.Error.ToString(), "Error in JobQueue");
+      }
+    }
 
     public UserControl UI { get; set; }
 
+    public Dictionary<ITask, string> TaskInfos { get; set; }
+
     #region ITask Members
+
+    public string Name { get; protected set; }
 
     public Queue<IWorkItem> WorkItems
     {
       get { return this.workItems; }
     }
-
-    public Dictionary<ITask, string> TaskInfos { get; set; }
 
     public event EventHandler<TaskEventArgs> WIProcessed;
 
@@ -54,26 +62,6 @@ namespace WOP.Tasks
       }
     }
 
-    protected void RaisePropertyChangedEvent(string prop)
-    {
-      PropertyChangedEventHandler tmp = this.PropertyChanged;
-      if (tmp != null) {
-        tmp(this, new PropertyChangedEventArgs(prop));
-      }
-    }
-
-    string ITask.Name
-    {
-      get { return this.Name; }
-      set { this.Name = value; }
-    }
-
-    UserControl ITask.UI
-    {
-      get { return this.UI; }
-      set { this.UI = value; }
-    }
-
     public Job ParentJob { get; set; }
     public TASKPOS Position { get; set; }
 
@@ -88,9 +76,19 @@ namespace WOP.Tasks
       this.bgWorker.CancelAsync();
     }
 
+    public abstract ITask CloneNonDynamicStuff();
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     #endregion
+
+    protected void RaisePropertyChangedEvent(string prop)
+    {
+      PropertyChangedEventHandler tmp = this.PropertyChanged;
+      if (tmp != null) {
+        tmp(this, new PropertyChangedEventArgs(prop));
+      }
+    }
 
     private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
     {
@@ -107,17 +105,15 @@ namespace WOP.Tasks
               continue;
             }
             if (wi is ImageWI) {
-              var iwi = (ImageWI)wi;
+              var iwi = (ImageWI) wi;
               logger.Info("task {0} start processing: {1}", this.Name, iwi);
               this.Process(iwi);
             }
             // tell job (or anyone else) we have finised process
             this.throwProcessedEvent(wi);
-            // add procedd wi into next tasks queue
-            if (this.Position != TASKPOS.LAST && this.NextTask != null) {
-              lock (this.NextTask.WorkItems) {
-                this.NextTask.WorkItems.Enqueue(wi);
-              }
+            // add processed wi into next tasks queue
+            if (this.ParentJob != null) {
+              this.ParentJob.HandOverWorkItemToNextEnabledTask(this, wi);
             }
             // check if we want to stop
             if (wi is StopWI) {
@@ -125,10 +121,12 @@ namespace WOP.Tasks
               return;
             }
           }
-        }
-        catch (InvalidOperationException iex) {
-          // notting doto here...queue seems empty
+        } catch (InvalidOperationException iex) {
+          // notting todo here...queue seems empty
+          logger.Trace("{0} is waiting for its predecessor", this.Name);
           Thread.Sleep(2000);
+        } catch(Exception ex) {
+          logger.Error("{0} catched unexcepted exception: {1}", this.Name, ex);
         }
       }
     }

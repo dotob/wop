@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{856636A5-4B9B-4AF9-B9FB-3AF25B99EA65}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -37,15 +37,23 @@
   <ItemGroup>
     <Reference Include="FreeImageNET, Version=3.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\FreeImageNET.dll</HintPath>
+      <HintPath>libs\FreeImage\FreeImageNET.dll</HintPath>
     </Reference>
     <Reference Include="MbUnit.Framework, Version=2.4.2.130, Culture=neutral, PublicKeyToken=5e72ecd30bc408d5">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\MbUnit.Framework.dll</HintPath>
+      <HintPath>libs\mbunit\MbUnit.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\json\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=1.0.0.505, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>libs\NLog.dll</HintPath>
+      <HintPath>libs\nlog\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\nunit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -155,6 +163,7 @@
     <Compile Include="Objects\ImageWorker.cs" />
     <Compile Include="Objects\IWorkItem.cs" />
     <Compile Include="Objects\ImageWI.cs" />
+    <Compile Include="Objects\SettingProperty.cs" />
     <Compile Include="Objects\StopWI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -187,6 +196,7 @@
     <Compile Include="TasksUI\FileGatherTaskUI.xaml.cs">
       <DependentUpon>FileGatherTaskUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tasks\CleanResourcesTask.cs" />
     <Compile Include="Tasks\ImageRotateTask.cs" />
     <Compile Include="Tasks\GEOTagTask.cs" />
     <Compile Include="Tasks\ImageShrinkTask.cs" />
@@ -194,7 +204,7 @@
     <Compile Include="Tasks\FileGatherTask.cs" />
     <Compile Include="Tasks\FileRenamerTask.cs" />
     <Compile Include="Tasks\FTPTask.cs" />
-    <Compile Include="Tasks\ITask.cs" />
+    <Compile Include="Objects\ITask.cs" />
     <Compile Include="Tasks\Job.cs" />
     <Compile Include="Objects\StartWI.cs" />
     <Compile Include="Util\WayPoint.cs" />

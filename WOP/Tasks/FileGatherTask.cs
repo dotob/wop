@@ -8,14 +8,11 @@ using NLog;
 using WOP.Objects;
 using WOP.TasksUI;
 
-namespace WOP.Tasks
-{
-  public class FileGatherTask : ITask
-  {
+namespace WOP.Tasks {
+  public class FileGatherTask : ITask {
     #region SORTSTYLE enum
 
-    public enum SORTSTYLE
-    {
+    public enum SORTSTYLE {
       NONE,
       FILENAME,
       DATEFILE,
@@ -27,6 +24,7 @@ namespace WOP.Tasks
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     private bool isEnabled;
+    private TASKPOS position;
     private Queue<ImageWI> workItems;
 
     public FileGatherTask()
@@ -45,12 +43,25 @@ namespace WOP.Tasks
       this.UI.DataContext = this;
     }
 
+    [SettingProperty]
     public string SourceDirectory { get; set; }
+
+    [SettingProperty]
     public string TargetDirectory { get; set; }
+
+    [SettingProperty]
     public string FilePattern { get; set; }
+
+    [SettingProperty]
     public bool RecurseDirectories { get; set; }
+
+    [SettingProperty]
     public bool DeleteSource { get; set; }
+
+    [SettingProperty]
     public SORTSTYLE SortOrder { get; set; }
+
+    /// for binding a list to it...
     public ObservableCollection<SORTSTYLE> SortStyles { get; set; }
 
     #region ITask Members
@@ -73,12 +84,25 @@ namespace WOP.Tasks
 
     public Queue<IWorkItem> WorkItems { get; private set; }
     public ITask NextTask { get; set; }
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
     public UserControl UI { get; set; }
     public Job ParentJob { get; set; }
-    public TASKPOS Position { get; set; }
-    public Dictionary<ITask, string> TaskInfos { get; set; }
+
+    /// <summary>
+    /// this task can only bee at first position
+    /// </summary>
+    public TASKPOS Position
+    {
+      get { return this.position; }
+      set
+      {
+        if (value != TASKPOS.FIRST) {
+          throw new ArgumentException("Der FileGatherTask kann nur an erster Stelle eines Jobs kommen.", "Position");
+        }
+        this.position = value;
+      }
+    }
 
     public event EventHandler<TaskEventArgs> WIProcessed;
 
@@ -91,6 +115,19 @@ namespace WOP.Tasks
     public void Pause()
     {
       this.bgWorker.CancelAsync();
+    }
+
+    public ITask CloneNonDynamicStuff()
+    {
+      FileGatherTask t = new FileGatherTask();
+      t.IsEnabled = this.IsEnabled;
+      t.SourceDirectory = this.SourceDirectory;
+      t.TargetDirectory = this.TargetDirectory;
+      t.RecurseDirectories = this.RecurseDirectories;
+      t.SortOrder = this.SortOrder;
+      t.FilePattern = this.FilePattern;
+      t.DeleteSource = this.DeleteSource;
+      return t;
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -158,36 +195,27 @@ namespace WOP.Tasks
             if (this.DeleteSource) {
               File.Delete(wi.OriginalFile.FullName);
             }
-            // hand them over to next task
-            if (this.NextTask != null) {
-              lock (this.NextTask.WorkItems) {
-                EventHandler<TaskEventArgs> temp = this.WIProcessed;
-                if (temp != null) {
-                  temp(this, new TaskEventArgs(this, wi));
-                }
-                this.NextTask.WorkItems.Enqueue(wi);
-              }
+            // tell any interest that we processed a wi
+            EventHandler<TaskEventArgs> temp = this.WIProcessed;
+            if (temp != null) {
+              temp(this, new TaskEventArgs(this, wi));
             }
-          }
-          catch (Exception ex) {
+            this.ParentJob.HandOverWorkItemToNextEnabledTask(this, wi);
+          } catch (Exception ex) {
             logger.ErrorException(string.Format("error while copying file {0} to: {1}", wi.OriginalFile.Name, nuFile), ex);
           }
         }
       }
       if (!this.bgWorker.CancellationPending) {
         // remember the stopwi item at the end
-        if (this.NextTask != null) {
-          lock (this.NextTask.WorkItems) {
-            this.NextTask.WorkItems.Enqueue(new StopWI());
-          }
-        }
+        this.ParentJob.HandOverWorkItemToNextEnabledTask(this, new StopWI());
       }
     }
 
     public static int CompareByFileDate(ImageWI a, ImageWI b)
     {
       if (a != null && b != null && a.FileDate != null && b.FileDate != null) {
-        return ((DateTime)a.FileDate).CompareTo((DateTime)b.FileDate);
+        return ((DateTime) a.FileDate).CompareTo((DateTime) b.FileDate);
       }
       return 0;
     }
@@ -195,7 +223,7 @@ namespace WOP.Tasks
     public static int CompareByExifDate(ImageWI a, ImageWI b)
     {
       if (a != null && b != null && a.ExifDate != null && b.ExifDate != null) {
-        return ((DateTime)a.ExifDate).CompareTo((DateTime)b.ExifDate);
+        return ((DateTime) a.ExifDate).CompareTo((DateTime) b.ExifDate);
       }
       return 0;
     }

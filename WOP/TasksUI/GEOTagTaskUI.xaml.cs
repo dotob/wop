@@ -19,7 +19,7 @@ namespace WOP.TasksUI
     {
       var task = this.DataContext as GEOTagTask;
       if (task != null) {
-        task.GPXFiles.Add(new FileInfo(this.gpxFile.Text));
+        task.GpxFiles.Add(new FileInfo(this.gpxFile.Text));
       }
     }
 
@@ -29,7 +29,7 @@ namespace WOP.TasksUI
       if (task != null) {
         var s = this.gpxFileList.SelectedItem as FileInfo;
         if (s != null) {
-          task.GPXFiles.Remove(s);
+          task.GpxFiles.Remove(s);
         }
       }
     }

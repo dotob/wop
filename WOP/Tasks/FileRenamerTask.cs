@@ -3,11 +3,8 @@ using System.IO;
 using WOP.Objects;
 using WOP.TasksUI;
 
-namespace WOP.Tasks
-{
-  public class FileRenamerTask : SkeletonTask
-  {
-
+namespace WOP.Tasks {
+  public class FileRenamerTask : SkeletonTask {
     public FileRenamerTask()
     {
       this.Name = "Umbenennen";
@@ -15,7 +12,16 @@ namespace WOP.Tasks
       this.UI.DataContext = this;
     }
 
+    [SettingProperty]
     public string RenamePattern { get; set; }
+
+    public override ITask CloneNonDynamicStuff()
+    {
+      FileRenamerTask t = new FileRenamerTask();
+      t.IsEnabled = this.IsEnabled;
+      t.RenamePattern = this.RenamePattern;
+      return t;
+    }
 
     public override bool Process(ImageWI iwi)
     {
@@ -31,8 +37,7 @@ namespace WOP.Tasks
         // save current file location
         iwi.CurrentFile = new FileInfo(nuName);
         success = true;
-      }
-      catch (Exception ex) {
+      } catch (Exception ex) {
         logger.ErrorException(string.Format("error while moving (renaming) file {0} to: {1}", iwi.CurrentFile.Name, nuName), ex);
       }
 

@@ -1,28 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using NLog;
 using WOP.Objects;
-using Size=System.Drawing.Size;
 
 namespace WOP.Tasks {
   public class Job : INotifyPropertyChanged {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof (Job));
     public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof (Job));
+    private BitmapSource currentWorkItemThumbnail;
+    private int finishedWorkItemCount;
     private bool isFinished;
     private Visibility isFinishedVisible;
     private bool isProcessing;
     private IWorkItem lastFinishedWI = new StartWI();
+    private string processInfoString;
     private int progress;
     private int totalWorkItemCount;
-    private int finishedWorkItemCount;
-    private BitmapSource currentWorkItemThumbnail;
 
     public Job()
     {
@@ -61,6 +60,19 @@ namespace WOP.Tasks {
         }
         this.isProcessing = value;
         this.RaisePropertyChangedEvent("IsProcessing");
+      }
+    }
+
+    public string ProcessInfoString
+    {
+      get { return this.processInfoString; }
+      set
+      {
+        if (this.processInfoString == value) {
+          return;
+        }
+        this.processInfoString = value;
+        this.RaisePropertyChangedEvent("ProcessInfoString");
       }
     }
 
@@ -128,8 +140,7 @@ namespace WOP.Tasks {
       get { return this.finishedWorkItemCount; }
       set
       {
-        if (this.finishedWorkItemCount == value)
-        {
+        if (this.finishedWorkItemCount == value) {
           return;
         }
         this.finishedWorkItemCount = value;
@@ -145,8 +156,7 @@ namespace WOP.Tasks {
       get { return this.currentWorkItemThumbnail; }
       set
       {
-        if (this.currentWorkItemThumbnail == value)
-        {
+        if (this.currentWorkItemThumbnail == value) {
           return;
         }
         this.currentWorkItemThumbnail = value;
@@ -178,6 +188,7 @@ namespace WOP.Tasks {
       this.IsProcessing = true;
       if (this.TasksList != null) {
         logger.Info("start job: {0}", this.Name);
+        this.ProcessInfoString = string.Format("Lese Dateien ein...");
         for (int i = this.TasksList.Count - 1; i >= 0; i--) {
           ITask t = this.TasksList[i];
           if (t.IsEnabled) {
@@ -192,8 +203,32 @@ namespace WOP.Tasks {
       this.IsProcessing = false;
       if (this.TasksList != null) {
         logger.Info("pause job: {0}", this.Name);
+        this.ProcessInfoString = string.Format("Pausiere");
         foreach (ITask task in this.TasksList) {
           task.Pause();
+        }
+      }
+    }
+
+    public void HandOverWorkItemToNextEnabledTask(ITask t, IWorkItem wi)
+    {
+      if (t != null && wi != null) {
+        ITask nextTask = null;
+        IEnumerable<ITask> enabledTasks = this.TasksList.Where(x => x.IsEnabled);
+        bool found = false;
+        foreach (ITask task in enabledTasks) {
+          if (found) {
+            nextTask = task;
+            break;
+          }
+          if (task == t) {
+            found = true;
+          }
+        }
+        if (nextTask != null) {
+          lock (nextTask.WorkItems) {
+            nextTask.WorkItems.Enqueue(wi);
+          }
         }
       }
     }
@@ -255,28 +290,24 @@ namespace WOP.Tasks {
 
     public static Job CreateTestJob()
     {
-      var j = new Job();
-      var fgt = new FileGatherTask();
-      fgt.SourceDirectory = @"..\..\..\IM\pixweniger";
-      fgt.TargetDirectory = @"c:\tmp";
-      fgt.SortOrder = FileGatherTask.SORTSTYLE.FILENAME;
-      fgt.RecurseDirectories = true;
-      fgt.FilePattern = "*jpg";
-      j.AddTask(fgt);
-
-      var frt = new FileRenamerTask();
-      frt.RenamePattern = "bastiTest_{0}";
-      j.AddTask(frt);
-
-      j.AddTask(new ImageRotateTask());
-      j.AddTask(new ImageShrinkTask());
-
-      return j;
+      // configure tasks
+      Job skeletonJob = new Job();
+      skeletonJob.Name = "my first job";
+      skeletonJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
+      skeletonJob.AddTask(new FileRenamerTask {IsEnabled = false, RenamePattern = "bastitest_{0}"});
+      skeletonJob.AddTask(new ImageShrinkTask {IsEnabled = false, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
+      skeletonJob.AddTask(new ImageRotateTask {IsEnabled = false});
+//      skeletonJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "", Password = "" });
+//      skeletonJob.AddTask(new GEOTagTask { IsEnabled = false });
+      skeletonJob.AddTask(new CleanResourcesTask {IsEnabled = true});
+      return skeletonJob;
     }
 
     private void lastTaskHasProcessedWI(object sender, TaskEventArgs e)
     {
       logger.Info("last task {0} hast processed WI: {1}", e.Task.Name, e.WorkItem.Name);
+
+      this.ProcessInfoString = string.Format("Bearbeite: {0}", e.WorkItem.Name);
 
       // filegathertask will fill workitems
       // whats this for?????
@@ -296,7 +327,7 @@ namespace WOP.Tasks {
       }
 
       // set progress
-      this.Progress = (int)((this.FinishedWorkItems.Count * 1f / this.TotalWorkItemCount) * 100);
+      this.Progress = (int) ((this.FinishedWorkItems.Count*1f/this.TotalWorkItemCount)*100);
 
       // listen for last wi
       if (e.WorkItem is StopWI) {
@@ -308,6 +339,20 @@ namespace WOP.Tasks {
           temp(this, EventArgs.Empty);
         }
       }
+    }
+
+    /// <summary>
+    /// works only on jobs that 
+    /// </summary>
+    /// <returns></returns>
+    public Job CloneNonDynamicStuff()
+    {
+      Job j = new Job();
+      j.Name = this.Name;
+      foreach (ITask task in this.TasksList) {
+        j.AddTask(task.CloneNonDynamicStuff());
+      }
+      return j;
     }
 
     public override string ToString()

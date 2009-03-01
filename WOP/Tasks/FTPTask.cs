@@ -17,10 +17,25 @@ namespace WOP.Tasks
       this.UI.DataContext = this;
     }
 
+    [SettingProperty]
     public string Server { get; set; }
+    [SettingProperty]
     public string ServerDirectory { get; set; }
+    [SettingProperty]
     public string UserName { get; set; }
+    [SettingProperty]
     public string Password { get; set; }
+
+    public override ITask CloneNonDynamicStuff()
+    {
+      FTPTask t = new FTPTask();
+      t.IsEnabled = this.IsEnabled;
+      t.Server = this.Server;
+      t.ServerDirectory = this.ServerDirectory;
+      t.UserName = this.UserName;
+      t.Password = this.Password;
+      return t;
+    }
 
     public override bool Process(ImageWI iwi)
     {
