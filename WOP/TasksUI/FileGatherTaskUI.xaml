@@ -82,6 +82,7 @@
                            VerticalAlignment="Center"
                            Style="{DynamicResource wop_tb}" />
                 <TextBox x:Name="filePattern"
+                         Text="{Binding FilePattern}"
                          VerticalAlignment="Center"
                          Width="80" />
                 <TextBlock Text="Sortierung:"

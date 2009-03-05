@@ -71,7 +71,7 @@
                  Foreground="Green"
                  FontWeight="Bold"
                  Visibility="{Binding Path=IsFinishedVisible}"
-                 HorizontalAlignment="Center">Finished</TextBlock>
+                 HorizontalAlignment="Center">Fertig</TextBlock>
 
       <Button Grid.Column="0"
               Grid.Row="6"
