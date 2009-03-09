@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using NLog;
 using WOP.Objects;
 using WOP.Tasks;
 
-namespace WOP
-{
+namespace WOP {
   /// <summary>
   /// Interaktionslogik für MainWindow.xaml
   /// </summary>
-  public partial class MainWindow : Window
-  {
+  public partial class MainWindow : Window {
+    private const int stepsForSplashScreenFadeIn = 50;
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
     private readonly WOPSplash wopSplash = new WOPSplash();
-    private Job skeletonJob;
     private ObservableCollection<Job> jobsToWorkOn = new ObservableCollection<Job>();
-    private const int stepsForSplashScreenFadeIn = 50;
+    private Job skeletonJob;
 
     public MainWindow()
     {
@@ -44,7 +42,7 @@ namespace WOP
 
     private void bgSplasher_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-      this.wopSplash.Opacity = 1f / stepsForSplashScreenFadeIn * e.ProgressPercentage;
+      this.wopSplash.Opacity = 1f/stepsForSplashScreenFadeIn*e.ProgressPercentage;
     }
 
     private void bgSplasher_DoWork(object sender, DoWorkEventArgs e)
@@ -57,8 +55,8 @@ namespace WOP
           Thread.Sleep(10);
         }
         Thread.Sleep(2000);
-        for (int i = stepsForSplashScreenFadeIn / 2; i >= 0; i--) {
-          this.bgSplasher.ReportProgress(i * 2);
+        for (int i = stepsForSplashScreenFadeIn/2; i >= 0; i--) {
+          this.bgSplasher.ReportProgress(i*2);
           Thread.Sleep(4);
         }
       }
@@ -119,6 +117,17 @@ namespace WOP
           App.MainApp.ActivateBlackTheme();
         }
         this.m_mn_whitetheme.IsChecked = false;
+      }
+    }
+
+    private void deletethejob_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      FrameworkElement fe = e.OriginalSource as FrameworkElement;
+      if (fe != null) {
+        Job job = fe.Tag as Job;
+        if (job != null) {
+          this.jobsToWorkOn.Remove(job);
+        }
       }
     }
   }

@@ -13,8 +13,9 @@ namespace WOP.Tasks {
   [JsonObject(MemberSerialization.OptIn)]
   public class Job : INotifyPropertyChanged {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-    public static readonly RoutedCommand PauseJobCommand = new RoutedCommand("PauseJobCommand", typeof (Job));
-    public static readonly RoutedCommand StartJobCommand = new RoutedCommand("StartJobCommand", typeof (Job));
+    public static readonly RoutedCommand PauseJob = new RoutedCommand("PauseJobCommand", typeof (Job));
+    public static readonly RoutedCommand StartJob = new RoutedCommand("StartJobCommand", typeof(Job));
+    public static readonly RoutedCommand DeleteJob = new RoutedCommand("DeleteJobCommand", typeof(Job));
     private BitmapSource currentWorkItemThumbnail;
     private int finishedWorkItemCount;
     private bool isFinished;
@@ -373,6 +374,11 @@ namespace WOP.Tasks {
     public override string ToString()
     {
       return string.Format("{0}:{1} Tasks, WI:{2}/{3}", this.Name, this.TasksList.Count, this.FinishedWorkItems.Count, this.TotalWorkItemCount);
+    }
+
+    public void DeleteMe()
+    {
+      
     }
   }
 }

@@ -18,6 +18,7 @@ namespace WOP.Tasks
     {
       this.Name = "Speicher aufräumen";
     }
+
     public override UserControl UI
     {
       get
@@ -25,6 +26,21 @@ namespace WOP.Tasks
         return null;
       }
       set {  }
+    }
+
+    /// <summary>
+    /// this task can only bee at first position
+    /// </summary>
+    public new TASKPOS Position
+    {
+      get { return base.Position; }
+      set
+      {
+        if (value != TASKPOS.LAST){
+          throw new ArgumentException("Der CleanResourcesTask kann nur an letzter Stelle eines Jobs kommen.", "Position");
+        }
+        base.Position = value;
+      }
     }
 
     public override ITask CloneNonDynamicStuff()

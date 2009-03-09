@@ -7,9 +7,14 @@
         Loaded="Window_Loaded"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:TasksUI="clr-namespace:WOP.TasksUI"
+        xmlns:Tasks="clr-namespace:WOP.Tasks"
         mc:Ignorable="d"
         Icon="wop.png">
+  <Window.CommandBindings>
+    <CommandBinding x:Name="deletethejob"
+                    Command="{x:Static Tasks:Job.DeleteJob}"
+                    Executed="deletethejob_Executed"></CommandBinding>
+  </Window.CommandBindings>
   <Grid Style="{StaticResource myGrid}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />

@@ -147,7 +147,7 @@ namespace WOP.Tasks {
     public void bgWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       this.gatherFiles();
-      this.copyItems();
+      this.copyOrMoveItems();
     }
 
     private void gatherFiles()
@@ -192,25 +192,18 @@ namespace WOP.Tasks {
       }
     }
 
-    private void copyItems()
+    private void copyOrMoveItems()
     {
       foreach (ImageWI wi in this.workItems) {
         if (!this.bgWorker.CancellationPending) {
           string nuFile = Path.Combine(this.TargetDirectory, wi.OriginalFile.Name);
           try {
-            File.Copy(wi.CurrentFile.FullName, nuFile, true);
+            this.copyOrMoveOneItem(wi, nuFile);
+
             // set currentfile info
             wi.CurrentFile = new FileInfo(nuFile);
-            // do we want to delete?
-            if (this.DeleteSource) {
-              File.Delete(wi.OriginalFile.FullName);
-            }
-            // tell any interest that we processed a wi
-            EventHandler<TaskEventArgs> temp = this.WIProcessed;
-            if (temp != null) {
-              temp(this, new TaskEventArgs(this, wi));
-            }
-            this.ParentJob.HandOverWorkItemToNextEnabledTask(this, wi);
+
+            this.finishedProcessing(wi);
           } catch (Exception ex) {
             logger.ErrorException(string.Format("error while copying file {0} to: {1}", wi.OriginalFile.Name, nuFile), ex);
           }
@@ -220,6 +213,28 @@ namespace WOP.Tasks {
         // remember the stopwi item at the end
         this.ParentJob.HandOverWorkItemToNextEnabledTask(this, new StopWI());
       }
+    }
+
+    private void copyOrMoveOneItem(ImageWI wi, string nuFile) {
+      // do we want to delete? if yes move i good (performs better if on the same disk...)
+      if (this.DeleteSource) {
+        // check if file exists....eed to delete it first...
+        if(File.Exists(nuFile)) {
+          File.Delete(nuFile);
+        }
+        File.Move(wi.CurrentFile.FullName, nuFile);
+      } else {
+        File.Copy(wi.CurrentFile.FullName, nuFile, true);
+      }
+    }
+
+    private void finishedProcessing(ImageWI wi) {
+      // tell any interest that we processed a wi
+      EventHandler<TaskEventArgs> temp = this.WIProcessed;
+      if (temp != null) {
+        temp(this, new TaskEventArgs(this, wi));
+      }
+      this.ParentJob.HandOverWorkItemToNextEnabledTask(this, wi);
     }
 
     public static int CompareByFileDate(ImageWI a, ImageWI b)

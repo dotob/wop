@@ -1,26 +1,42 @@
 ﻿<UserControl x:Class="WOP.JobListTemplate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Tasks="clr-namespace:WOP.Tasks">
+  <UserControl.CommandBindings>
+    <CommandBinding x:Name="pausethejob"
+                    Command="{x:Static Tasks:Job.PauseJob}"
+                    CanExecute="pausethejob_CanExecute"
+                    Executed="pausethejob_Executed"></CommandBinding>
+    <CommandBinding x:Name="startthejob"
+                    Command="{x:Static Tasks:Job.StartJob}"
+                    CanExecute="startthejob_CanExecute"
+                    Executed="startthejob_Executed"></CommandBinding>
+  </UserControl.CommandBindings>
   <Border Style="{DynamicResource myBorder}">
-    <Grid>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-      </Grid.RowDefinitions>
+    <StackPanel>
+      <Button HorizontalAlignment="Right"
+              Tag="{Binding}"
+              Command="{x:Static Tasks:Job.DeleteJob}"
+              Width="5">X</Button>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"></ColumnDefinition>
+          <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-      <TextBlock Style="{DynamicResource bigTextLabel}"
-                 Grid.Column="0"
-                 Grid.Row="0"
-                 Text="Name:" />
+        <TextBlock Style="{DynamicResource bigTextLabel}"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Text="Name:" />
       <TextBlock Style="{DynamicResource bigTextValue}"
                  Grid.Column="1"
                  Grid.Row="0"
@@ -76,14 +92,15 @@
       <Button Grid.Column="0"
               Grid.Row="6"
               Content="Start"
-              Click="StartButton_Click"
+              Command="{x:Static Tasks:Job.StartJob}"
               IsEnabled="True" />
       <Button Grid.Column="1"
               Grid.Row="6"
               Content="Pause"
-              Click="PauseButton_Click"
+              Command="{x:Static Tasks:Job.PauseJob}"
               IsEnabled="True" />
 
     </Grid>
+    </StackPanel>
   </Border>
 </UserControl>
