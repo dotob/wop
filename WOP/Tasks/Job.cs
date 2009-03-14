@@ -318,9 +318,9 @@ namespace WOP.Tasks {
       skeletonJob.Name = "my first job";
       skeletonJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
       skeletonJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0:000}"});
-      skeletonJob.AddTask(new DirSorterTask { IsEnabled = true, DirectoryFillCount = 2, DirectoryPattern = "test_{0:000}"});
       skeletonJob.AddTask(new ImageShrinkTask { IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb" });
-      skeletonJob.AddTask(new ImageRotateTask {IsEnabled = false});
+      skeletonJob.AddTask(new DirSorterTask { IsEnabled = true, DirectoryFillCount = 2, DirectoryPattern = "test_{0:000}" });
+      skeletonJob.AddTask(new ImageRotateTask { IsEnabled = false });
 //      skeletonJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "", Password = "" });
 //      skeletonJob.AddTask(new GEOTagTask { IsEnabled = false });
       skeletonJob.AddTask(new CleanResourcesTask {IsEnabled = true});

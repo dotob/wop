@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 using WOP.TasksUI;
+using WOP.Util;
 
 namespace WOP.Tasks {
   [JsonObject(MemberSerialization.OptIn)]
@@ -194,6 +195,8 @@ namespace WOP.Tasks {
 
     private void copyOrMoveItems()
     {
+      Utils.garanteeDirExists(TargetDirectory);
+
       foreach (ImageWI wi in this.workItems) {
         if (!this.bgWorker.CancellationPending) {
           string nuFile = Path.Combine(this.TargetDirectory, wi.OriginalFile.Name);

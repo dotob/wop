@@ -13,7 +13,7 @@ namespace WOP.Util
 
     public static string AugmentFilename(this FileInfo fi, string augmentWith)
     {
-      return Path.Combine(fi.DirectoryName, string.Format("{0}{1}{2}", fi.Name, augmentWith, fi.Extension));
+      return Path.Combine(fi.DirectoryName, string.Format("{0}{1}{2}", fi.NameWithoutExtension(), augmentWith, fi.Extension));
     }
 
     public static FileInfo GetFileFromDialog(string initialDir)
@@ -47,6 +47,13 @@ namespace WOP.Util
       bm.Sekunden = ((inDegrees - bm.Grad) * 60 - bm.Minuten) * 60;
       bm.Plus = inDegrees >= 0;
       return bm;
+    }
+
+    public static void garanteeDirExists(string directory)
+    {
+      if (!Directory.Exists(directory)) {
+        Directory.CreateDirectory(directory);
+      }
     }
   }
 }

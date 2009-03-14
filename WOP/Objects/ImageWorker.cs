@@ -49,6 +49,12 @@ namespace WOP.Objects {
       return dib;
     }
 
+    /// <summary>
+    /// shrinks a given image to the given filename
+    /// </summary>
+    /// <param name="dib"></param>
+    /// <param name="fileOut"></param>
+    /// <param name="nuSize"></param>
     public static void ShrinkImageFI(FIBITMAP dib, FileInfo fileOut, Size nuSize)
     {
       ShrinkImageFI(dib, fileOut, nuSize, stdFilter, stdQuality);

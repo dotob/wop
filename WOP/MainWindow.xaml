@@ -86,6 +86,7 @@
     <StackPanel Grid.Row="3"
                 Grid.Column="1"
                 Orientation="Horizontal">
+      <TextBlock Style="{DynamicResource wop_tb}">Verarbeitung:</TextBlock>
       <RadioButton IsChecked="True" Checked="SequentialButtonChecked" Unchecked="SequentialButtonUnChecked">Sequentiell</RadioButton>
       <RadioButton >Parallel</RadioButton>
     </StackPanel>

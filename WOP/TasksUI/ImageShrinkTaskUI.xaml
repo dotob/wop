@@ -74,7 +74,7 @@
                   Orientation="Horizontal">
         <CheckBox x:Name="preserveOriginals"
                   IsChecked="{Binding Path=PreserveOriginals}"
-                  Margin="0 0 10 0"
+                  Margin="3 0 10 0"
                   VerticalAlignment="Center">
           <CheckBox.ToolTip>
             Originale werden behalten und Verkleinerungen unter erweitertem Namen abgespeichert
@@ -92,6 +92,16 @@
                  MinWidth="80"
                  IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
                  VerticalAlignment="Center" />
+        <CheckBox 
+                          IsChecked="{Binding Path=HandoverOriginal}"
+                          Margin="10 0 10 0"
+                          VerticalAlignment="Center">
+          <CheckBox.ToolTip>
+            Originale werden an den nächsten Task weitergeleitet. 
+            Ist diese Option deaktiviert, so werden die verkleinerten Bilder weitergereicht.
+          </CheckBox.ToolTip>
+          Originale weiterreichen
+        </CheckBox>
       </StackPanel>
     </Grid>
   </Expander>

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Controls;
+using FreeImageAPI;
 using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
@@ -77,10 +78,15 @@ namespace WOP.Tasks {
 
     [JsonProperty]
     public bool AbsoluteSizing { get; set; }
+
     [JsonProperty]
     public bool PreserveOriginals { get; set; }
+
     [JsonProperty]
     public string NameExtension { get; set; }
+
+    [JsonProperty]
+    public bool HandoverOriginal { get; set; }
 
     public override ITask CloneNonDynamicStuff()
     {
@@ -90,6 +96,7 @@ namespace WOP.Tasks {
       t.NameExtension = this.NameExtension;
       t.PreserveOriginals = this.PreserveOriginals;
       t.SizePercent = this.SizePercent;
+      t.HandoverOriginal = this.HandoverOriginal;
       t.SizeX = this.SizeX;
       t.SizeY = this.SizeY;
       return t;
@@ -98,10 +105,35 @@ namespace WOP.Tasks {
     public override bool Process(ImageWI iwi)
     {
       try {
-        FileInfo ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename("_tmp_"));
-        ImageWorker.ShrinkImageFI(iwi.ImageHandle, ftmp, this.calcNewSize(iwi));
-        File.Delete(iwi.CurrentFile.FullName);
-        File.Move(ftmp.FullName, iwi.CurrentFile.FullName);
+        if (this.PreserveOriginals) {
+          FileInfo ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename(this.NameExtension));
+          // save shrinked version of image to file
+          FIBITMAP shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
+          ImageWorker.SaveJPGImageHandle(shrinkedDib, ftmp);
+          // now we have the original and the shrinked version on disk
+          // check which version should be handed over to the next task
+          if (!this.HandoverOriginal) {
+            // after this the smaller image is the new current
+            ImageWorker.CleanUpResources(iwi.ImageHandle);
+            // set it the new current
+            iwi.ImageHandle = shrinkedDib;
+            iwi.CurrentFile = ftmp;
+          } else {
+            // handle for shrinked version is not needed anymore
+            ImageWorker.CleanUpResources(shrinkedDib);
+          }
+        } else {
+          // create shrinked image in memory
+          FIBITMAP shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
+          // cleanup old current handle
+          ImageWorker.CleanUpResources(iwi.ImageHandle);
+          // set shrinked version the new current
+          iwi.ImageHandle = shrinkedDib;
+          // delete original file
+          File.Delete(iwi.CurrentFile.FullName);
+          // save shrinked image to disk
+          ImageWorker.SaveJPGImageHandle(iwi.ImageHandle, iwi.CurrentFile);
+        }
       } catch (Exception ex) {
         logger.ErrorException(string.Format("error while shrinking file {0}", iwi.CurrentFile.Name), ex);
       }
