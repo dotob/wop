@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using System.Xml;
 using NLog;
 
@@ -52,6 +53,13 @@ namespace WOP
         Application.Current.Resources.MergedDictionaries.Remove(blackTheme);
         Application.Current.Resources.MergedDictionaries.Add(whiteTheme);
       }
+    }
+
+    private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+      logger.ErrorException("uncought exception:", e.Exception);
+      MessageBox.Show(e.Exception.Message, "Unerwarteteter Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+      e.Handled = true;
     }
   }
 }
