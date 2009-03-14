@@ -13,30 +13,6 @@ namespace WOP {
       this.InitializeComponent();
     }
 
-    private void StartButton_Click(object sender, RoutedEventArgs e)
-    {
-      var j = this.DataContext as Job;
-      if (j != null) {
-        j.Start();
-      }
-    }
-
-    private void PauseButton_Click(object sender, RoutedEventArgs e)
-    {
-      var j = this.DataContext as Job;
-      if (j != null) {
-        j.Pause();
-      }
-    }
-
-    private void XButton_Click(object sender, RoutedEventArgs e)
-    {
-      var j = this.DataContext as Job;
-      if (j != null) {
-        j.DeleteMe();
-      }
-    }
-
     private void pausethejob_CanExecute(object sender, CanExecuteRoutedEventArgs e)
     {
       var j = this.DataContext as Job;
@@ -50,22 +26,6 @@ namespace WOP {
       var j = this.DataContext as Job;
       if (j != null) {
         j.Pause();
-      }
-    }
-
-    private void startthejob_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-    {
-      var j = this.DataContext as Job;
-      if (j != null && !j.IsFinished && !j.IsProcessing) {
-        e.CanExecute = true;
-      }
-    }
-
-    private void startthejob_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
-      var j = this.DataContext as Job;
-      if (j != null) {
-        j.Start();
       }
     }
   }

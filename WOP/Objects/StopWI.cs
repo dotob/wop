@@ -11,7 +11,7 @@ namespace WOP.Objects {
 
     public string Name
     {
-      get { return "StopItem"; }
+      get { return "Job beendet"; }
     }
 
     public int ProcessPosition

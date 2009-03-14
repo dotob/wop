@@ -1,7 +1,11 @@
 ﻿<UserControl x:Class="WOP.TasksUI.ImageShrinkTaskUI"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:Tasks="clr-namespace:WOP.Tasks">
+             xmlns:Tasks="clr-namespace:WOP.Tasks"
+             xmlns:Util="clr-namespace:WOP.Util">
+  <UserControl.Resources>
+    <Util:BoolToOppositeBoolConverter x:Key="oppositeConverter" />
+  </UserControl.Resources>
   <Expander IsExpanded="{Binding Path=IsEnabled}">
     <Expander.Header>
       <TextBlock Text="{Binding Name}"
@@ -71,7 +75,12 @@
         <CheckBox x:Name="preserveOriginals"
                   IsChecked="{Binding Path=PreserveOriginals}"
                   Margin="0 0 10 0"
-                  VerticalAlignment="Center">Originale behalten</CheckBox>
+                  VerticalAlignment="Center">
+          <CheckBox.ToolTip>
+            Originale werden behalten und Verkleinerungen unter erweitertem Namen abgespeichert
+          </CheckBox.ToolTip>
+          Originale behalten
+        </CheckBox>
         <TextBlock Text="Thumb-Namen erweitern um:"
                    IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
                    Grid.Column="0"
@@ -81,6 +90,7 @@
                    Style="{DynamicResource wop_tb}" />
         <TextBox Text="{Binding Path=NameExtension}"
                  MinWidth="80"
+                 IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
                  VerticalAlignment="Center" />
       </StackPanel>
     </Grid>

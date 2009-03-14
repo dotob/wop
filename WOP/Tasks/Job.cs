@@ -25,6 +25,7 @@ namespace WOP.Tasks {
     private string processInfoString;
     private int progress;
     private int totalWorkItemCount;
+    private bool isEnqueued;
 
     public Job()
     {
@@ -91,6 +92,23 @@ namespace WOP.Tasks {
         }
         this.isFinished = value;
         this.RaisePropertyChangedEvent("IsFinished");
+      }
+    }
+
+    public bool IsEnqueued
+    {
+      get { return this.isEnqueued; }
+      set
+      {
+        if (this.isEnqueued == value)
+        {
+          return;
+        }
+        this.isEnqueued = value;
+        if(this.isEnqueued) {
+          this.ProcessInfoString = string.Format("Warte auf Ausführung...");
+        }
+        this.RaisePropertyChangedEvent("IsEnqueued");
       }
     }
 

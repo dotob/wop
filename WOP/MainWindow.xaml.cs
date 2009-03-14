@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
@@ -11,12 +13,15 @@ namespace WOP {
   /// <summary>
   /// Interaktionslogik für MainWindow.xaml
   /// </summary>
-  public partial class MainWindow : Window {
+  public partial class MainWindow : Window, INotifyPropertyChanged {
     private const int stepsForSplashScreenFadeIn = 50;
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgSplasher = new BackgroundWorker();
     private readonly WOPSplash wopSplash = new WOPSplash();
+    private bool executeSequential = true;
+    private Queue<Job> jobQueue = new Queue<Job>();
     private ObservableCollection<Job> jobsToWorkOn = new ObservableCollection<Job>();
+    private Job processingJob;
     private Job skeletonJob;
 
     public MainWindow()
@@ -39,6 +44,25 @@ namespace WOP {
       get { return this.jobsToWorkOn; }
       set { this.jobsToWorkOn = value; }
     }
+
+    public bool ExecuteSequential
+    {
+      get { return this.executeSequential; }
+      set
+      {
+        if (this.executeSequential == value) {
+          return;
+        }
+        this.executeSequential = value;
+        this.RaisePropertyChangedEvent("ExecuteSequential");
+      }
+    }
+
+    #region INotifyPropertyChanged Members
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    #endregion
 
     private void bgSplasher_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
@@ -129,6 +153,77 @@ namespace WOP {
           this.jobsToWorkOn.Remove(job);
         }
       }
+    }
+
+    private void startthejob_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+      FrameworkElement fe = e.OriginalSource as FrameworkElement;
+      if (fe != null) {
+        var j = fe.DataContext as Job;
+        // only a not processing, not enqueued and not finished job can be started
+        if (j != null && !j.IsFinished && !j.IsProcessing && !j.IsEnqueued) {
+          e.CanExecute = true;
+        }
+      }
+    }
+
+    private void startthejob_Executed(object sender, ExecutedRoutedEventArgs e)
+    {
+      FrameworkElement fe = e.OriginalSource as FrameworkElement;
+      if (fe != null) {
+        var j = fe.DataContext as Job;
+        if (j != null) {
+          if (this.ExecuteSequential) {
+            // queue job...
+            this.jobQueue.Enqueue(j);
+            j.IsEnqueued = true;
+            j.JobFinished += this.whenJobIsFinished;
+            this.removeJobAndStartNextJobInQueue();
+          } else {
+            j.Start();
+          }
+        }
+      }
+    }
+
+    private void whenJobIsFinished(object sender, EventArgs e)
+    {
+      this.processingJob = null;
+      this.removeJobAndStartNextJobInQueue();
+    }
+
+    private void removeJobAndStartNextJobInQueue()
+    {
+      if (this.processingJob == null) {
+        try {
+          Job j = this.jobQueue.Dequeue();
+          this.processingJob = j;
+          logger.Info("start job {0} is first in queue and none is processing", j);
+          j.Start();
+        } catch (Exception) {
+          logger.Info("no next job to start");
+        }
+      } else {
+        logger.Info("job enqueued. there is still an active Job");
+      }
+    }
+
+    private void RaisePropertyChangedEvent(string lastfinishedwi)
+    {
+      PropertyChangedEventHandler tmp = this.PropertyChanged;
+      if (tmp != null) {
+        tmp(this, new PropertyChangedEventArgs(lastfinishedwi));
+      }
+    }
+
+    private void SequentialButtonChecked(object sender, RoutedEventArgs e)
+    {
+      this.ExecuteSequential = true;
+    }
+
+    private void SequentialButtonUnChecked(object sender, RoutedEventArgs e)
+    {
+      this.ExecuteSequential = false;
     }
   }
 }

@@ -2,7 +2,54 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:wop="clr-namespace:WOP" >
 
-    <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
+  <!-- SimpleStyles: TextBox -->
+
+  <Style TargetType="{x:Type TextBox}">
+    <Setter Property="SnapsToDevicePixels"
+            Value="True" />
+    <Setter Property="OverridesDefaultStyle"
+            Value="True" />
+    <Setter Property="KeyboardNavigation.TabNavigation"
+            Value="None" />
+    <Setter Property="FocusVisualStyle"
+            Value="{x:Null}" />
+    <Setter Property="MinWidth"
+            Value="120" />
+    <!--<Setter Property="MinHeight"
+            Value="20" />-->
+    <Setter Property="AllowDrop"
+            Value="true" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type TextBoxBase}">
+          <Border Name="Border"
+                  CornerRadius="2"
+                  Padding="2"
+                  Background="#FFFFFF"
+                  BorderBrush="#888888"
+                  BorderThickness="1">
+            <ScrollViewer Margin="0"
+                          x:Name="PART_ContentHost" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+              <Setter TargetName="Border"
+                      Property="Background"
+                      Value="#EEEEEE" />
+              <Setter TargetName="Border"
+                      Property="BorderBrush"
+                      Value="#EEEEEE" />
+              <Setter Property="Foreground"
+                      Value="#888888" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="IsTabStop" Value="false"/>

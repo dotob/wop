@@ -26,8 +26,15 @@ namespace WOP.Tasks {
 
     [JsonProperty]
     public bool PreserveOriginals { get; set; }
+
+    private string nameExtension = "_rotated";
+
     [JsonProperty]
-    public string NameExtension { get; set; }
+    public string NameExtension
+    {
+      get { return this.nameExtension; }
+      set { this.nameExtension = value; }
+    }
 
     public override ITask CloneNonDynamicStuff()
     {

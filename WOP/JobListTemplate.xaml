@@ -7,10 +7,7 @@
                     Command="{x:Static Tasks:Job.PauseJob}"
                     CanExecute="pausethejob_CanExecute"
                     Executed="pausethejob_Executed"></CommandBinding>
-    <CommandBinding x:Name="startthejob"
-                    Command="{x:Static Tasks:Job.StartJob}"
-                    CanExecute="startthejob_CanExecute"
-                    Executed="startthejob_Executed"></CommandBinding>
+
   </UserControl.CommandBindings>
   <Border Style="{DynamicResource myBorder}">
     <StackPanel>
