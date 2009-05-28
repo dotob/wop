@@ -5,19 +5,18 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class Job : INotifyPropertyChanged {
+    public static readonly RoutedCommand DeleteJob = new RoutedCommand("DeleteJobCommand", typeof (Job));
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
     public static readonly RoutedCommand PauseJob = new RoutedCommand("PauseJobCommand", typeof (Job));
-    public static readonly RoutedCommand StartJob = new RoutedCommand("StartJobCommand", typeof(Job));
-    public static readonly RoutedCommand DeleteJob = new RoutedCommand("DeleteJobCommand", typeof(Job));
+    public static readonly RoutedCommand StartJob = new RoutedCommand("StartJobCommand", typeof (Job));
     private BitmapSource currentWorkItemThumbnail;
     private int finishedWorkItemCount;
+    private bool isEnqueued;
     private bool isFinished;
     private Visibility isFinishedVisible;
     private bool isProcessing;
@@ -25,7 +24,6 @@ namespace WOP.Tasks {
     private string processInfoString;
     private int progress;
     private int totalWorkItemCount;
-    private bool isEnqueued;
 
     public Job()
     {
@@ -35,7 +33,6 @@ namespace WOP.Tasks {
       this.IsFinishedVisible = Visibility.Hidden;
     }
 
-    [JsonProperty]
     public string Name { get; set; }
 
     public int Progress
@@ -51,7 +48,6 @@ namespace WOP.Tasks {
       }
     }
 
-    [JsonProperty]
     public List<ITask> TasksList { get; set; }
     public List<IWorkItem> GatheredWorkItems { get; set; }
     public List<IWorkItem> FinishedWorkItems { get; set; }
@@ -100,12 +96,11 @@ namespace WOP.Tasks {
       get { return this.isEnqueued; }
       set
       {
-        if (this.isEnqueued == value)
-        {
+        if (this.isEnqueued == value) {
           return;
         }
         this.isEnqueued = value;
-        if(this.isEnqueued) {
+        if (this.isEnqueued) {
           this.ProcessInfoString = string.Format("Warte auf Ausführung...");
         }
         this.RaisePropertyChangedEvent("IsEnqueued");
@@ -318,11 +313,12 @@ namespace WOP.Tasks {
       skeletonJob.Name = "my first job";
       skeletonJob.AddTask(new FileGatherTask {IsEnabled = true, DeleteSource = false, FilePattern = "*.jpg", RecurseDirectories = true, SourceDirectory = @"..\..\..\testdata\pixrotate", TargetDirectory = @"c:\tmp"});
       skeletonJob.AddTask(new FileRenamerTask {IsEnabled = true, RenamePattern = "bastitest_{0:000}"});
-      skeletonJob.AddTask(new ImageShrinkTask { IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb" });
-      skeletonJob.AddTask(new DirSorterTask { IsEnabled = true, DirectoryFillCount = 2, DirectoryPattern = "test_{0:000}" });
-      skeletonJob.AddTask(new ImageRotateTask { IsEnabled = false });
+      skeletonJob.AddTask(new ImageShrinkTask {IsEnabled = true, SizeX = 400, SizeY = 400, PreserveOriginals = true, NameExtension = "_thumb"});
+      skeletonJob.AddTask(new DirSorterTask {IsEnabled = true, DirectoryFillCount = 2, DirectoryPattern = "test_{0:000}"});
+      skeletonJob.AddTask(new ImageRotateTask {IsEnabled = false});
 //      skeletonJob.AddTask(new FTPTask() { IsEnabled = true, Server = "www.dotob.de", ServerDirectory = "files", UserName = "", Password = "" });
 //      skeletonJob.AddTask(new GEOTagTask { IsEnabled = false });
+      skeletonJob.AddTask(new SliceTask() {IsEnabled = false, XSliceCount = 5, YSliceCount = 5});
       skeletonJob.AddTask(new CleanResourcesTask {IsEnabled = true});
       return skeletonJob;
     }
@@ -379,24 +375,11 @@ namespace WOP.Tasks {
       return j;
     }
 
-    public static string SerializeMe(Job j)
-    {
-      return JsonConvert.SerializeObject(j, Formatting.Indented);
-    }
-
-    public static Job DeserializeMe(string json)
-    {
-      return JsonConvert.DeserializeObject<Job>(json);
-    }
-
     public override string ToString()
     {
       return string.Format("{0}:{1} Tasks, WI:{2}/{3}", this.Name, this.TasksList.Count, this.FinishedWorkItems.Count, this.TotalWorkItemCount);
     }
 
-    public void DeleteMe()
-    {
-      
-    }
+    public void DeleteMe() {}
   }
 }

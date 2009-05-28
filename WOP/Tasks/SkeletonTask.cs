@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 
@@ -40,10 +39,8 @@ namespace WOP.Tasks {
 
     #region ITask Members
 
-    [JsonProperty]
     public string Name { get; protected set; }
 
-    [JsonProperty]
     public Type TaskType
     {
       get
@@ -61,7 +58,6 @@ namespace WOP.Tasks {
 
     public ITask NextTask { get; set; }
 
-    [JsonProperty]
     public bool IsEnabled
     {
       get { return this.isEnabled; }
@@ -155,20 +151,4 @@ namespace WOP.Tasks {
     public abstract bool Process(ImageWI iwi);
   }
 
-  internal class JSONTaskConverter:JsonConverter {
-    public override void WriteJson(JsonWriter writer, object value)
-    {
-      
-    }
-
-    public override object ReadJson(JsonReader reader, Type objectType)
-    {
-      return string.Empty;
-    }
-
-    public override bool CanConvert(Type objectType)
-    {
-      return true;
-    }
-  }
 }

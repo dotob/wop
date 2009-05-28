@@ -3,13 +3,11 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Controls;
 using FreeImageAPI;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class ImageShrinkTask : SkeletonTask {
     private int sizePercent;
     private int sizeX;
@@ -34,7 +32,6 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public int SizeX
     {
       get { return this.sizeX; }
@@ -48,7 +45,6 @@ namespace WOP.Tasks {
       }
     }
 
-    [JsonProperty]
     public int SizeY
     {
       get { return this.sizeY; }
@@ -62,7 +58,6 @@ namespace WOP.Tasks {
       }
     }
 
-    [JsonProperty]
     public int SizePercent
     {
       get { return this.sizePercent; }
@@ -76,16 +71,9 @@ namespace WOP.Tasks {
       }
     }
 
-    [JsonProperty]
     public bool AbsoluteSizing { get; set; }
-
-    [JsonProperty]
     public bool PreserveOriginals { get; set; }
-
-    [JsonProperty]
     public string NameExtension { get; set; }
-
-    [JsonProperty]
     public bool HandoverOriginal { get; set; }
 
     public override ITask CloneNonDynamicStuff()

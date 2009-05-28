@@ -1,13 +1,11 @@
 using System;
 using System.Windows.Controls;
 using FTPLib;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks
 {
-  [JsonObject(MemberSerialization.OptIn)]
   public class FTPTask : SkeletonTask
   {
     private readonly FTP ftplib = new FTP();
@@ -30,13 +28,9 @@ namespace WOP.Tasks
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public string Server { get; set; }
-    [JsonProperty]
     public string ServerDirectory { get; set; }
-    [JsonProperty]
     public string UserName { get; set; }
-    [JsonProperty]
     public string Password { get; set; }
 
     public override ITask CloneNonDynamicStuff()

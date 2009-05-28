@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
-using Newtonsoft.Json;
 using WOP.Objects;
 
 namespace WOP.Tasks
@@ -11,7 +10,6 @@ namespace WOP.Tasks
   /// <summary>
   /// remove memory used by the resources
   /// </summary>
-  [JsonObject(MemberSerialization.OptIn)]
   public class CleanResourcesTask:SkeletonTask
   {
     public CleanResourcesTask()

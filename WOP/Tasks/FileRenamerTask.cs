@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Controls;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class FileRenamerTask : SkeletonTask {
     private UserControl ui;
 
@@ -26,7 +24,6 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public string RenamePattern { get; set; }
 
     public override ITask CloneNonDynamicStuff()
@@ -63,7 +60,7 @@ namespace WOP.Tasks {
       // check for exif date...so we dont need to read exif data when it is not needed
       if (this.RenamePattern.Contains("{2}")) {
         return string.Format(this.RenamePattern, iwi.ProcessPosition, iwi.FileDate, iwi.ExifDate) + iwi.OriginalFile.Extension;
-      }else {
+      } else {
         return string.Format(this.RenamePattern, iwi.ProcessPosition, iwi.FileDate, 0) + iwi.OriginalFile.Extension;
       }
     }

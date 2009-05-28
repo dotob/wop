@@ -1,10 +1,8 @@
 ﻿using System.Windows.Controls;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class ImageRotateTask : SkeletonTask {
     private UserControl ui;
 
@@ -24,12 +22,10 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public bool PreserveOriginals { get; set; }
 
     private string nameExtension = "_rotated";
 
-    [JsonProperty]
     public string NameExtension
     {
       get { return this.nameExtension; }

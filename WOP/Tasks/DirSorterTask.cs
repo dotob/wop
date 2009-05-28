@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Controls;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class DirSorterTask : SkeletonTask {
     private string currentDir;
     private string currentDirComplete;
@@ -30,10 +28,8 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public string DirectoryPattern { get; set; }
 
-    [JsonProperty]
     public int DirectoryFillCount { get; set; }
 
     public override ITask CloneNonDynamicStuff()

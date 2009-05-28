@@ -20,18 +20,8 @@ namespace WopConsole
       //BogenMass bm = Utils.ConvertToBogenMass(51.2345);
       //TestWriteGPS();
       //TestFormatting();
-      TestJSON();
     }
 
-    private static void TestJSON()
-    {
-      Job j = Job.CreateTestJob();
-      string json = Job.SerializeMe(j);
-      Console.Write(json);
-      Console.ReadKey();
-      Job jj = Job.DeserializeMe(json);
-      Console.ReadKey();
-    }
 
     private static void TestWriteGPS()
     {

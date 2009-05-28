@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Controls;
-using Newtonsoft.Json;
 using NLog;
 using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class FileGatherTask : ITask {
     #region SORTSTYLE enum
 
@@ -43,22 +41,11 @@ namespace WOP.Tasks {
       this.SortStyles = new ObservableCollection<SORTSTYLE> {SORTSTYLE.NONE, SORTSTYLE.FILENAME, SORTSTYLE.DATEFILE, SORTSTYLE.DATEEXIF};
     }
 
-    [JsonProperty]
     public string SourceDirectory { get; set; }
-
-    [JsonProperty]
     public string TargetDirectory { get; set; }
-
-    [JsonProperty]
     public string FilePattern { get; set; }
-
-    [JsonProperty]
     public bool RecurseDirectories { get; set; }
-
-    [JsonProperty]
     public bool DeleteSource { get; set; }
-
-    [JsonProperty]
     public SORTSTYLE SortOrder { get; set; }
 
     /// for binding a list to it...

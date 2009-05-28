@@ -5,13 +5,11 @@ using System.IO;
 using System.Windows.Controls;
 using System.Xml;
 using System.Xml.XPath;
-using Newtonsoft.Json;
 using WOP.Objects;
 using WOP.TasksUI;
 using WOP.Util;
 
 namespace WOP.Tasks {
-  [JsonObject(MemberSerialization.OptIn)]
   public class GEOTagTask : SkeletonTask {
     private ObservableCollection<FileInfo> gpxFiles = new ObservableCollection<FileInfo>();
     private bool inited;
@@ -34,7 +32,6 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
-    [JsonProperty]
     public ObservableCollection<FileInfo> GpxFiles
     {
       get { return this.gpxFiles; }
