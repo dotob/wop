@@ -1,13 +1,13 @@
-using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Controls;
-using FTPLib;
+using FreeImageAPI;
 using WOP.Objects;
 using WOP.TasksUI;
+using WOP.Util;
 
-namespace WOP.Tasks
-{
-  public class SliceTask : SkeletonTask
-  {
+namespace WOP.Tasks {
+  public class SliceTask : SkeletonTask {
     private bool inited;
     private UserControl ui;
 
@@ -41,6 +41,20 @@ namespace WOP.Tasks
 
     public override bool Process(ImageWI iwi)
     {
+      Size s = ImageWorker.GetCurrentSize(iwi);
+      Size tileSize = new Size();
+      tileSize.Width = s.Width/this.XSliceCount;
+      tileSize.Height = s.Height/this.YSliceCount;
+      int i = 0;
+      for (int x = 0; x < this.XSliceCount; x++) {
+        for (int y = 0; y < this.YSliceCount; y++) {
+          int left = x*tileSize.Width;
+          int top = y*tileSize.Height;
+          FIBITMAP aTile = FreeImage.Copy(iwi.ImageHandle, left, top, left + tileSize.Width, top + tileSize.Height);
+          ImageWorker.SaveJPGImageHandle(aTile, new FileInfo(iwi.CurrentFile.AugmentFilename(string.Format("_tile_{0:000}", i))));
+          i++;
+        }
+      }
       return true;
     }
   }
