@@ -294,7 +294,7 @@ namespace WOP.Objects {
       var EncParms = new EncoderParameters(1);
       ImageCodecInfo CodecInfo = GetEncoderInfo("image/jpeg");
 
-      // load the image to change 
+      // TODO: do not load the image to change again 
       Image img = Image.FromFile(fileIn);
       PropertyItem[] PropertyItems = img.PropertyItems;
       int oldArrLength = PropertyItems.Length;
