@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using WOP.Objects;
 
@@ -38,6 +39,14 @@ namespace WOP.Tasks
           throw new ArgumentException("Der CleanResourcesTask kann nur an letzter Stelle eines Jobs kommen.", "Position");
         }
         base.Position = value;
+      }
+    }
+
+    public override System.Windows.Visibility UIVisibility
+    {
+      get
+      {
+        return Visibility.Collapsed;
       }
     }
 

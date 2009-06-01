@@ -226,6 +226,7 @@
     <Compile Include="Tasks\Job.cs" />
     <Compile Include="Objects\StartWI.cs" />
     <Compile Include="Util\BoolToOppositeBoolConverter.cs" />
+    <Compile Include="Util\UIUtils.cs" />
     <Compile Include="Util\WayPoint.cs" />
     <Compile Include="Tests\IMTest.cs" />
     <Compile Include="Util\Utils.cs" />

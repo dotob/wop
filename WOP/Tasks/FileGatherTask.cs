@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using NLog;
 using WOP.Objects;
@@ -70,6 +71,11 @@ namespace WOP.Tasks {
           tmp(this, new PropertyChangedEventArgs("WorkingStyle"));
         }
       }
+    }
+
+    public Visibility UIVisibility
+    {
+      get { return Visibility.Visible;}
     }
 
     public bool IsEnabled

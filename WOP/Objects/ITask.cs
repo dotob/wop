@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using WOP.Tasks;
 
@@ -18,6 +19,7 @@ namespace WOP.Objects {
     COPYOUTPUT,
     COPYINPUT
   }
+
 
   public class TaskEventArgs : EventArgs
   {
@@ -41,6 +43,7 @@ namespace WOP.Objects {
     Job ParentJob { get; set; }
     TASKPOS Position { get; set; }
     TASKWORKINGSTYLE WorkingStyle { get; set; }
+    Visibility UIVisibility { get; }
     event EventHandler<TaskEventArgs> WIProcessed;
     void Start();
     void Pause();

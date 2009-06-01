@@ -55,6 +55,11 @@ namespace WOP.Tasks {
       }
     }
 
+    public virtual Visibility UIVisibility
+    {
+      get { return Visibility.Visible; }
+    }
+
     public event EventHandler<TaskEventArgs> WIProcessed;
 
     public ITask NextTask { get; set; }

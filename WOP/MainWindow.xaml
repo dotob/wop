@@ -71,9 +71,10 @@
     <ListBox x:Name="m_sp_tasks"
              Grid.Row="1"
              Grid.Column="0"
-             Grid.RowSpan="4"
+             Grid.RowSpan="3"
              Grid.IsSharedSizeScope="True"
              HorizontalContentAlignment="Stretch"
+             ScrollViewer.CanContentScroll="False"
              ItemTemplate="{StaticResource taskUITemplate}">
     </ListBox>
     <GridSplitter Grid.Row="1"

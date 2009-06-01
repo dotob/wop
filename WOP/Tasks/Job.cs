@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -29,7 +30,7 @@ namespace WOP.Tasks {
     {
       this.GatheredWorkItems = new List<IWorkItem>();
       this.FinishedWorkItems = new List<IWorkItem>();
-      this.TasksList = new List<ITask>();
+      this.TasksList = new ObservableCollection<ITask>();
       this.IsFinishedVisible = Visibility.Hidden;
     }
 
@@ -48,7 +49,7 @@ namespace WOP.Tasks {
       }
     }
 
-    public List<ITask> TasksList { get; set; }
+    public ObservableCollection<ITask> TasksList { get; set; }
     public List<IWorkItem> GatheredWorkItems { get; set; }
     public List<IWorkItem> FinishedWorkItems { get; set; }
 
@@ -381,5 +382,27 @@ namespace WOP.Tasks {
     }
 
     public void DeleteMe() {}
+
+    public void moveTaskUp(ITask task)
+    {
+      if (this.TasksList.Contains(task)) {
+        int idx = this.TasksList.IndexOf(task);
+        if (idx > 0) {
+          this.TasksList.Remove(task);
+          this.TasksList.Insert(--idx, task);
+        }
+      }
+    }
+
+    public void moveTaskDown(ITask task)
+    {
+      if (this.TasksList.Contains(task)) {
+        int idx = this.TasksList.IndexOf(task);
+        if (idx < this.TasksList.Count) {
+          this.TasksList.Remove(task);
+          this.TasksList.Insert(++idx, task);
+        }
+      }
+    }
   }
 }

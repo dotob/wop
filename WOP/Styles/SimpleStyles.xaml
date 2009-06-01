@@ -233,7 +233,7 @@
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <!--<Setter Property="MinHeight" Value="23"/>-->
-        <Setter Property="MinWidth" Value="75"/>
+        <!--<Setter Property="MinWidth" Value="75"/>-->
         <Setter Property="Margin" Value="2"/>
         <Setter Property="Template">
             <Setter.Value>
