@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="WOP.TasksUI.TaskUIContainer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Expander IsExpanded="{Binding IsEnabled}">
+    <Expander.Header>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"
+                            SharedSizeGroup="label"></ColumnDefinition>
+          <ColumnDefinition Width="*"
+                            SharedSizeGroup="notting"></ColumnDefinition>
+          <ColumnDefinition Width="Auto"
+                            SharedSizeGroup="upButton"></ColumnDefinition>
+          <ColumnDefinition Width="Auto"
+                            SharedSizeGroup="downButton"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="{Binding Name}"
+                   Grid.Column="0"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Style="{DynamicResource wop_tb_nobg}" />
+        <Button Grid.Column="2">up</Button>
+        <Button Grid.Column="3">down</Button>
+      </Grid>
+    </Expander.Header>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Button x:Name="flowButton" Click="flowButton_Click" Height="200">
+        <!--<Viewbox Stretch="Fill">-->
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.3*" />
+          </Grid.ColumnDefinitions>
+          <Path x:Name="flowButton_curvedTop"
+                Fill="{x:Null}"
+                Stretch="Fill"
+                Stroke="#FF000000"
+                Grid.Column="1"
+                Data="M22.256645,-3.9165364 C21.83512,80.392466 119.0607,80.392684 119.06026,164.09951"
+                Margin="-2.736,-3.325,-3.061,-2.772"
+                Grid.RowSpan="2"
+                StrokeThickness="6" />
+          <Path x:Name="flowButton_curvedBottom"
+                Margin="-2.736,-3.008,-3.061,-3.089"
+                Fill="{x:Null}"
+                Stretch="Fill"
+                Stroke="#FF000000"
+                StrokeThickness="6"
+                Data="M22.256645,-3.9165364 C21.83512,80.392466 119.0607,80.392684 119.06026,164.09951"
+                Grid.Column="1"
+                Grid.RowSpan="2"
+                RenderTransformOrigin="0.5,0.5"
+                Grid.Row="2">
+            <Path.RenderTransform>
+              <TransformGroup>
+                <ScaleTransform ScaleX="-1"
+                                ScaleY="1" />
+                <SkewTransform AngleX="0"
+                               AngleY="0" />
+                <RotateTransform Angle="0" />
+                <TranslateTransform X="0"
+                                    Y="0" />
+              </TransformGroup>
+            </Path.RenderTransform>
+          </Path>
+          <Path x:Name="flowButton_straightTop"
+                HorizontalAlignment="Right"
+                Margin="0,-4.053,-2.605,-2.789"
+                Width="6"
+                Fill="{x:Null}"
+                Stretch="Fill"
+                Stroke="#FF000000"
+                StrokeThickness="6"
+                Data="M22.105263,-1.0526316 L22.105263,135.78984"
+                Grid.RowSpan="2" />
+          <Path x:Name="flowButton_straightBottom"
+                HorizontalAlignment="Right"
+                Margin="0,-3.737,-2.605,-2.579"
+                Width="6"
+                Fill="{x:Null}"
+                Stretch="Fill"
+                Stroke="#FF000000"
+                StrokeThickness="6"
+                Grid.Row="2"
+                Data="M22.105263,135.26316 L22.105263,271.5791"
+                Grid.RowSpan="2" />
+        </Grid>
+        <!--</Viewbox>-->
+      </Button>
+      <ContentControl Grid.Column="1"
+                      Content="{Binding UI}">
+        <!-- CONTENT OF TASK HERE  -->
+      </ContentControl>
+    </Grid>
+  </Expander>
+</UserControl>
+

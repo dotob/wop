@@ -26,6 +26,8 @@ namespace WOP.Tasks {
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     private bool isEnabled;
     private TASKPOS position;
+    private UserControl ui;
+    private TASKWORKINGSTYLE workingStyle;
     private Queue<ImageWI> workItems;
 
     public FileGatherTask()
@@ -48,10 +50,27 @@ namespace WOP.Tasks {
     public bool DeleteSource { get; set; }
     public SORTSTYLE SortOrder { get; set; }
 
+
     /// for binding a list to it...
     public ObservableCollection<SORTSTYLE> SortStyles { get; set; }
 
     #region ITask Members
+
+    public TASKWORKINGSTYLE WorkingStyle
+    {
+      get { return this.workingStyle; }
+      set
+      {
+        if (this.workingStyle == value) {
+          return;
+        }
+        this.workingStyle = value;
+        PropertyChangedEventHandler tmp = this.PropertyChanged;
+        if (tmp != null) {
+          tmp(this, new PropertyChangedEventArgs("WorkingStyle"));
+        }
+      }
+    }
 
     public bool IsEnabled
     {
@@ -73,7 +92,6 @@ namespace WOP.Tasks {
     public ITask NextTask { get; set; }
     public string Name { get; private set; }
 
-    private UserControl ui;
     public UserControl UI
     {
       get
@@ -182,7 +200,7 @@ namespace WOP.Tasks {
 
     private void copyOrMoveItems()
     {
-      Utils.garanteeDirExists(TargetDirectory);
+      Utils.garanteeDirExists(this.TargetDirectory);
 
       foreach (ImageWI wi in this.workItems) {
         if (!this.bgWorker.CancellationPending) {
@@ -205,20 +223,27 @@ namespace WOP.Tasks {
       }
     }
 
-    private void copyOrMoveOneItem(ImageWI wi, string nuFile) {
+    private void copyOrMoveOneItem(ImageWI wi, string nuFile)
+    {
       // do we want to delete? if yes move i good (performs better if on the same disk...)
-      if (this.DeleteSource) {
-        // check if file exists....eed to delete it first...
-        if(File.Exists(nuFile)) {
-          File.Delete(nuFile);
+      // check if we want to move or copy to ourselve...
+      if (nuFile != wi.CurrentFile.FullName) {
+        if (this.DeleteSource) {
+          // check if file exists....eed to delete it first...
+          if (File.Exists(nuFile)) {
+            File.Delete(nuFile);
+          }
+          File.Move(wi.CurrentFile.FullName, nuFile);
+        } else {
+          File.Copy(wi.CurrentFile.FullName, nuFile, true);
         }
-        File.Move(wi.CurrentFile.FullName, nuFile);
       } else {
-        File.Copy(wi.CurrentFile.FullName, nuFile, true);
+        logger.Info("source and target are identical ({0}), do nothing", nuFile);
       }
     }
 
-    private void finishedProcessing(ImageWI wi) {
+    private void finishedProcessing(ImageWI wi)
+    {
       // tell any interest that we processed a wi
       EventHandler<TaskEventArgs> temp = this.WIProcessed;
       if (temp != null) {

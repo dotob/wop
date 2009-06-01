@@ -8,13 +8,13 @@ using NLog;
 using WOP.Objects;
 
 namespace WOP.Tasks {
-  //[JsonConverter(typeof(JSONTaskConverter))]
   public abstract class SkeletonTask : ITask, INotifyPropertyChanged {
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private readonly BackgroundWorker bgWorker = new BackgroundWorker();
     // TODO: is this queue thread save??
     private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
     private bool isEnabled;
+    private TASKWORKINGSTYLE workingStyle;
 
     protected SkeletonTask()
     {
@@ -25,33 +25,34 @@ namespace WOP.Tasks {
       this.bgWorker.RunWorkerCompleted += this.bgWorker_RunWorkerCompleted;
     }
 
-    void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-    {
-      if(e.Error!=null) {
-        logger.Error(e.Error);
-        MessageBox.Show(e.Error.ToString(), "Error in JobQueue");
-      }
-    }
-
-    public abstract UserControl UI { get; set; }
-
     public Dictionary<ITask, string> TaskInfos { get; set; }
-
-    #region ITask Members
-
-    public string Name { get; protected set; }
 
     public Type TaskType
     {
-      get
-      {
-        return this.GetType();
-      }
+      get { return this.GetType(); }
     }
+
+    #region ITask Members
+
+    public abstract UserControl UI { get; set; }
+    public string Name { get; protected set; }
 
     public Queue<IWorkItem> WorkItems
     {
       get { return this.workItems; }
+    }
+
+    public TASKWORKINGSTYLE WorkingStyle
+    {
+      get { return this.workingStyle; }
+      set
+      {
+        if (this.workingStyle == value) {
+          return;
+        }
+        this.workingStyle = value;
+        this.RaisePropertyChangedEvent("WorkingStyle");
+      }
     }
 
     public event EventHandler<TaskEventArgs> WIProcessed;
@@ -90,6 +91,14 @@ namespace WOP.Tasks {
     public event PropertyChangedEventHandler PropertyChanged;
 
     #endregion
+
+    private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+      if (e.Error != null) {
+        logger.Error(e.Error);
+        MessageBox.Show(e.Error.ToString(), "Error in JobQueue");
+      }
+    }
 
     protected void RaisePropertyChangedEvent(string prop)
     {
@@ -134,7 +143,7 @@ namespace WOP.Tasks {
           // notting todo here...queue seems empty
           logger.Trace("{0} is waiting for its predecessor", this.Name);
           Thread.Sleep(2000);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
           logger.Error("{0} catched unexcepted exception: {1}", this.Name, ex);
         }
       }
@@ -150,5 +159,4 @@ namespace WOP.Tasks {
 
     public abstract bool Process(ImageWI iwi);
   }
-
 }

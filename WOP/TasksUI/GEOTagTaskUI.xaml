@@ -1,33 +1,25 @@
 ﻿<UserControl x:Class="WOP.TasksUI.GEOTagTaskUI"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Expander IsExpanded="{Binding Path=IsEnabled}">
-    <Expander.Header>
-      <TextBlock Text="{Binding Name}"
-                 FontWeight="Bold"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Style="{DynamicResource wop_tb_nobg}" />
-        </Expander.Header>
-    <Grid Style="{StaticResource myGrid}">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-      </Grid.RowDefinitions>
-      <TextBlock Text="GEO-Tag-File:"
-                 Grid.Column="0"
-                 Grid.Row="0"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center"
-                 Style="{DynamicResource wop_tb}" />
+  <Grid Style="{StaticResource myGrid}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+    </Grid.RowDefinitions>
+    <TextBlock Text="GEO-Tag-File:"
+               Grid.Column="0"
+               Grid.Row="0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Style="{DynamicResource wop_tb}" />
             <TextBox Grid.Column="1"
                      Grid.Row="0"
                      MinWidth="200"
@@ -73,5 +65,4 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-  </Expander>
 </UserControl>

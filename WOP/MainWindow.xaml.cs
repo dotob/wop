@@ -105,12 +105,7 @@ namespace WOP {
 
     private void addJobUIs()
     {
-      foreach (ITask task in this.skeletonJob.TasksList) {
-        if (task.UI != null) {
-          task.UI.Margin = new Thickness(2);
-          this.m_sp_tasks.Children.Add(task.UI);
-        }
-      }
+      this.m_sp_tasks.ItemsSource = this.skeletonJob.TasksList;
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

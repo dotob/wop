@@ -1,33 +1,26 @@
 ﻿<UserControl x:Class="WOP.TasksUI.FileGatherTaskUI"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Expander IsExpanded="{Binding IsEnabled}">
-    <Expander.Header>
-      <TextBlock Text="Job"
-                 FontWeight="Bold"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Style="{DynamicResource wop_tb_nobg}" />
-        </Expander.Header>
-    <Grid Style="{StaticResource myGrid}">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition></RowDefinition>
-        <RowDefinition></RowDefinition>
-        <RowDefinition></RowDefinition>
-        <RowDefinition></RowDefinition>
-      </Grid.RowDefinitions>
+  <Grid Style="{StaticResource myGrid}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition></RowDefinition>
+      <RowDefinition></RowDefinition>
+      <RowDefinition></RowDefinition>
+      <RowDefinition></RowDefinition>
+      <RowDefinition></RowDefinition>
+    </Grid.RowDefinitions>
 
-      <TextBlock Text="Jobname:"
-                 Grid.Column="0"
-                 Grid.Row="0"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Style="{DynamicResource wop_tb}" />
+    <TextBlock Text="Jobname:"
+               Grid.Column="0"
+               Grid.Row="0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Style="{DynamicResource wop_tb}" />
             <TextBox x:Name="jobName"
                      Grid.Column="1"
                      Grid.Row="0"
@@ -77,6 +70,11 @@
                 <CheckBox Content="Quelldateien löschen"
                           VerticalAlignment="Center"
                           Margin="2, 2, 15, 2" />
+            </StackPanel> 
+            <StackPanel Grid.Column="0"
+                        Grid.Row="4"
+                        Grid.ColumnSpan="3"
+                        Orientation="Horizontal">
                 <TextBlock Text="Dateimuster:"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
@@ -93,5 +91,4 @@
                           SelectedItem="{Binding SortOrder}" />
             </StackPanel> 
         </Grid>
-  </Expander>
 </UserControl>

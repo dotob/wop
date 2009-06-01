@@ -6,96 +6,87 @@
   <UserControl.Resources>
     <Util:BoolToOppositeBoolConverter x:Key="oppositeConverter" />
   </UserControl.Resources>
-  <Expander IsExpanded="{Binding Path=IsEnabled}">
-    <Expander.Header>
-      <TextBlock Text="{Binding Name}"
-                 FontWeight="Bold"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Style="{DynamicResource wop_tb_nobg}" />
-    </Expander.Header>
-    <Grid Style="{StaticResource myGrid}">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-        <ColumnDefinition Width="Auto"></ColumnDefinition>
-        <ColumnDefinition Width="*"></ColumnDefinition>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="Auto"></RowDefinition>
-        <RowDefinition Height="Auto"></RowDefinition>
-      </Grid.RowDefinitions>
+  <Grid Style="{StaticResource myGrid}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+      <ColumnDefinition Width="Auto"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
 
-      <RadioButton Content="Neue Größe:"
-                   x:Name="pxSize"
-                   Grid.Column="0"
-                   Grid.Row="0"
-                   Grid.ColumnSpan="2"
-                   IsChecked="{Binding AbsoluteSizing}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center" />
-      <TextBox Text="{Binding Path=SizeX}"
-               Grid.Column="1"
-               Grid.Row="0"
-               IsEnabled="{Binding Path=IsChecked, ElementName=pxSize}"
-               VerticalAlignment="Center" />
-      <!--<TextBlock Text="x" Grid.Column="2" Grid.Row="0"  VerticalAlignment="Center"/>
+    <RadioButton Content="Neue Größe:"
+                 x:Name="pxSize"
+                 Grid.Column="0"
+                 Grid.Row="0"
+                 Grid.ColumnSpan="2"
+                 IsChecked="{Binding AbsoluteSizing}"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center" />
+    <TextBox Text="{Binding Path=SizeX}"
+             Grid.Column="1"
+             Grid.Row="0"
+             IsEnabled="{Binding Path=IsChecked, ElementName=pxSize}"
+             VerticalAlignment="Center" />
+    <!--<TextBlock Text="x" Grid.Column="2" Grid.Row="0"  VerticalAlignment="Center"/>
             <TextBox Text="{Binding Path=SizeY}" Grid.Column="3" Grid.Row="0"  VerticalAlignment="Center"/>-->
 
-      <RadioButton Content="Neue Größe %:"
-                   x:Name="percSize"
-                   Grid.Column="0"
-                   Grid.Row="1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center" />
-      <UniformGrid Grid.Column="1"
-                   Grid.Row="1"
-                   Grid.ColumnSpan="3"
-                   Columns="2"
-                   IsEnabled="{Binding Path=IsChecked, ElementName=percSize}">
-        <Slider Minimum="1"
-                Maximum="100"
-                SmallChange="1"
-                LargeChange="10"
+    <RadioButton Content="Neue Größe %:"
+                 x:Name="percSize"
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center" />
+    <UniformGrid Grid.Column="1"
+                 Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 Columns="2"
+                 IsEnabled="{Binding Path=IsChecked, ElementName=percSize}">
+      <Slider Minimum="1"
+              Maximum="100"
+              SmallChange="1"
+              LargeChange="10"
+              MinWidth="80"
+              TickPlacement="None"
+              Value="{Binding Path=SizePercent}" />
+      <TextBox  Grid.Column="3"
+                Grid.Row="0"
                 MinWidth="80"
-                TickPlacement="None"
-                Value="{Binding Path=SizePercent}" />
-        <TextBox  Grid.Column="3"
-                  Grid.Row="0"
-                  MinWidth="80"
-                  VerticalAlignment="Center"
-                  Text="{Binding Path=SizePercent, UpdateSourceTrigger=PropertyChanged}" />
-      </UniformGrid>
+                VerticalAlignment="Center"
+                Text="{Binding Path=SizePercent, UpdateSourceTrigger=PropertyChanged}" />
+    </UniformGrid>
 
-      <StackPanel Grid.Column="0"
-                  Grid.Row="2"
-                  Grid.ColumnSpan="4"
-                  Orientation="Horizontal">
-        <CheckBox x:Name="preserveOriginals"
-                  IsChecked="{Binding Path=PreserveOriginals}"
-                  Margin="3 0 10 0"
-                  VerticalAlignment="Center">
-          <CheckBox.ToolTip>
-            Originale werden behalten und Verkleinerungen unter erweitertem Namen abgespeichert
-          </CheckBox.ToolTip>
-          Originale behalten
-        </CheckBox>
-        <TextBlock Text="Thumb-Namen erweitern um:"
-                   IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
-                   Grid.Column="0"
-                   Grid.Row="1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Style="{DynamicResource wop_tb}" />
+    <StackPanel Grid.Column="0"
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Orientation="Horizontal">
+      <CheckBox x:Name="preserveOriginals"
+                IsChecked="{Binding Path=PreserveOriginals}"
+                Margin="3 0 10 0"
+                VerticalAlignment="Center">
+        <CheckBox.ToolTip>
+          Originale werden behalten und Verkleinerungen unter erweitertem Namen abgespeichert
+        </CheckBox.ToolTip>
+        Originale behalten
+      </CheckBox>
+      <TextBlock Text="Thumb-Namen erweitern um:"
+                 IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
+                 Grid.Column="0"
+                 Grid.Row="1"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Style="{DynamicResource wop_tb}" />
         <TextBox Text="{Binding Path=NameExtension}"
                  MinWidth="80"
                  IsEnabled="{Binding Path=IsChecked, ElementName=preserveOriginals}"
                  VerticalAlignment="Center" />
-        <CheckBox 
-                          IsChecked="{Binding Path=HandoverOriginal}"
-                          Margin="10 0 10 0"
-                          VerticalAlignment="Center">
+        <CheckBox IsChecked="{Binding Path=HandoverOriginal}"
+                  Margin="10 0 10 0"
+                  VerticalAlignment="Center">
           <CheckBox.ToolTip>
             Originale werden an den nächsten Task weitergeleitet. 
             Ist diese Option deaktiviert, so werden die verkleinerten Bilder weitergereicht.
@@ -103,6 +94,5 @@
           Originale weiterreichen
         </CheckBox>
       </StackPanel>
-    </Grid>
-  </Expander>
+  </Grid>
 </UserControl>

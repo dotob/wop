@@ -12,6 +12,13 @@ namespace WOP.Objects {
     LAST
   }
 
+  public enum TASKWORKINGSTYLE
+  {
+    STRAIGHT,
+    COPYOUTPUT,
+    COPYINPUT
+  }
+
   public class TaskEventArgs : EventArgs
   {
     public ITask Task;
@@ -33,6 +40,7 @@ namespace WOP.Objects {
     bool IsEnabled { get; set; }
     Job ParentJob { get; set; }
     TASKPOS Position { get; set; }
+    TASKWORKINGSTYLE WorkingStyle { get; set; }
     event EventHandler<TaskEventArgs> WIProcessed;
     void Start();
     void Pause();

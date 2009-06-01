@@ -8,8 +8,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Tasks="clr-namespace:WOP.Tasks"
+        xmlns:TasksUI="clr-namespace:WOP.TasksUI"
         mc:Ignorable="d"
         Icon="wop.png">
+  <Window.Resources>
+    <DataTemplate x:Key="taskUITemplate">
+      <TasksUI:TaskUIContainer />
+    </DataTemplate>
+  </Window.Resources>
   <Window.CommandBindings>
     <CommandBinding x:Name="deletethejob"
                     Command="{x:Static Tasks:Job.DeleteJob}"
@@ -62,14 +68,14 @@
       </MenuItem>
     </Menu>
 
-    <StackPanel Grid.Row="1"
-                Grid.Column="0"
-                Grid.RowSpan="4"
-                x:Name="m_sp_tasks"
-                CanVerticallyScroll="True">
-      <!--<TasksUI:FileGatherTaskUI HorizontalAlignment="Stretch"></TasksUI:FileGatherTaskUI>
-            <TasksUI:FileRenamerTaskUI HorizontalAlignment="Stretch"></TasksUI:FileRenamerTaskUI>-->
-    </StackPanel>
+    <ListBox x:Name="m_sp_tasks"
+             Grid.Row="1"
+             Grid.Column="0"
+             Grid.RowSpan="4"
+             Grid.IsSharedSizeScope="True"
+             HorizontalContentAlignment="Stretch"
+             ItemTemplate="{StaticResource taskUITemplate}">
+    </ListBox>
     <GridSplitter Grid.Row="1"
                   Grid.Column="0"
                   d:LayoutOverrides="GridBox" />
@@ -87,8 +93,10 @@
                 Grid.Column="1"
                 Orientation="Horizontal">
       <TextBlock Style="{DynamicResource wop_tb}">Verarbeitung:</TextBlock>
-      <RadioButton IsChecked="True" Checked="SequentialButtonChecked" Unchecked="SequentialButtonUnChecked">Sequentiell</RadioButton>
-      <RadioButton >Parallel</RadioButton>
+      <RadioButton IsChecked="True"
+                   Checked="SequentialButtonChecked"
+                   Unchecked="SequentialButtonUnChecked">Sequentiell</RadioButton>
+      <RadioButton>Parallel</RadioButton>
     </StackPanel>
     <StatusBar Grid.Row="4"
                Grid.Column="0"
