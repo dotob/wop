@@ -14,7 +14,7 @@ namespace WOP.Tasks {
     // TODO: is this queue thread save??
     private readonly Queue<IWorkItem> workItems = new Queue<IWorkItem>();
     private bool isEnabled;
-    private TASKWORKINGSTYLE workingStyle;
+    private TASKWORKINGSTYLE workingStyle =TASKWORKINGSTYLE.STRAIGHT;
 
     protected SkeletonTask()
     {
@@ -54,6 +54,12 @@ namespace WOP.Tasks {
         this.RaisePropertyChangedEvent("WorkingStyle");
       }
     }
+
+    public virtual TASKWORKINGSTYLE WorkingStyleConstraint
+    {
+      get { return TASKWORKINGSTYLE.ALL; }
+    }
+
 
     public virtual Visibility UIVisibility
     {

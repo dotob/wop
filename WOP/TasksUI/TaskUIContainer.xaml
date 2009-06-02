@@ -115,6 +115,13 @@
                     Data="M22.105263,135.26316 L22.105263,271.5791"
                     StrokeStartLineCap="Round"
                     StrokeEndLineCap="Round" />
+              <Rectangle x:Name="flowButton_rectangle"
+                         VerticalAlignment="Center"
+                         Height="50"
+                         Width="50"
+                         Fill="#FF000000"
+                         Stroke="#FF000000"
+                         Grid.RowSpan="4" />
             </Grid>
           </Viewbox>
         </Button>

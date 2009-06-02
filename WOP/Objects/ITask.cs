@@ -13,11 +13,13 @@ namespace WOP.Objects {
     LAST
   }
 
+  [Flags]
   public enum TASKWORKINGSTYLE
   {
-    STRAIGHT,
-    COPYOUTPUT,
-    COPYINPUT
+    STRAIGHT = 1,
+    COPYOUTPUT = 2,
+    COPYINPUT = 4,
+    ALL = 7
   }
 
 
@@ -43,6 +45,7 @@ namespace WOP.Objects {
     Job ParentJob { get; set; }
     TASKPOS Position { get; set; }
     TASKWORKINGSTYLE WorkingStyle { get; set; }
+    TASKWORKINGSTYLE WorkingStyleConstraint { get;}
     Visibility UIVisibility { get; }
     event EventHandler<TaskEventArgs> WIProcessed;
     void Start();

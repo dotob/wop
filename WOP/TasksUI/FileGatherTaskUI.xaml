@@ -67,9 +67,9 @@
                 <CheckBox Content="Unterverzeichnisse durchsuchen"
                           VerticalAlignment="Center"
                           Margin="2, 2, 5, 2" />
-                <CheckBox Content="Quelldateien löschen"
+                <!--<CheckBox Content="Quelldateien löschen"
                           VerticalAlignment="Center"
-                          Margin="2, 2, 15, 2" />
+                          Margin="2, 2, 15, 2" />-->
             </StackPanel> 
             <StackPanel Grid.Column="0"
                         Grid.Row="4"

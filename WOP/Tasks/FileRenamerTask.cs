@@ -26,6 +26,14 @@ namespace WOP.Tasks {
 
     public string RenamePattern { get; set; }
 
+    public override TASKWORKINGSTYLE WorkingStyleConstraint
+    {
+      get
+      {
+        return TASKWORKINGSTYLE.ALL;
+      }
+    }
+
     public override ITask CloneNonDynamicStuff()
     {
       FileRenamerTask t = new FileRenamerTask();
@@ -44,9 +52,17 @@ namespace WOP.Tasks {
           logger.Debug("file {0} already existed, so we remove it", nuName);
           File.Delete(nuName);
         }
-        File.Move(iwi.CurrentFile.FullName, nuName);
-        // save current file location
-        iwi.CurrentFile = new FileInfo(nuName);
+        // only in straight mode there is no copy
+        if (WorkingStyle == TASKWORKINGSTYLE.STRAIGHT) {
+          File.Move(iwi.CurrentFile.FullName, nuName);
+        } else {
+          File.Copy(iwi.CurrentFile.FullName, nuName);
+        }
+        // when straight or copyinput we need to let currentfile point to the new file
+        if (WorkingStyle != TASKWORKINGSTYLE.COPYOUTPUT) {
+          // save current file location
+          iwi.CurrentFile = new FileInfo(nuName);
+        }
         success = true;
       } catch (Exception ex) {
         logger.ErrorException(string.Format("error while moving (renaming) file {0} to: {1}", iwi.CurrentFile.Name, nuName), ex);

@@ -32,6 +32,11 @@ namespace WOP.Tasks {
       set { this.ui = value; }
     }
 
+    public override TASKWORKINGSTYLE WorkingStyleConstraint
+    {
+      get { return TASKWORKINGSTYLE.ALL; }
+    }
+
     public int SizeX
     {
       get { return this.sizeX; }
@@ -72,9 +77,7 @@ namespace WOP.Tasks {
     }
 
     public bool AbsoluteSizing { get; set; }
-    public bool PreserveOriginals { get; set; }
     public string NameExtension { get; set; }
-    public bool HandoverOriginal { get; set; }
 
     public override ITask CloneNonDynamicStuff()
     {
@@ -82,9 +85,7 @@ namespace WOP.Tasks {
       t.IsEnabled = this.IsEnabled;
       t.AbsoluteSizing = this.AbsoluteSizing;
       t.NameExtension = this.NameExtension;
-      t.PreserveOriginals = this.PreserveOriginals;
       t.SizePercent = this.SizePercent;
-      t.HandoverOriginal = this.HandoverOriginal;
       t.SizeX = this.SizeX;
       t.SizeY = this.SizeY;
       return t;
@@ -93,34 +94,43 @@ namespace WOP.Tasks {
     public override bool Process(ImageWI iwi)
     {
       try {
-        if (this.PreserveOriginals) {
-          FileInfo ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename(this.NameExtension));
-          // save shrinked version of image to file
-          FIBITMAP shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
-          ImageWorker.SaveJPGImageHandle(shrinkedDib, ftmp);
-          // now we have the original and the shrinked version on disk
-          // check which version should be handed over to the next task
-          if (!this.HandoverOriginal) {
+        FIBITMAP shrinkedDib;
+        FileInfo ftmp;
+        switch (this.WorkingStyle) {
+          case TASKWORKINGSTYLE.STRAIGHT:
+            // do not save. just shrink
+            // create shrinked image in memory
+            shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
+            // cleanup old current handle
+            ImageWorker.CleanUpResources(iwi.ImageHandle);
+            // set shrinked version the new current
+            iwi.ImageHandle = shrinkedDib;
+            break;
+          case TASKWORKINGSTYLE.COPYOUTPUT:
+            ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename(this.NameExtension));
+            // save shrinked version of image to file
+            shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
+            ImageWorker.SaveJPGImageHandle(shrinkedDib, ftmp);
+            // now we have the original and the shrinked version on disk
+            // check which version should be handed over to the next task
             // after this the smaller image is the new current
             ImageWorker.CleanUpResources(iwi.ImageHandle);
             // set it the new current
             iwi.ImageHandle = shrinkedDib;
             iwi.CurrentFile = ftmp;
-          } else {
+            break;
+          case TASKWORKINGSTYLE.COPYINPUT:
+            ftmp = new FileInfo(iwi.CurrentFile.AugmentFilename(this.NameExtension));
+            // save shrinked version of image to file
+            shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
+            ImageWorker.SaveJPGImageHandle(shrinkedDib, ftmp);
+            // now we have the original and the shrinked version on disk
+            // check which version should be handed over to the next task
             // handle for shrinked version is not needed anymore
             ImageWorker.CleanUpResources(shrinkedDib);
-          }
-        } else {
-          // create shrinked image in memory
-          FIBITMAP shrinkedDib = ImageWorker.GetShrinkedDIB(iwi.ImageHandle, this.calcNewSize(iwi));
-          // cleanup old current handle
-          ImageWorker.CleanUpResources(iwi.ImageHandle);
-          // set shrinked version the new current
-          iwi.ImageHandle = shrinkedDib;
-          // delete original file
-          File.Delete(iwi.CurrentFile.FullName);
-          // save shrinked image to disk
-          ImageWorker.SaveJPGImageHandle(iwi.ImageHandle, iwi.CurrentFile);
+            break;
+          default:
+            throw new ArgumentOutOfRangeException();
         }
       } catch (Exception ex) {
         logger.ErrorException(string.Format("error while shrinking file {0}", iwi.CurrentFile.Name), ex);

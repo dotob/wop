@@ -28,7 +28,7 @@ namespace WOP.Tasks {
     private bool isEnabled;
     private TASKPOS position;
     private UserControl ui;
-    private TASKWORKINGSTYLE workingStyle;
+    private TASKWORKINGSTYLE workingStyle = TASKWORKINGSTYLE.COPYOUTPUT;
     private Queue<ImageWI> workItems;
 
     public FileGatherTask()
@@ -66,6 +66,8 @@ namespace WOP.Tasks {
           return;
         }
         this.workingStyle = value;
+        // if this workingstyle is straight it means deletesource
+        this.DeleteSource = this.workingStyle == TASKWORKINGSTYLE.STRAIGHT;
         PropertyChangedEventHandler tmp = this.PropertyChanged;
         if (tmp != null) {
           tmp(this, new PropertyChangedEventArgs("WorkingStyle"));
@@ -73,9 +75,14 @@ namespace WOP.Tasks {
       }
     }
 
+    public TASKWORKINGSTYLE WorkingStyleConstraint
+    {
+      get { return TASKWORKINGSTYLE.STRAIGHT | TASKWORKINGSTYLE.COPYOUTPUT; }
+    }
+
     public Visibility UIVisibility
     {
-      get { return Visibility.Visible;}
+      get { return Visibility.Visible; }
     }
 
     public bool IsEnabled

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using WOP.Objects;
 using WOP.Tasks;
-using WOP.Util;
 
 namespace WOP.TasksUI {
   /// <summary>
@@ -37,19 +35,32 @@ namespace WOP.TasksUI {
         TASKWORKINGSTYLE newStyle = oldStyle;
         switch (oldStyle) {
           case TASKWORKINGSTYLE.STRAIGHT:
-            newStyle = TASKWORKINGSTYLE.COPYOUTPUT;
+            if (TASKWORKINGSTYLE.COPYOUTPUT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.COPYOUTPUT)) {
+              newStyle = TASKWORKINGSTYLE.COPYOUTPUT;
+            } else if (TASKWORKINGSTYLE.COPYINPUT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.COPYINPUT)) {
+              newStyle = TASKWORKINGSTYLE.COPYINPUT;
+            }
             break;
           case TASKWORKINGSTYLE.COPYOUTPUT:
-            newStyle = TASKWORKINGSTYLE.COPYINPUT;
+            if (TASKWORKINGSTYLE.COPYINPUT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.COPYINPUT)) {
+              newStyle = TASKWORKINGSTYLE.COPYINPUT;
+            } else if (TASKWORKINGSTYLE.STRAIGHT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.STRAIGHT)) {
+              newStyle = TASKWORKINGSTYLE.STRAIGHT;
+            }
+
             break;
           case TASKWORKINGSTYLE.COPYINPUT:
-            newStyle = TASKWORKINGSTYLE.STRAIGHT;
+            if (TASKWORKINGSTYLE.STRAIGHT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.STRAIGHT)) {
+              newStyle = TASKWORKINGSTYLE.STRAIGHT;
+            } else if (TASKWORKINGSTYLE.COPYOUTPUT == (task.WorkingStyleConstraint & TASKWORKINGSTYLE.COPYOUTPUT)) {
+              newStyle = TASKWORKINGSTYLE.COPYOUTPUT;
+            }
             break;
           default:
             throw new ArgumentOutOfRangeException();
         }
-        this.setButtonStyle(newStyle);
         task.WorkingStyle = newStyle;
+        this.setButtonStyle(task);
       }
     }
 
@@ -59,30 +70,36 @@ namespace WOP.TasksUI {
       ITask task = this.DataContext as ITask;
       if (task != null) {
         // cycle button around
-        this.setButtonStyle(task.WorkingStyle);
+        this.setButtonStyle(task);
       }
     }
 
-    private void setButtonStyle(TASKWORKINGSTYLE taskworkingstyle)
+    private void setButtonStyle(ITask task)
     {
-      switch (taskworkingstyle) {
+      switch (task.WorkingStyle) {
         case TASKWORKINGSTYLE.STRAIGHT:
           this.flowButton_curvedBottom.Visibility = Visibility.Hidden;
           this.flowButton_curvedTop.Visibility = Visibility.Hidden;
-          this.flowButton_straightTop.Visibility = Visibility.Visible;
           this.flowButton_straightBottom.Visibility = Visibility.Visible;
+          this.flowButton_straightTop.Visibility = Visibility.Visible;
+          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.flowButton.ToolTip = "Eingangsbild wird verändert und weitergegeben. Erstellt keine Kopie.";
           break;
         case TASKWORKINGSTYLE.COPYOUTPUT:
           this.flowButton_curvedBottom.Visibility = Visibility.Hidden;
           this.flowButton_curvedTop.Visibility = Visibility.Visible;
           this.flowButton_straightTop.Visibility = Visibility.Visible;
           this.flowButton_straightBottom.Visibility = Visibility.Visible;
+          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.flowButton.ToolTip = "Eingangsbild wird weitergegeben. Verändertes Bild wird gespeichert.";
           break;
         case TASKWORKINGSTYLE.COPYINPUT:
           this.flowButton_curvedBottom.Visibility = Visibility.Visible;
           this.flowButton_curvedTop.Visibility = Visibility.Visible;
           this.flowButton_straightTop.Visibility = Visibility.Visible;
           this.flowButton_straightBottom.Visibility = Visibility.Hidden;
+          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.flowButton.ToolTip = "Eingangsbild wird gespeichert. Verändertes Bild wird weitergegeben";
           break;
         default:
           throw new ArgumentOutOfRangeException("taskworkingstyle");
@@ -119,7 +136,6 @@ namespace WOP.TasksUI {
         Job j = task.ParentJob;
         j.moveTaskDown(task);
       }
-
     }
   }
 }

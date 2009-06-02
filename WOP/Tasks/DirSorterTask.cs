@@ -41,6 +41,14 @@ namespace WOP.Tasks {
       return t;
     }
 
+    public override TASKWORKINGSTYLE WorkingStyleConstraint
+    {
+      get
+      {
+        return TASKWORKINGSTYLE.ALL;
+      }
+    }
+
     public override bool Process(ImageWI iwi)
     {
       bool success = false;
@@ -50,7 +58,9 @@ namespace WOP.Tasks {
             // create new directory
             this.currentDir = this.createNewDirName();
             if (iwi.CurrentFile != null) {
-              this.currentDirComplete = Path.Combine(iwi.CurrentFile.DirectoryName, this.currentDir);
+              if (iwi.CurrentFile.DirectoryName != null) {
+                this.currentDirComplete = Path.Combine(iwi.CurrentFile.DirectoryName, this.currentDir);
+              }
               if (!Directory.Exists(currentDirComplete)) {
                 Directory.CreateDirectory(this.currentDirComplete);
               }
@@ -65,8 +75,23 @@ namespace WOP.Tasks {
               if (File.Exists(nuLocation)) {
                 File.Delete(nuLocation);
               }
-              File.Move(iwi.CurrentFile.FullName, nuLocation);
-              iwi.CurrentFile = new FileInfo(nuLocation);
+              // handle mode
+              switch (WorkingStyle) {
+                case TASKWORKINGSTYLE.STRAIGHT:
+                  File.Move(iwi.CurrentFile.FullName, nuLocation);
+                  break;
+                case TASKWORKINGSTYLE.COPYOUTPUT:
+                  File.Copy(iwi.CurrentFile.FullName, nuLocation);
+                  break;
+                case TASKWORKINGSTYLE.COPYINPUT:
+                  File.Copy(iwi.CurrentFile.FullName, nuLocation);
+                  // the handovered file is the file on the new location
+                  iwi.CleanUp();
+                  iwi.CurrentFile = new FileInfo(nuLocation);
+                  break;
+                default:
+                  throw new ArgumentOutOfRangeException();
+              }
               pixInDir++;
             }
           }
