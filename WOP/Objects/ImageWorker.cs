@@ -263,7 +263,7 @@ namespace WOP.Objects {
         FreeImage.Unload(dib);
       }
       // Make sure to set the handle to null so that it is clear that the handle is not pointing to a bitmap.
-      dib = 0;
+      dib = FIBITMAP.Zero;
     }
 
     public static void WriteGPSDateIntoImage(FileInfo fin, FileInfo fout, WayPoint wp)

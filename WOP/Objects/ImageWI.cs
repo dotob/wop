@@ -63,7 +63,7 @@ namespace WOP.Objects {
     {
       if (this.imageHandle != null) {
         ImageWorker.CleanUpResources((FIBITMAP) this.imageHandle);
-        this.imageHandle = 0;
+        this.imageHandle = FIBITMAP.Zero;
       }
     }
 
