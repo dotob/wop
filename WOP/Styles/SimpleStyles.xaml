@@ -4,6 +4,13 @@
 
   <!-- SimpleStyles: TextBox -->
 
+  <Style TargetType="{x:Type TextBlock}">
+    <Setter Property="Foreground"
+            Value="{DynamicResource fontColor}" />
+  </Style>
+
+  <!-- SimpleStyles: TextBox -->
+
   <Style TargetType="{x:Type TextBox}">
     <Setter Property="SnapsToDevicePixels"
             Value="True" />
@@ -440,16 +447,16 @@
                 Fill="#404040" />
                             </Grid>
                         </BulletDecorator.Bullet>
-                        <!--<ContentPresenter 
+                        <ContentPresenter 
             Margin="4,0,0,0"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
-            RecognizesAccessKey="True"/>-->
-                        <TextBlock Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" 
+            RecognizesAccessKey="True"/>
+                        <!--<TextBlock Text="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Left"
                                    Margin="4,0,0,0" 
-                                   Style="{DynamicResource wop_tb}"/>
+                                   Style="{DynamicResource wop_tb}"/>-->
                     </BulletDecorator>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="false">

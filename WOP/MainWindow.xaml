@@ -96,8 +96,72 @@
       <TextBlock Style="{DynamicResource wop_tb}">Verarbeitung:</TextBlock>
       <RadioButton IsChecked="True"
                    Checked="SequentialButtonChecked"
-                   Unchecked="SequentialButtonUnChecked">Sequentiell</RadioButton>
-      <RadioButton>Parallel</RadioButton>
+                   Unchecked="SequentialButtonUnChecked">
+        <RadioButton.Content>
+          <StackPanel Orientation="Horizontal">
+            <Line StrokeEndLineCap="Round"
+                  StrokeThickness="3" 
+                  SnapsToDevicePixels="True" 
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0" 
+                  Margin="2"/>
+            <Line StrokeEndLineCap="Round"
+                  SnapsToDevicePixels="True"
+                  StrokeThickness="3" 
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0" 
+                  Margin="2"/>
+            <Line StrokeEndLineCap="Round"
+                  SnapsToDevicePixels="True"
+                  StrokeThickness="3" 
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0" 
+                  Margin="2"/>
+          </StackPanel>
+        </RadioButton.Content>
+      </RadioButton>
+      <RadioButton>
+        <RadioButton.Content>
+          <StackPanel Orientation="Vertical">
+            <Line StrokeEndLineCap="Round"
+                  SnapsToDevicePixels="True"
+                  StrokeThickness="3"
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0"
+                  Margin="2" />
+            <Line StrokeEndLineCap="Round"
+                  SnapsToDevicePixels="True"
+                  StrokeThickness="3"
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0"
+                  Margin="2" />
+            <Line StrokeEndLineCap="Round"
+                  SnapsToDevicePixels="True"
+                  StrokeThickness="3"
+                  Stroke="AliceBlue"
+                  X1="0"
+                  X2="8"
+                  Y1="0"
+                  Y2="0"
+                  Margin="2" />
+          </StackPanel>
+        </RadioButton.Content>
+      </RadioButton>
     </StackPanel>
     <StatusBar Grid.Row="4"
                Grid.Column="0"

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="wop_copyoutput.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient2555">
+      <stop
+         id="stop2557"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:1.0000000;"
+         offset="0.50000000"
+         id="stop2561" />
+      <stop
+         id="stop2563"
+         offset="0.75000000"
+         style="stop-color:#ffffff;stop-opacity:1.0000000;" />
+      <stop
+         style="stop-color:#e1e1e1;stop-opacity:1.0000000;"
+         offset="0.84166664"
+         id="stop2565" />
+      <stop
+         id="stop2559"
+         offset="1.0000000"
+         style="stop-color:#ffffff;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2555"
+       id="linearGradient2553"
+       x1="33.431175"
+       y1="31.964777"
+       x2="21.747974"
+       y2="11.780679"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient4254"
+       inkscape:collect="always">
+      <stop
+         id="stop4256"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop
+         id="stop4258"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="47.620636"
+       x2="44.096100"
+       y1="4.4331360"
+       x1="12.378357"
+       id="linearGradient4260"
+       xlink:href="#linearGradient4254"
+       inkscape:collect="always"
+       gradientTransform="matrix(3.2148246,0,0,3.2148246,275.53417,357.02639)" />
+    <linearGradient
+       id="linearGradient4274">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0.25490198;"
+         offset="0.0000000"
+         id="stop4276" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop4278" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="26.357183"
+       x2="23.688078"
+       y1="11.318835"
+       x1="23.688078"
+       id="linearGradient4272"
+       xlink:href="#linearGradient4274"
+       inkscape:collect="always"
+       gradientTransform="matrix(3.2148246,0,0,3.2148246,275.53416,357.02637)" />
+    <linearGradient
+       id="linearGradient4236"
+       inkscape:collect="always">
+      <stop
+         id="stop4238"
+         offset="0"
+         style="stop-color:#eeeeee;stop-opacity:1;" />
+      <stop
+         id="stop4240"
+         offset="1"
+         style="stop-color:#eeeeee;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="33.758667"
+       x2="12.221823"
+       y1="37.205811"
+       x1="12.277412"
+       id="linearGradient4242"
+       xlink:href="#linearGradient4236"
+       inkscape:collect="always"
+       gradientTransform="matrix(3.2148246,0,0,3.2148246,275.53416,357.02637)" />
+    <linearGradient
+       id="linearGradient4184">
+      <stop
+         id="stop4186"
+         offset="0.0000000"
+         style="stop-color:#838383;stop-opacity:1.0000000;" />
+      <stop
+         id="stop4188"
+         offset="1.0000000"
+         style="stop-color:#bbbbbb;stop-opacity:0.0000000;" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(3.2148246,0,0,3.2148246,278.09155,352.7641)"
+       y2="35.281250"
+       x2="24.687500"
+       y1="35.281250"
+       x1="7.0625000"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4209"
+       xlink:href="#linearGradient4184"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient4244">
+      <stop
+         id="stop4246"
+         offset="0.0000000"
+         style="stop-color:#e4e4e4;stop-opacity:1.0000000;" />
+      <stop
+         id="stop4248"
+         offset="1.0000000"
+         style="stop-color:#d3d3d3;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(4.1350424,2.5130219,-2.2850394,3.7599045,267.96537,341.34812)"
+       r="20.935817"
+       fy="2.9585190"
+       fx="15.571491"
+       cy="2.9585190"
+       cx="15.571491"
+       id="radialGradient4250"
+       xlink:href="#linearGradient4244"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient4228">
+      <stop
+         id="stop4230"
+         offset="0.0000000"
+         style="stop-color:#bbbbbb;stop-opacity:1.0000000;" />
+      <stop
+         id="stop4232"
+         offset="1.0000000"
+         style="stop-color:#9f9f9f;stop-opacity:1.0000000;" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="40.943935"
+       x2="36.183067"
+       y1="28.481176"
+       x1="7.6046205"
+       id="linearGradient4234"
+       xlink:href="#linearGradient4228"
+       inkscape:collect="always"
+       gradientTransform="matrix(3.2148246,0,0,3.2148246,275.53416,357.02637)" />
+    <linearGradient
+       id="linearGradient2350">
+      <stop
+         id="stop2352"
+         offset="0"
+         style="stop-color:#858585;stop-opacity:1;" />
+      <stop
+         style="stop-color:#cbcbcb;stop-opacity:1;"
+         offset="0.5"
+         id="stop2356" />
+      <stop
+         id="stop2354"
+         offset="1"
+         style="stop-color:#6b6b6b;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2263">
+      <stop
+         style="stop-color:#1e2d69;stop-opacity:1;"
+         offset="0"
+         id="stop2265" />
+      <stop
+         style="stop-color:#78a7e0;stop-opacity:1;"
+         offset="1"
+         id="stop2267" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5060">
+      <stop
+         style="stop-color:black;stop-opacity:1;"
+         offset="0"
+         id="stop5062" />
+      <stop
+         style="stop-color:black;stop-opacity:0;"
+         offset="1"
+         id="stop5064" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5048">
+      <stop
+         style="stop-color:black;stop-opacity:0;"
+         offset="0"
+         id="stop5050" />
+      <stop
+         id="stop5056"
+         offset="0.5"
+         style="stop-color:black;stop-opacity:1;" />
+      <stop
+         style="stop-color:black;stop-opacity:0;"
+         offset="1"
+         id="stop5052" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5048"
+       id="linearGradient6898"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.774389,0,0,1.969706,-1892.179,-872.8854)"
+       x1="302.85715"
+       y1="366.64789"
+       x2="302.85715"
+       y2="609.50507" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5060"
+       id="radialGradient6900"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.774389,0,0,1.969706,-1891.633,-872.8854)"
+       cx="605.71429"
+       cy="486.64789"
+       fx="605.71429"
+       fy="486.64789"
+       r="117.14286" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5060"
+       id="radialGradient6902"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(-2.774389,0,0,1.969706,112.7623,-872.8854)"
+       cx="605.71429"
+       cy="486.64789"
+       fx="605.71429"
+       fy="486.64789"
+       r="117.14286" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.88847738"
+     inkscape:cx="372.04724"
+     inkscape:cy="526.18109"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1140"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-global="false">
+    <sodipodi:guide
+       orientation="0,1"
+       position="524.41216,564.36394"
+       id="guide6904" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#999999;fill-opacity:1;fill-rule:evenodd;stroke:#999999;stroke-width:0.6409722px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="M 103.83491,53.053332 C 103.83491,172.12704 315.12459,195.30737 315.12459,314.38106 L 280.17048,314.38106 C 278.30696,314.3621 277.23192,315.02451 277.28423,316.36821 C 277.31485,317.15479 278.43162,317.86731 280.16483,319.15625 L 351.10676,370.65562 L 421.01593,319.16102 C 422.59776,317.88881 423.52913,317.52933 423.44175,316.79059 C 423.37243,316.20454 423.56728,315.15368 421.01499,315.19663 L 387.08894,315.19663 C 387.08894,195.85864 175.79926,172.41401 175.79926,53.076012 L 103.83491,53.053332 z"
+       id="path2383"
+       sodipodi:nodetypes="cccscccscccc"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:nodetypes="cccccccc"
+       id="path2387"
+       d="M 104.85217,381.11405 C 104.85217,500.18775 104.85217,465.89652 104.85217,584.97022 L 69.898058,584.97022 L 140.83434,641.24475 L 210.74257,585.78579 L 176.81652,585.78579 C 176.81652,466.44779 176.81652,500.47473 176.81652,381.13674 L 104.85217,381.11405 z"
+       style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.27350429"
+       id="rect2474"
+       width="435.57666"
+       height="651.6767"
+       x="28.138025"
+       y="9.0041637"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       transform="matrix(7.8851288e-2,0,0,6.7085609e-2,422.42123,473.25386)"
+       id="g6707"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <rect
+         style="opacity:0.40206185;fill:url(#linearGradient6898);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+         id="rect6709"
+         width="1339.6335"
+         height="478.35718"
+         x="-1559.2523"
+         y="-150.69685" />
+      <path
+         style="opacity:0.40206185;fill:url(#radialGradient6900);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+         d="M -219.61876,-150.68038 C -219.61876,-150.68038 -219.61876,327.65041 -219.61876,327.65041 C -76.744594,328.55086 125.78146,220.48075 125.78138,88.454235 C 125.78138,-43.572302 -33.655436,-150.68036 -219.61876,-150.68038 z"
+         id="path6711"
+         sodipodi:nodetypes="cccc" />
+      <path
+         sodipodi:nodetypes="cccc"
+         id="path6713"
+         d="M -1559.2523,-150.68038 C -1559.2523,-150.68038 -1559.2523,327.65041 -1559.2523,327.65041 C -1702.1265,328.55086 -1904.6525,220.48075 -1904.6525,88.454235 C -1904.6525,-43.572302 -1745.2157,-150.68036 -1559.2523,-150.68038 z"
+         style="opacity:0.40206185;fill:url(#radialGradient6902);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible" />
+    </g>
+    <path
+       sodipodi:nodetypes="cccsccccccccc"
+       id="path4196"
+       d="M 311.81567,382.62483 C 309.80641,382.62483 308.50042,383.55771 307.69671,385.33734 C 307.69671,385.33734 286.90081,440.32229 286.90081,440.32229 C 286.90081,440.32229 286.09711,442.48123 286.09711,446.04869 C 286.09711,446.04869 286.09711,477.07165 286.09711,477.07165 C 286.09711,480.55205 288.21176,482.29574 291.42166,482.29574 L 415.3933,482.29574 C 418.55945,482.29574 420.51693,479.98692 420.51693,476.36841 L 420.51693,445.34545 C 420.51693,445.34545 420.8576,442.86868 420.21554,441.12599 L 398.61594,385.83966 C 398.02274,384.19399 396.56841,382.66309 394.99926,382.62483 L 311.81567,382.62483 z"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#535353;stroke-width:6.42964935;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:nodetypes="ccccccccc"
+       id="path4170"
+       d="M 286.05821,443.81638 L 288.51626,441.59105 L 409.42482,441.79198 L 420.55583,442.81204 L 420.55583,476.37008 C 420.55583,479.98859 418.6044,482.29606 415.43824,482.29606 L 291.40073,482.29606 C 288.19083,482.29606 286.05821,480.55347 286.05821,477.07307 L 286.05821,443.81638 z"
+       style="fill:url(#linearGradient4234);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.02044296px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:nodetypes="csccccccs"
+       id="path3093"
+       d="M 286.94386,440.33666 C 284.64754,445.04406 286.94187,448.02925 290.27349,448.02925 C 290.27349,448.02925 415.65164,448.02925 415.65164,448.02925 C 419.24919,447.9527 421.58377,444.77617 420.24425,441.14033 L 398.65901,385.81098 C 398.06578,384.16528 396.55404,382.63441 394.98492,382.59612 L 311.85875,382.59612 C 309.84949,382.59612 308.52909,383.57208 307.72539,385.35171 C 307.72539,385.35171 286.94386,440.33666 286.94386,440.33666 z"
+       style="fill:url(#radialGradient4250);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="457.24588"
+       x="300.79623"
+       height="17.882462"
+       width="56.661282"
+       id="rect4174"
+       style="opacity:1;fill:url(#linearGradient4209);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.40899992;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:nodetypes="cscc"
+       id="path4194"
+       d="M 300.79625,475.12836 C 300.79625,475.12836 300.79625,462.23215 300.79625,462.23215 C 306.69716,472.45279 327.46801,475.12836 342.38804,475.12836 C 342.38804,475.12836 300.79625,475.12836 300.79625,475.12836 z"
+       style="opacity:0.81142853;fill:url(#linearGradient4242);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:nodetypes="cccccccc"
+       id="path4201"
+       d="M 419.54599,439.41812 C 419.75019,443.43655 418.21502,446.86314 415.2956,446.95286 C 415.2956,446.95286 292.75061,446.95286 292.75061,446.95286 C 288.60596,446.95286 286.74618,445.9082 286.05075,444.1622 C 286.34577,447.19809 288.70562,449.46444 292.75061,449.46444 C 292.75061,449.46444 415.2956,449.46444 415.2956,449.46444 C 418.75479,449.35813 420.93058,444.88647 419.64256,439.83672 L 419.54599,439.41812 z"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4211"
+       d="M 310.79677,389.67694 C 310.64866,390.32093 310.19399,390.92043 310.19399,391.58574 C 310.19399,394.63535 312.09388,397.3386 314.51391,399.92419 C 315.28633,399.42888 315.6877,398.78482 316.52317,398.31678 C 313.50027,395.69348 311.5293,392.79827 310.79677,389.67694 z M 396.49193,389.67694 C 395.75664,392.79409 393.78502,395.69647 390.76553,398.31678 C 391.64687,398.81051 392.06428,399.5006 392.87526,400.02465 C 395.30975,397.43141 397.09471,394.64612 397.09471,391.58574 C 397.09471,390.92043 396.63953,390.32093 396.49193,389.67694 z M 403.52436,416.80202 C 401.55113,429.79026 380.06061,440.1095 353.59412,440.1095 C 327.19317,440.1095 305.82134,429.84527 303.76434,416.90248 C 303.66034,417.53622 303.36248,418.16231 303.36248,418.81128 C 303.36252,432.69274 325.83125,444.02756 353.59412,444.02756 C 381.35702,444.02756 403.92622,432.69274 403.92622,418.81128 C 403.92622,418.12678 403.63993,417.46958 403.52436,416.80202 z"
+       style="opacity:0.69142857;fill:url(#linearGradient4272);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="matrix(3.2148246,0,0,3.2148246,275.81832,357.59469)"
+       d="M 8.5736699,25.593554 A 1.3700194,1.016466 0 1 1 5.833631,25.593554 A 1.3700194,1.016466 0 1 1 8.5736699,25.593554 z"
+       sodipodi:ry="1.016466"
+       sodipodi:rx="1.3700194"
+       sodipodi:cy="25.593554"
+       sodipodi:cx="7.2036505"
+       id="path4224"
+       style="opacity:1;fill:#ffffff;fill-opacity:0.45762706;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       sodipodi:type="arc"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:1;fill:#ffffff;fill-opacity:0.45762706;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible"
+       id="path4226"
+       sodipodi:cx="7.2036505"
+       sodipodi:cy="25.593554"
+       sodipodi:rx="1.3700194"
+       sodipodi:ry="1.016466"
+       d="M 8.5736699,25.593554 A 1.3700194,1.016466 0 1 1 5.833631,25.593554 A 1.3700194,1.016466 0 1 1 8.5736699,25.593554 z"
+       transform="matrix(3.2148246,0,0,3.2148246,384.73227,357.31053)"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient4260);stroke-width:3.21482539;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 312.96282,384.08144 C 311.02849,384.08144 309.77117,384.97953 308.99743,386.69281 C 308.99743,386.69281 288.3743,440.02906 288.3743,440.02906 C 288.3743,440.02906 287.60055,442.10751 287.60055,445.54194 C 287.60055,445.54194 287.60055,475.40795 287.60055,475.40795 C 287.60055,479.7632 289.02813,480.63815 292.72656,480.63815 L 413.88333,480.63815 C 418.13696,480.63815 418.8159,479.62098 418.8159,474.73094 L 418.8159,444.8649 C 418.8159,444.8649 419.14384,442.48049 418.52573,440.80281 L 397.32978,386.77453 C 396.7587,385.19023 395.55954,384.11831 394.04892,384.08144 L 312.96282,384.08144 z"
+       id="path4252"
+       sodipodi:nodetypes="cccsccccccccc"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       d="M 405.73455,458.06564 L 405.73455,474.20705"
+       id="path4282"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4284"
+       d="M 399.3049,458.25779 L 399.3049,474.39923"
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       d="M 392.87526,458.25779 L 392.87526,474.39923"
+       id="path4286"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4288"
+       d="M 386.44561,458.25779 L 386.44561,474.39923"
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       d="M 380.01596,458.25779 L 380.01596,474.39923"
+       id="path4290"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4292"
+       d="M 373.58631,458.25779 L 373.58631,474.39923"
+       style="fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#ffffff;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:0.42372885"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4294"
+       d="M 402.51973,458.22606 L 402.51973,474.36747"
+       style="opacity:0.09714284;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="opacity:0.09714284;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 396.09008,458.41821 L 396.09008,474.55965"
+       id="path4296"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4298"
+       d="M 389.66043,458.41821 L 389.66043,474.55965"
+       style="opacity:0.09714284;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="opacity:0.09714284;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 383.23078,458.41821 L 383.23078,474.55965"
+       id="path4300"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4302"
+       d="M 376.80113,458.41821 L 376.80113,474.55965"
+       style="opacity:0.09714284;fill:none;fill-opacity:0.75;fill-rule:evenodd;stroke:#000000;stroke-width:3.21482611px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       id="path4572"
+       d="M 300.8509,457.28872 L 300.8509,475.07071 L 341.23714,475.07071 L 301.956,473.96562 L 300.8509,457.28872 z"
+       style="opacity:0.43999999;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.20571427;fill:url(#linearGradient2553);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.93365198;stroke-linecap:square;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.42372879;visibility:visible;display:inline;overflow:visible"
+       id="path2545"
+       sodipodi:cx="25"
+       sodipodi:cy="19.5625"
+       sodipodi:rx="14.875"
+       sodipodi:ry="6.6875"
+       d="M 39.875,19.5625 A 14.875,6.6875 0 1 1 10.125,19.5625 A 14.875,6.6875 0 1 1 39.875,19.5625 z"
+       transform="matrix(3.3363932,0,0,3.4101155,270.28477,350.29254)"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="Z:\basti auf meinem Mac\Documents\drawings\wop_saveoutput.png"
+       style="fill:none;fill-rule:evenodd;stroke:#999999;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 104.85217,53.114052 C 104.85217,172.18775 104.85217,195.89652 104.85217,314.97022 L 69.898058,314.97022 L 140.83434,371.24475 L 210.74257,315.78579 L 176.81652,315.78579 C 176.81652,196.44779 176.81652,172.47473 176.81652,53.136742 L 104.85217,53.114052 z"
+       id="path2458"
+       sodipodi:nodetypes="cccccccc" />
+  </g>
+</svg>
