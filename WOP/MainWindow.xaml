@@ -89,7 +89,16 @@
              IsSynchronizedWithCurrentItem="True"
              VerticalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
-             ItemTemplate="{DynamicResource ListViewJobsItemTemplate}" />
+             ItemTemplate="{DynamicResource ListViewJobsItemTemplate}">
+      <ListBox.Resources>
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                         Color="Transparent" />
+        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                         Color="Transparent" />
+        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}"
+                         Color="Transparent" />
+      </ListBox.Resources>
+    </ListBox> 
     <StackPanel Grid.Row="3"
                 Grid.Column="1"
                 Orientation="Horizontal">

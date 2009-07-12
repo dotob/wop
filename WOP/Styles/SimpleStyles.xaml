@@ -353,8 +353,8 @@
           <Border x:Name="Border"
                   CornerRadius="2"
                   BorderThickness="1"
-                  BorderBrush="{DynamicResource borderColor}"
-                  Visibility="Hidden"
+                  BorderBrush="Transparent"
+                  Background="Transparent"
                   >
             
             </Border>
@@ -367,14 +367,14 @@
             <Trigger Property="IsKeyboardFocused"
                      Value="true">
               <Setter TargetName="Border"
-                      Property="Visibility"
-                      Value="Visible" />
+                      Property="BorderBrush"
+                      Value="{DynamicResource borderColor}" />
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="true">
               <Setter TargetName="Border"
-                      Property="Visibility"
-                      Value="Visible" />
+                      Property="BorderBrush"
+                      Value="{DynamicResource borderColor}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

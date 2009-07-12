@@ -273,6 +273,10 @@
     <Content Include="FreeImage.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="resources\eject.png" />
+    <Resource Include="resources\pause.png" />
+    <Resource Include="resources\start.png" />
+    <Resource Include="resources\stop.png" />
     <Resource Include="resources\wop_copyinput.png" />
     <Resource Include="resources\wop_copyoutput.png" />
     <Resource Include="resources\wop_down.png" />

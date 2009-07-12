@@ -14,7 +14,9 @@
       <Button HorizontalAlignment="Right"
               Tag="{Binding}"
               Command="{x:Static Tasks:Job.DeleteJob}"
-              Width="5">X</Button>
+              Style="{DynamicResource mtButton}">
+        <Image Source="pack://application:,,,/WOP;component/resources/eject.png" />
+      </Button>
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"></ColumnDefinition>
@@ -88,14 +90,18 @@
 
       <Button Grid.Column="0"
               Grid.Row="6"
-              Content="Start"
               Command="{x:Static Tasks:Job.StartJob}"
-              IsEnabled="True" />
+              IsEnabled="True"
+              Style="{DynamicResource mtButton}">
+        <Image Source="pack://application:,,,/WOP;component/resources/start.png" />
+        </Button>
       <Button Grid.Column="1"
               Grid.Row="6"
-              Content="Pause"
               Command="{x:Static Tasks:Job.PauseJob}"
-              IsEnabled="True" />
+              IsEnabled="True" 
+              Style="{DynamicResource mtButton}">
+        <Image Source="pack://application:,,,/WOP;component/resources/pause.png" />
+        </Button>
 
     </Grid>
     </StackPanel>
