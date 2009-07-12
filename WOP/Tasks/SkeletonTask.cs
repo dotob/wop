@@ -83,6 +83,11 @@ namespace WOP.Tasks {
       }
     }
 
+    public bool CanChangePosition
+    {
+      get { return true; }
+    }
+
     public Job ParentJob { get; set; }
     public TASKPOS Position { get; set; }
 

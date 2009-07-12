@@ -42,6 +42,7 @@ namespace WOP.Objects {
     string Name { get; }
     UserControl UI { get; set; }
     bool IsEnabled { get; set; }
+    bool CanChangePosition { get; }
     Job ParentJob { get; set; }
     TASKPOS Position { get; set; }
     TASKWORKINGSTYLE WorkingStyle { get; set; }

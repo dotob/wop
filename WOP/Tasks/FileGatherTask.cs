@@ -101,6 +101,11 @@ namespace WOP.Tasks {
       }
     }
 
+    public bool CanChangePosition
+    {
+      get { return false; }
+    }
+
     public Queue<IWorkItem> WorkItems { get; private set; }
     public ITask NextTask { get; set; }
     public string Name { get; private set; }

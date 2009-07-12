@@ -78,27 +78,24 @@ namespace WOP.TasksUI {
     {
       switch (task.WorkingStyle) {
         case TASKWORKINGSTYLE.STRAIGHT:
-          this.flowButton_curvedBottom.Visibility = Visibility.Hidden;
-          this.flowButton_curvedTop.Visibility = Visibility.Hidden;
-          this.flowButton_straightBottom.Visibility = Visibility.Visible;
-          this.flowButton_straightTop.Visibility = Visibility.Visible;
-          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.straight.Visibility = Visibility.Visible;
+          this.copyoutput.Visibility = Visibility.Hidden;
+          this.copyinput.Visibility = Visibility.Hidden;
+          this.last.Visibility = Visibility.Hidden;
           this.flowButton.ToolTip = "Eingangsbild wird verändert und weitergegeben. Erstellt keine Kopie.";
           break;
         case TASKWORKINGSTYLE.COPYOUTPUT:
-          this.flowButton_curvedBottom.Visibility = Visibility.Hidden;
-          this.flowButton_curvedTop.Visibility = Visibility.Visible;
-          this.flowButton_straightTop.Visibility = Visibility.Visible;
-          this.flowButton_straightBottom.Visibility = Visibility.Visible;
-          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.straight.Visibility = Visibility.Hidden;
+          this.copyoutput.Visibility = Visibility.Visible;
+          this.copyinput.Visibility = Visibility.Hidden;
+          this.last.Visibility = Visibility.Hidden;
           this.flowButton.ToolTip = "Eingangsbild wird weitergegeben. Verändertes Bild wird gespeichert.";
           break;
         case TASKWORKINGSTYLE.COPYINPUT:
-          this.flowButton_curvedBottom.Visibility = Visibility.Visible;
-          this.flowButton_curvedTop.Visibility = Visibility.Visible;
-          this.flowButton_straightTop.Visibility = Visibility.Visible;
-          this.flowButton_straightBottom.Visibility = Visibility.Hidden;
-          this.flowButton_rectangle.Visibility = Visibility.Hidden;
+          this.straight.Visibility = Visibility.Hidden;
+          this.copyoutput.Visibility = Visibility.Hidden;
+          this.copyinput.Visibility = Visibility.Visible;
+          this.last.Visibility = Visibility.Hidden;
           this.flowButton.ToolTip = "Eingangsbild wird gespeichert. Verändertes Bild wird weitergegeben";
           break;
         default:
