@@ -13,11 +13,13 @@ using WOP.Util;
 using FIImageMetadata=FreeImageAPI.Metadata.ImageMetadata;
 using Size=System.Drawing.Size;
 
-namespace WOP.Objects {
+namespace WOP.Objects
+{
   /// <summary>
   /// this is for editing pictures
   /// </summary>
-  public class ImageWorker {
+  public class ImageWorker
+  {
     protected static readonly Logger logger = LogManager.GetCurrentClassLogger();
     private static FREE_IMAGE_FILTER stdFilter = FREE_IMAGE_FILTER.FILTER_BOX;
     private static FREE_IMAGE_SAVE_FLAGS stdQuality = FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD;
@@ -40,7 +42,7 @@ namespace WOP.Objects {
     {
       FIBITMAP? dib = GetJPGImageHandle(fileIn);
       if (dib != null) {
-        FIBITMAP ddib = (FIBITMAP) dib;
+        FIBITMAP ddib = (FIBITMAP)dib;
         ShrinkImageFI(ddib, fileOut, nuSize, filter, savequality);
         if (cleanup) {
           CleanUpResources(ddib);
@@ -110,69 +112,105 @@ namespace WOP.Objects {
     /// <param name="extension">if you want a different filename, it can be extended</param>
     public static void AutoRotateImageFI(FileInfo fi, string extension)
     {
-      FIBITMAP? dibNull = GetJPGImageHandle(fi);
+      string outname = fi.AugmentFilename(extension);
+      // Create a wrapper for all metadata the image contains
+      ushort rotateme;
+      if (GetRotInfo(fi, out rotateme)) {
+        bool imageWasChanged = DoLosslessRotation(fi, rotateme, outname);
+        if (imageWasChanged) {
+          ResetRotationInfo(outname);
+        }
+      }
+      else {
+        // tell anyone?
+      }
+    }
+
+    private static void ResetRotationInfo(string outname)
+    {
+      FIBITMAP? dibNull = GetJPGImageHandle(new FileInfo(outname));
       if (dibNull != null) {
-        FIBITMAP dib = (FIBITMAP) dibNull;
-        string outname = fi.AugmentFilename(extension);
-        // Create a wrapper for all metadata the image contains
+        FIBITMAP dib = (FIBITMAP)dibNull;
         var iMetadata = new ImageMetadata(dib);
         MetadataModel exifMain = iMetadata[FREE_IMAGE_MDMODEL.FIMD_EXIF_MAIN];
         if (exifMain != null) {
           MetadataTag orientationTag = exifMain.GetTag("Orientation");
           if (orientationTag != null) {
-            bool imageWasChanged = false;
-            var rotInfo = (ushort[]) orientationTag.Value;
-            ushort rotateme = rotInfo[0];
-            switch (rotateme) {
-              case 1:
-                // do nothing, alright
-                break;
-              case 2:
-                // flip vertical
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_V, true);
-                imageWasChanged = true;
-                break;
-              case 3:
-                // 180 clockwise
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_180, true);
-                imageWasChanged = true;
-                break;
-              case 4:
-                // flip horizontal
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_H, true);
-                imageWasChanged = true;
-                break;
-              case 5:
-                // flip horizontal, 90 clockwise
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_H, true);
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
-                imageWasChanged = true;
-                break;
-              case 6:
-                // 90 clockwise
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
-                imageWasChanged = true;
-                break;
-              case 7:
-                // flip vertical, 90 clockwise
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_V, true);
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
-                imageWasChanged = true;
-                break;
-              case 8:
-                // 270 clockwise
-                FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_270, true);
-                imageWasChanged = true;
-                break;
-            }
-            if (imageWasChanged) {
-              orientationTag.SetValue(new ushort[] {1});
-              //TODO: save file
-            }
+            orientationTag.SetValue(new ushort[] {1});
           }
         }
         CleanUpResources(dib);
       }
+    }
+
+    private static bool GetRotInfo(FileInfo fi, out ushort rotateme)
+    {
+      bool gotRotInfo = false;
+      rotateme = 1;
+      FIBITMAP? dibNull = GetJPGImageHandle(fi);
+      if (dibNull != null) {
+        FIBITMAP dib = (FIBITMAP)dibNull;
+        var iMetadata = new ImageMetadata(dib);
+        MetadataModel exifMain = iMetadata[FREE_IMAGE_MDMODEL.FIMD_EXIF_MAIN];
+        if (exifMain != null) {
+          MetadataTag orientationTag = exifMain.GetTag("Orientation");
+          if (orientationTag != null) {
+            var rotInfo = (ushort[])orientationTag.Value;
+            rotateme = rotInfo[0];
+            gotRotInfo = true;
+          }
+        }
+        CleanUpResources(dib);
+      }
+      return gotRotInfo;
+    }
+
+    private static bool DoLosslessRotation(FileSystemInfo fi, ushort rotateme, string outname)
+    {
+      bool imageWasChanged = false;
+      switch (rotateme) {
+        case 1:
+          // do nothing, alright
+          break;
+        case 2:
+          // flip vertical
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_V, true);
+          imageWasChanged = true;
+          break;
+        case 3:
+          // 180 clockwise
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_180, true);
+          imageWasChanged = true;
+          break;
+        case 4:
+          // flip horizontal
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_H, true);
+          imageWasChanged = true;
+          break;
+        case 5:
+          // flip horizontal, 90 clockwise
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_H, true);
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
+          imageWasChanged = true;
+          break;
+        case 6:
+          // 90 clockwise
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
+          imageWasChanged = true;
+          break;
+        case 7:
+          // flip vertical, 90 clockwise
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_FLIP_V, true);
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_90, true);
+          imageWasChanged = true;
+          break;
+        case 8:
+          // 270 clockwise
+          FreeImage.JPEGTransform(fi.FullName, outname, FREE_IMAGE_JPEG_OPERATION.FIJPEG_OP_ROTATE_270, true);
+          imageWasChanged = true;
+          break;
+      }
+      return imageWasChanged;
     }
 
     /// <summary>
@@ -188,7 +226,7 @@ namespace WOP.Objects {
       if (exifMain != null) {
         MetadataTag orientationTag = exifMain.GetTag("Orientation");
         if (orientationTag != null) {
-          var rotInfo = (ushort[]) orientationTag.Value;
+          var rotInfo = (ushort[])orientationTag.Value;
           if (rotInfo != null && rotInfo.Length > 0) {
             rotateme = rotInfo[0];
           }
@@ -227,7 +265,8 @@ namespace WOP.Objects {
       FIBITMAP? handle = null;
       try {
         handle = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, fileIn.FullName, FREE_IMAGE_LOAD_FLAGS.JPEG_FAST);
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         logger.ErrorException(string.Format("error while loading {0} into FreeImage", fileIn.FullName), ex);
       }
       return handle;
@@ -308,14 +347,15 @@ namespace WOP.Objects {
         for (int i = 0; i < length; i++) {
           newProperties[0].Value[i] = 0;
         }
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
         logger.InfoException("in WriteLongLat got an exception", ex);
       }
       //PropertyItems[0].Value = Pic.GetPropertyItem(4).Value; // bDescription; 
       newProperties[0].Value[0] = latDeg;
       newProperties[0].Value[8] = latMin;
-      byte secHelper = (byte) (latSec/2.56);
-      byte secRemains = (byte) ((latSec - (secHelper*2.56))*100);
+      byte secHelper = (byte)(latSec / 2.56);
+      byte secRemains = (byte)((latSec - (secHelper * 2.56)) * 100);
       newProperties[0].Value[16] = secRemains; // add to the sum below x_x_*17_+16 
       newProperties[0].Value[17] = secHelper; // multiply by 2.56 
       newProperties[0].Value[20] = 100;
@@ -328,13 +368,14 @@ namespace WOP.Objects {
         for (int i = 0; i < length; i++) {
           newProperties[1].Value[i] = 0;
         }
-      } catch (Exception e) {
+      }
+      catch (Exception e) {
         Console.WriteLine("Error {0}", e);
       }
       newProperties[1].Value[0] = lonDeg;
       newProperties[1].Value[8] = lonMin;
-      secHelper = (byte) (lonSec/2.56);
-      secRemains = (byte) ((lonSec - (secHelper*2.56))*100);
+      secHelper = (byte)(lonSec / 2.56);
+      secRemains = (byte)((lonSec - (secHelper * 2.56)) * 100);
       newProperties[1].Value[16] = secRemains;
       // add to the sum bellow x_x_*17_+16 
       newProperties[1].Value[17] = secHelper;
@@ -360,7 +401,8 @@ namespace WOP.Objects {
       newProperties[0].Len = 2;
       if (isNorth) {
         newProperties[0].Value[0] = 78; //ASCII for N
-      } else {
+      }
+      else {
         newProperties[0].Value[0] = 83; //ASCII for S
       }
 
@@ -374,7 +416,8 @@ namespace WOP.Objects {
       newProperties[0].Len = 2;
       if (isWest == false) {
         newProperties[0].Value[0] = 69; //ASCII for E
-      } else {
+      }
+      else {
         newProperties[0].Value[0] = 87; //ASCII for W
       }
       newProperties[0].Value[1] = 0;
@@ -383,7 +426,7 @@ namespace WOP.Objects {
       // we cannot store in the same image, so use a temporary image instead 
       string FilenameTemp = fileIn + ".temp";
       // for lossless rewriting must rotate the image by 90 degrees! 
-      EncoderParameter EncParm = new EncoderParameter(Enc, (long) EncoderValue.TransformRotate90);
+      EncoderParameter EncParm = new EncoderParameter(Enc, (long)EncoderValue.TransformRotate90);
       EncParms.Param[0] = EncParm;
       // now write the rotated image with new description 
       img.Save(FilenameTemp, CodecInfo, EncParms);
@@ -397,11 +440,12 @@ namespace WOP.Objects {
       }
       // now must rotate back the written picture 
       img = Image.FromFile(FilenameTemp);
-      EncParm = new EncoderParameter(Enc, (long) EncoderValue.TransformRotate270);
+      EncParm = new EncoderParameter(Enc, (long)EncoderValue.TransformRotate270);
       EncParms.Param[0] = EncParm;
       if (string.IsNullOrEmpty(fileOut)) {
         img.Save(fileIn, CodecInfo, EncParms);
-      } else {
+      }
+      else {
         img.Save(fileOut, CodecInfo, EncParms);
       }
       // release memory now 
@@ -414,7 +458,7 @@ namespace WOP.Objects {
 
     public static Size GetCurrentSize(ImageWI iwi)
     {
-      return new Size((int) FreeImage.GetWidth(iwi.ImageHandle), (int) FreeImage.GetHeight(iwi.ImageHandle));
+      return new Size((int)FreeImage.GetWidth(iwi.ImageHandle), (int)FreeImage.GetHeight(iwi.ImageHandle));
     }
   }
 }
