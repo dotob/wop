@@ -14,6 +14,7 @@ namespace WOP.Objects
     DateTime CreationTime { get; set; }
     DateTime FinishedWork { get; set; }
     FIBITMAP ImageHandle { get; set; }
+    FIBITMAP? ImageHandleWeak { get; }
 
     void CleanUp();
   }

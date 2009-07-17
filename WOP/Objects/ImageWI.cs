@@ -59,6 +59,15 @@ namespace WOP.Objects {
       set { this.imageHandle = value; }
     }
 
+    public FIBITMAP? ImageHandleWeak
+    {
+      get
+      {
+        return imageHandle;
+      }
+    }
+
+
     public void CleanUp()
     {
       if (this.imageHandle != null) {

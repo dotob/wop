@@ -113,7 +113,6 @@ namespace WOP.Objects
     public static void AutoRotateImageFI(FileInfo fi, string extension)
     {
       string outname = fi.AugmentFilename(extension);
-      // Create a wrapper for all metadata the image contains
       ushort rotateme;
       if (GetRotInfo(fi, out rotateme)) {
         bool imageWasChanged = DoLosslessRotation(fi, rotateme, outname);

@@ -16,6 +16,11 @@ namespace WOP.Util
       return Path.Combine(fi.DirectoryName, string.Format("{0}{1}{2}", fi.NameWithoutExtension(), augmentWith, fi.Extension));
     }
 
+    public static FileInfo AugmentFileInfo(this FileInfo fi, string augmentWith)
+    {
+      return new FileInfo(Path.Combine(fi.DirectoryName, string.Format("{0}{1}{2}", fi.NameWithoutExtension(), augmentWith, fi.Extension)));
+    }
+
     public static FileInfo GetFileFromDialog(string initialDir)
     {
       FileInfo fi = null;

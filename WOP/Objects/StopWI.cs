@@ -56,6 +56,11 @@ namespace WOP.Objects {
       set { throw new NotImplementedException(); }
     }
 
+    public FIBITMAP? ImageHandleWeak
+    {
+      get { throw new NotImplementedException(); }
+    }
+
     public void CleanUp()
     {
       // do notting
