@@ -1,1 +1,69 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+  <object id="defaultjob" type="WOP.Tasks.Job, WOP">
+    <property name="TasksList">
+      <list element-type="WOP.Objects.ITask, WOP">
+        <ref object="fgt" />
+        <ref object="frt"/>
+        <ref object="ist"/>
+        <ref object="dst"/>
+        <ref object="irt"/>
+        <ref object="ftpt"/>
+        <ref object="geott"/>
+        <ref object="st"/>
+        <ref object="crt"/>
+      </list>
+    </property>
+  </object>
+
+  <object id="fgt" type="WOP.Tasks.FileGatherTask, WOP">
+    <property name="IsEnabled" value="true" />
+    <property name="DeleteSource" value="false" />
+    <property name="FilePattern" value="*.jpg" />
+    <property name="RecurseDirectories" value="true" />
+    <property name="SourceDirectory" value="..\..\..\testdata\pixrotate" />
+    <property name="TargetDirectory" value="c:\tmp" />
+  </object>
+  
+  <object id="frt" type="WOP.Tasks.FileRenamerTask, WOP">
+    <property name="IsEnabled" value="true" />
+    <property name="RenamePattern" value="bastitest_{0:000}" />
+  </object>
+  
+  <object id="ist" type="WOP.Tasks.ImageShrinkTask, WOP">
+    <property name="IsEnabled" value="true" />
+    <property name="SizeX" value="400" />
+    <property name="SizeY" value="400" />
+    <property name="NameExtension" value="_thumb" />
+  </object>  
+  
+  <object id="dst" type="WOP.Tasks.DirSorterTask, WOP">
+    <property name="IsEnabled" value="true" />
+    <property name="DirectoryFillCount" value="2" />
+    <property name="DirectoryPattern" value="test_{0:000}" />
+  </object>
+  
+  <object id="irt" type="WOP.Tasks.ImageRotateTask, WOP">
+    <property name="IsEnabled" value="true" />
+  </object>
+  
+  <object id="ftpt" type="WOP.Tasks.FTPTask, WOP">
+    <property name="IsEnabled" value="false" />
+    <property name="Server" value="www.dotob.de" />
+    <property name="ServerDirectory" value="files" />
+  </object>
+  
+  <object id="geott" type="WOP.Tasks.GEOTagTask, WOP">
+    <property name="IsEnabled" value="false" />
+  </object>
+  
+  <object id="st" type="WOP.Tasks.SliceTask, WOP">
+    <property name="IsEnabled" value="true" />
+    <property name="XSliceCount" value="5" />
+    <property name="YSliceCount" value="5" />
+  </object>
+  
+  <object id="crt" type="WOP.Tasks.CleanResourcesTask, WOP">
+    <property name="IsEnabled" value="true" />
+  </object>
+</objects>

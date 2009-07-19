@@ -6,6 +6,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using NLog;
+using Spring.Context;
+using Spring.Context.Support;
 using WOP.Objects;
 using WOP.Tasks;
 
@@ -23,6 +25,7 @@ namespace WOP {
     private ObservableCollection<Job> jobsToWorkOn = new ObservableCollection<Job>();
     private Job processingJob;
     private Job skeletonJob;
+    private IApplicationContext springContext;
 
     public MainWindow()
     {
@@ -37,6 +40,8 @@ namespace WOP {
       this.wopSplash.Opacity = 0;
       this.wopSplash.Show();
       this.bgSplasher.RunWorkerAsync();
+
+      this.springContext = ContextRegistry.GetContext();
     }
 
     public ObservableCollection<Job> JobsToWorkOn
@@ -100,7 +105,7 @@ namespace WOP {
 
     private void createDefaultJob()
     {
-      this.skeletonJob = Job.CreateTestJob();
+      this.skeletonJob = (Job) this.springContext["defaultjob"];
     }
 
     private void addJobUIs()
