@@ -15,11 +15,20 @@ namespace WopConsole
     {
       //SpeedTest();
       //RotateTest();
+      MetaDataTest();
+      //GetRotateInfo();
       //SetRotateInfo();
       //GPSTest();
       //BogenMass bm = Utils.ConvertToBogenMass(51.2345);
       //TestWriteGPS();
       //TestFormatting();
+    }
+
+    private static void MetaDataTest()
+    {
+      FileInfo fi = new FileInfo(@"..\..\..\testdata\pixrotate\IMG_4222.jpg");
+      FIBITMAP dib = (FIBITMAP) ImageWorker.GetJPGImageHandle(fi);
+      ImageWorker.SaveJPGImageHandle(dib, fi.AugmentFileInfo("_meta"));
     }
 
 
@@ -40,8 +49,18 @@ namespace WopConsole
 
     private static void RotateTest()
     {
+        ImageWorker.AutoRotateImageFI(new FileInfo(@"..\..\..\testdata\pixrotate\IMG_4222.jpg"), "_rot");
+        ushort u = ImageWorker.GetRotateInfo((FIBITMAP)ImageWorker.GetJPGImageHandle(new FileInfo(@"..\..\..\testdata\pixrotate\IMG_4222_rot.jpg")));
+    }
+
+    private static void GetRotateInfo()
+    {
       foreach (string s in Directory.GetFiles(@"..\..\..\testdata\pixrotate", "*")) {
-        ImageWorker.AutoRotateImageFI(new FileInfo(s), "_rot");
+        FileInfo fi = new FileInfo(s);
+        FIBITMAP? dib = ImageWorker.GetJPGImageHandle(fi);
+        if (dib != null) {
+          ushort info = ImageWorker.GetRotateInfo((FIBITMAP) dib);
+        }
       }
     }
 

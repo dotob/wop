@@ -53,8 +53,8 @@ namespace WOP.Tests
     public void TestMetadata()
     {
       foreach (string s in Directory.GetFiles(@"..\..\..\testdata\pixrotate", "*")) {
-        FIBITMAP? dib = ImageWorker.GetJPGImageHandle(new FileInfo(s));
-        //ImageWorker.AutoRotateImageFI(dib);
+        //FIBITMAP? dib = ImageWorker.GetJPGImageHandle(new FileInfo(s));
+        ImageWorker.AutoRotateImageFI(new FileInfo(s), "blabla");
         //ImageWorker.CleanUpResources(dib);
       }
     }

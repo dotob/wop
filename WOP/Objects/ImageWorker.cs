@@ -125,24 +125,25 @@ namespace WOP.Objects
       }
     }
 
-    private static void ResetRotationInfo(string outname)
+    public static void ResetRotationInfo(string outname)
     {
       FIBITMAP? dibNull = GetJPGImageHandle(new FileInfo(outname));
       if (dibNull != null) {
         FIBITMAP dib = (FIBITMAP)dibNull;
-        var iMetadata = new ImageMetadata(dib);
-        MetadataModel exifMain = iMetadata[FREE_IMAGE_MDMODEL.FIMD_EXIF_MAIN];
-        if (exifMain != null) {
-          MetadataTag orientationTag = exifMain.GetTag("Orientation");
-          if (orientationTag != null) {
-            orientationTag.SetValue(new ushort[] {1});
-          }
-        }
+//        var iMetadata = new ImageMetadata(dib);
+//        MetadataModel exifMain = iMetadata[FREE_IMAGE_MDMODEL.FIMD_EXIF_MAIN];
+//        if (exifMain != null) {
+//          MetadataTag orientationTag = exifMain.GetTag("Orientation");
+//          if (orientationTag != null) {
+//            orientationTag.SetValue(new ushort[] {1});
+//          }
+//        }
+        SaveJPGImageHandle(dib, new FileInfo(outname));
         CleanUpResources(dib);
       }
     }
 
-    private static bool GetRotInfo(FileInfo fi, out ushort rotateme)
+    public static bool GetRotInfo(FileInfo fi, out ushort rotateme)
     {
       bool gotRotInfo = false;
       rotateme = 1;
@@ -164,7 +165,7 @@ namespace WOP.Objects
       return gotRotInfo;
     }
 
-    private static bool DoLosslessRotation(FileSystemInfo fi, ushort rotateme, string outname)
+    public static bool DoLosslessRotation(FileSystemInfo fi, ushort rotateme, string outname)
     {
       bool imageWasChanged = false;
       switch (rotateme) {
@@ -263,7 +264,7 @@ namespace WOP.Objects
     {
       FIBITMAP? handle = null;
       try {
-        handle = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, fileIn.FullName, FREE_IMAGE_LOAD_FLAGS.JPEG_FAST);
+        handle = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_JPEG, fileIn.FullName, FREE_IMAGE_LOAD_FLAGS.JPEG_ACCURATE | FREE_IMAGE_LOAD_FLAGS.JPEG_EXIFROTATE);
       }
       catch (Exception ex) {
         logger.ErrorException(string.Format("error while loading {0} into FreeImage", fileIn.FullName), ex);
@@ -280,7 +281,7 @@ namespace WOP.Objects
     /// <returns>true if success</returns>
     public static bool SaveJPGImageHandle(FIBITMAP dib, FileInfo fileOut, FREE_IMAGE_SAVE_FLAGS savequality)
     {
-      return FreeImage.Save(FREE_IMAGE_FORMAT.FIF_JPEG, dib, fileOut.FullName, savequality);
+      return FreeImage.SaveEx(dib, fileOut.FullName, savequality);
     }
 
     /// <summary>
@@ -291,7 +292,7 @@ namespace WOP.Objects
     /// <returns></returns>
     public static bool SaveJPGImageHandle(FIBITMAP dib, FileInfo fileOut)
     {
-      return FreeImage.Save(FREE_IMAGE_FORMAT.FIF_JPEG, dib, fileOut.FullName, FREE_IMAGE_SAVE_FLAGS.JPEG_QUALITYGOOD);
+      return FreeImage.Save(FREE_IMAGE_FORMAT.FIF_JPEG, dib, fileOut.FullName, FREE_IMAGE_SAVE_FLAGS.DEFAULT);
     }
 
     public static void CleanUpResources(FIBITMAP dib)
